@@ -7,7 +7,7 @@ You need to have installed Node and NPM.
 
 Clone this repository
 ``` shell
-git clone https://github.com/gtsopour/nodejs-shopping-cart.git
+git clone https://github.com/nscon160498/ESHOP-CODE
 ```
 
 Install dependencies
@@ -19,7 +19,7 @@ Start NodeJS server at http://localhost:3000
 ``` shell
 npm start
 ```
-
+Start NodeJS admin at http://localhost:3000/admin/
 For Nodemon usage
 ``` shell
 nodemon ./bin/www
