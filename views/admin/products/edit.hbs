@@ -34,8 +34,10 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlFile1">Image</label>
-                        <input type="file" class="form-control-file" id="exampleFormControlFile1" name="image" value="{{image}}">
+                        <input type="file" id="exampleFormControlFile1" name="image" value="{{this.image}}">
+                        <img style="width: 200px;" src="/img/upload/{{image}}" class="preview"/>
                     </div>
+                      
                     <button type="submit" class="btn btn-primary"  value="Update">Submit</button>
                 </form>
             </div>

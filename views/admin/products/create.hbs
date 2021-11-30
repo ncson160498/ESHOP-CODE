@@ -12,7 +12,7 @@
     <div class="card-body">
         <div style="overflow: hidden;" class="table-responsive">
             <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                <form  action="./create" method="post" >
+                <form action="./create" method="post" id="createForm" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Name</label>
                         <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
@@ -22,24 +22,41 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Quanlity</label>
-                        <input type="quanlity" class="form-control" id="exampleInputPassword1" placeholder="Password" name="quanlity" value="{{quanlity}}">
+                        <input type="quanlity" class="form-control" id="exampleInputPassword1" placeholder="Password"
+                            name="quanlity" value="{{quanlity}}">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Size</label>
-                        <input type="number" class="form-control" id="exampleInputPassword1" placeholder="Password" name="size" value="{{size}}">
+                        <input type="number" class="form-control" id="exampleInputPassword1" placeholder="Password"
+                            name="size" value="{{size}}">
                     </div>
-                      <div class="form-group">
+                    <div class="form-group">
                         <label for="exampleInputPassword1">Price</label>
-                        <input type="number" class="form-control" id="exampleInputPassword1" placeholder="Password" name="price" value="{{price}}">
+                        <input type="number" class="form-control" id="exampleInputPassword1" placeholder="Password"
+                            name="price" value="{{price}}">
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlFile1">Image</label>
-                        {{!-- <input type="file" class="form-control-file" id="exampleFormControlFile1" name="image" value="{{image}}" accept="image/*"> --}}
-                          <input type="file" name="image" accept="image/*" />
+                        {{!-- <input type="file" class="form-control-file" id="exampleFormControlFile1" name="image"
+                            value="{{image}}" accept="image/*"> --}}
+                        <input type="file" name="image" accept="image/*" />
+                        <img style="width: 200px;" src="" class="preview" />
                     </div>
-                    <button type="submit" class="btn btn-primary"  value="create">Submit</button>
+                    <button type="submit" class="btn btn-primary" value="create">Submit</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+<script>
+    let fileInput = document.forms.createForm.image;
+    fileInput.addEventListener('change', () => {
+        let file = fileInput.files[0];
+        if (!file) return;
+        let reader = new FileReader;
+        reader.readAsDataURL(file);
+        reader.onload = function (e) {
+            document.querySelector('.preview').src = reader.result;
+        }
+    })
+</script>

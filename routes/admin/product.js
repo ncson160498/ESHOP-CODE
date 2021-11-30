@@ -2,21 +2,36 @@ var express = require('express');
 var router = express.Router();
 var databaseConfig = require('../../models/db');
 var fs = require('fs');
-var multer  = require('multer');
-var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './public/upload')
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + '_' + file.originalname);
+const multer  = require('multer')
+
+const imageUploader = multer({
+  storage: multer.diskStorage({
+      filename: (req, file, cb) => {
+          let d = new Date()
+          cb(null,  d.getDate() + "-" + (d.getMonth() + 1) + "-" + d.getFullYear() + "-" +
+              d.getHours() + "-" + d.getMinutes()+"-"+d.getSeconds() + "-" +  file.originalname);
+},
+  destination: (req, file, cb) => {
+    //   cb(null, __dirname + '/upload');
+    cb(null, 'public/img/upload');
+    
   }
-});
+  }),
+fileFilter: (req, file, cb) => {
+  if (file.mimetype === "image/png" ||
+      file.mimetype === "image/jpg" ||
+      file.mimetype === "image/jpeg") {
+      cb(null, true);
+  }
+  else {
+      cb(null, false);
+  }
+},
+  limits: {
+  fileSize: 10000000,
 
-var upload = multer({ storage: storage });
-// const upload = multer({ dest: './upload/' })
-
-
-
+}
+}).single('image')
  
 // Get list product
 router.get('/product', function (req, res, next) {
@@ -44,26 +59,18 @@ router.get('/product/create', function (req, res, next) {
         });
 })
 //add new product
-router.post('/product/create',upload.single('image'), function (req, res, next) {
-    var img = fs.readFileSync(req.file.path);
- var encode_image = img.toString('base64');
- // Define a JSONobject for the image attributes for saving to database
- 
- var finalImg = {
-      contentType: req.file.mimetype,
-      image:  new Buffer(encode_image, 'base64')
-   };
+router.post('/product/create',imageUploader, function (req, res, next) {
     let name = req.body.name;
 //   let image = req.body.image;
+    let image = (req.file) ? req.file.filename : 'defaut.jpg';
     let quanlity = req.body.quanlity;
     let size = req.body.size;
     let price = req.body.price;
     let errors = false;
-
     if (!errors) {
         var form_data = {
             name: name,
-            image: finalImg,
+            image: image,
             quanlity: quanlity,
             size: size,
             price: price,
@@ -84,6 +91,8 @@ router.post('/product/create',upload.single('image'), function (req, res, next) 
             } else {
                 req.flash('success', 'Product successfully added');
                 res.redirect('/admin/product');
+                console.log(image)
+
             }
         })
     }
@@ -113,40 +122,74 @@ router.get('/product/edit/(:id)', function (req, res, next) {
 
 // Update product
 router.post('/product/edit/:id',function(req,res,next){
+   
     let id = req.params.id;
     let name = req.body.name;
-    let image = req.body.image;
+    // let image = req.body.image;
+    // let image = (req.file) ? req.file.filename : 'defaut.jpg';
+    // console.log(image)
     let quanlity = req.body.quanlity;
     let size = req.body.size;
     let price = req.body.price;
     let errors = false;
     
     if (!errors) {
-        var form_data = {
-            name: name,
-            image: image,
-            quanlity: quanlity,
-            size: size,
-            price: price,
-        }
-        databaseConfig.query('UPDATE product SET ? WHERE id = ' + id, form_data, function(err, result) {
-            if (err) {
-                console.log(form_data);
-                req.flash('error', err)
-                // render to add.ejs
-                res.render('admin/products/edit', {
-                    name: form_data.name,
-                    image: form_data.image,
-                    quanlity: form_data.quanlity,
-                    size: form_data.size,
-                    price: form_data.price,
-                    layout: 'orther',
-                })
-            } else {
-                req.flash('success', 'Update Product successfully added');
-                res.redirect('/admin/product');
+        if(req.file){
+            console.log(req)
+            var form_data = {
+                name: name,
+                image: req.file.filename,
+                quanlity: quanlity,
+                size: size,
+                price: price,
             }
-        })
+            databaseConfig.query('UPDATE product SET ? WHERE id = ' + id, form_data, function(err, result) {
+                if (err) {
+                    console.log(form_data);
+                    req.flash('error', err)
+                    // render to add.ejs
+                    res.render('admin/products/edit', {
+                        name: form_data.name,
+                        image: form_data.image,
+                        quanlity: form_data.quanlity,
+                        size: form_data.size,
+                        price: form_data.price,
+                        layout: 'orther',
+                    })
+                } else {
+                    req.flash('success', 'Update Product successfully added');
+                    res.redirect('/admin/product');
+                }
+            })
+        }
+        else{
+            var form_data = {
+                name: name,
+                image: image,
+                quanlity: quanlity,
+                size: size,
+                price: price,
+            }
+            databaseConfig.query('UPDATE product SET ? WHERE id = ' + id, form_data, function(err, result) {
+                if (err) {
+                    console.log(form_data);
+                    req.flash('error', err)
+                    // render to add.ejs
+                    res.render('admin/products/edit', {
+                        name: form_data.name,
+                        image: form_data.image,
+                        quanlity: form_data.quanlity,
+                        size: form_data.size,
+                        price: form_data.price,
+                        layout: 'orther',
+                    })
+                } else {
+                    req.flash('success', 'Update Product successfully added');
+                    res.redirect('/admin/product');
+                }
+            })
+        }
+       
     }
 
 })

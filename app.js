@@ -11,34 +11,16 @@ const fs = require('fs');
 var flash = require('express-flash');
 var session = require('express-session');
 var mysqlConnection  = require('./models/db');
-
 var hbs = require('hbs');
 var session = require('express-session');
-
 var index = require('./routes/frontend/index');
 var adminProductRouter = require('./routes/admin/product');
-
 var app = express();
-
-// app.engine( 'hbs', hbs( { 
-//   extname: 'hbs', 
-//   defaultLayout: 'main', 
-//   layoutsDir: __dirname + '/views/layouts/',
-//   partialsDir: __dirname + '/views/partials/'
-// } ) );
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-// hbs.registerPartial('mySideBar', fs.readFileSync(__dirname + '/views/partials/admin/sideBar.hbs', 'utf8'));
-// hbs.registerPartial('myNav', fs.readFileSync(__dirname + '/views/partials/admin/nav.hbs', 'utf8'));
 hbs.registerPartials(__dirname + '/views/partials/frontend');
-// hbs.registerPartial('mySideBar', fs.readFileSync(__dirname + '/views/partials/admin/sideBar.hbs', 'utf8'));
-// hbs.registerPartial('myNav', fs.readFileSync(__dirname + '/views/partials/admin/nav.hbs', 'utf8'));
-
 app.set('view engine', 'hbs');
-
-// uncomment after placing your favicon in /public
-// app.use(favicon(path.join(__dirname, 'public')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -49,9 +31,6 @@ app.use(session({
   saveUninitialized: true
 }))
 app.use(express.static(path.join(__dirname, '/public/')));
-// app.use(express.static('upload'));
-
-
 // res.locals is an object passed to hbs engine
 app.use(function(req, res, next) {
     res.locals.session = req.session;
