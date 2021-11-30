@@ -136,27 +136,29 @@
 				<div class="col-sm-9 padding-right">
 					<div class="features_items"><!--features_items-->
 						<h2 class="title text-center">Các sản phẩm</h2>
+						   {{#each data}}
 						<div class="col-sm-4">
 							<div class="product-image-wrapper">
 								<div class="single-products">
 									<div class="productinfo text-center">
-										<img src="images/shop/product12.jpg" alt="" />
-										<h2>3.000.000 VND</h2>
-										<p>Easy Polo Black Edition</p>
-										<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
+										<img src="/img/upload/{{image}}" alt="" />
+										<h2>{{price}} VND</h2>
+										<p>{{name}}</p>
+										<a href="/product/detail/{{id}}" class="btn btn-default add-to-cart"><i class="fa fa-search"></i>Xem chi tiết</a>
 									</div>
 									<div class="product-overlay">
 										<div class="overlay-content">
-											<h2>3.000.000 VND</h2>
-											<p>Easy Polo Black Edition</p>
-											<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
+											<h2>{{price}} VND</h2>
+											<p>{{name}}</p>
+											<a href="/product/detail/{{id}}" class="btn btn-default add-to-cart"><i class="fa fa-search"></i>Xem chi tiết</a>
 										</div>
 									</div>
 								</div>
 							
 							</div>
 						</div>
-						<div class="col-sm-4">
+						{{/each}}
+						{{!-- <div class="col-sm-4">
 							<div class="product-image-wrapper">
 								<div class="single-products">
 									<div class="productinfo text-center">
@@ -391,7 +393,7 @@
 							<li><a href="">3</a></li>
 							<li><a href="">&raquo;</a></li>
 						</ul>
-					</div><!--features_items-->
+					</div><!--features_items--> --}}
 				</div>
 			</div>
 		</div>

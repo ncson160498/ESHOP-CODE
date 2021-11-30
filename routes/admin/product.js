@@ -32,14 +32,33 @@ fileFilter: (req, file, cb) => {
 
 }
 }).single('image')
+
+const getPagination = (page, size) => {
+    const limit = size ? +size : 3;
+    const offset = page ? page * limit : 0;
+  
+    return { limit, offset };
+  };
+  
+  const getPagingData = (data, page, limit) => {
+    const { count: totalItems, rows: tutorials } = data;
+    const currentPage = page ? +page : 0;
+    const totalPages = Math.ceil(totalItems / limit);
+  
+    return { totalItems, tutorials, totalPages, currentPage };
+  };
  
 // Get list product
-router.get('/product', function (req, res, next) {
-    databaseConfig.query('SELECT * FROM product', function (err, rows) {
+router.get('/product/(:page)', function (req, res, next) {
+    const page = req.body.page ? req.body.page : 0
+    const sql = 'SELECT * FROM product  LIMIT 3 OFFSET '+`${page}`
+    // const { page, size, title } = req.query;
+    // const { limit, offset } = getPagination(page, size);
+    databaseConfig.query(sql, function (err, rows) {
         if (err) {
             req.flash('error', err);
             // render to views admin/product/index.ejs
-            res.render('admin/products/index', { data: '' });
+            res.render('admin/products/index', { data: '',layout:'orther' });
         } else {
             // render to views/books/index.ejs
             res.render('admin/products/index',
@@ -74,10 +93,14 @@ router.post('/product/create',imageUploader, function (req, res, next) {
             quanlity: quanlity,
             size: size,
             price: price,
+            // category_id: 1,
+            // admin_id: 1,
+            // trademark_id : 1,
+            // content: 'test',
         }
         databaseConfig.query('INSERT INTO product SET ?', form_data, function (err, result) {
             if (err) {
-                console.log(form_data.image);
+                // console.log(form_data.image);
                 req.flash('error', err)
                 // render to add.ejs
                 res.render('admin/products/create', {
@@ -91,8 +114,6 @@ router.post('/product/create',imageUploader, function (req, res, next) {
             } else {
                 req.flash('success', 'Product successfully added');
                 res.redirect('/admin/product');
-                console.log(image)
-
             }
         })
     }
@@ -126,7 +147,7 @@ router.post('/product/edit/:id',function(req,res,next){
     let id = req.params.id;
     let name = req.body.name;
     // let image = req.body.image;
-    // let image = (req.file) ? req.file.filename : 'defaut.jpg';
+    let image = (req.file) ? req.file.filename : 'defaut.jpg';
     // console.log(image)
     let quanlity = req.body.quanlity;
     let size = req.body.size;
@@ -134,35 +155,33 @@ router.post('/product/edit/:id',function(req,res,next){
     let errors = false;
     
     if (!errors) {
-        if(req.file){
-            console.log(req)
-            var form_data = {
-                name: name,
-                image: req.file.filename,
-                quanlity: quanlity,
-                size: size,
-                price: price,
-            }
-            databaseConfig.query('UPDATE product SET ? WHERE id = ' + id, form_data, function(err, result) {
-                if (err) {
-                    console.log(form_data);
-                    req.flash('error', err)
-                    // render to add.ejs
-                    res.render('admin/products/edit', {
-                        name: form_data.name,
-                        image: form_data.image,
-                        quanlity: form_data.quanlity,
-                        size: form_data.size,
-                        price: form_data.price,
-                        layout: 'orther',
-                    })
-                } else {
-                    req.flash('success', 'Update Product successfully added');
-                    res.redirect('/admin/product');
-                }
-            })
-        }
-        else{
+        // if(req.file){
+        //     var form_data = {
+        //         name: name,
+        //         image: req.file.filename,
+        //         quanlity: quanlity,
+        //         size: size,
+        //         price: price,
+        //     }
+        //     databaseConfig.query('UPDATE product SET ? WHERE id = ' + id, form_data, function(err, result) {
+        //         if (err) {
+        //             console.log(form_data);
+        //             req.flash('error', err)
+        //             // render to add.ejs
+        //             res.render('admin/products/edit', {
+        //                 name: form_data.name,
+        //                 image: form_data.image,
+        //                 quanlity: form_data.quanlity,
+        //                 size: form_data.size,
+        //                 price: form_data.price,
+        //                 layout: 'orther',
+        //             })
+        //         } else {
+        //             req.flash('success', 'Update Product successfully added');
+        //             res.redirect('/admin/product');
+        //         }
+        //     })
+        // }
             var form_data = {
                 name: name,
                 image: image,
@@ -188,8 +207,6 @@ router.post('/product/edit/:id',function(req,res,next){
                     res.redirect('/admin/product');
                 }
             })
-        }
-       
     }
 
 })
