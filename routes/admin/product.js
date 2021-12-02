@@ -49,9 +49,9 @@ const getPagination = (page, size) => {
   };
  
 // Get list product
-router.get('/product/(:page)', function (req, res, next) {
+router.get('/product/', function (req, res, next) {
     const page = req.body.page ? req.body.page : 0
-    const sql = 'SELECT * FROM product  LIMIT 3 OFFSET '+`${page}`
+    const sql = 'SELECT * FROM product'
     // const { page, size, title } = req.query;
     // const { limit, offset } = getPagination(page, size);
     databaseConfig.query(sql, function (err, rows) {
