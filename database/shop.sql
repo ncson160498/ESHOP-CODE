@@ -72,3 +72,14 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+CREATE TABLE user
+(
+	id mediumint not null auto_increment,
+    name varchar(50) not null,
+    phone varchar(50) ,
+    email varchar(50) not null,
+    password varchar(100) not null,
+    admin boolean default 0,
+    root boolean default 0,
+    primary key(id)
+);

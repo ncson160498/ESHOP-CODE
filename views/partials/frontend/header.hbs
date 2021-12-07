@@ -1,155 +1,169 @@
 {{!-- <div class="row">
-    <div class="col-xs-4">
-        <div class="pull-left">
-        <a href="/"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
-        </div>
-    </div>
-    <div class="col-xs-8">
-        <div class="dropdown pull-right">
-            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart
-                {{# if session.cart.totalItems }}
-                <span>({{session.cart.totalItems}})</span>
-                {{/if}}
-            </a>
-            {{# if session.cart.totalItems }}
-            <div class="dropdown-menu">
-                <div class="cart">
-                    {{# each session.cart.items }}
-                    <div class="row">
-                        <div class="col-xs-4">
-                            {{ this.item.title }}
-                        </div>
-                        <div class="col-xs-4 text-right">
-                            <span class="badge">{{ this.quantity }}</span>
-                        </div>
-                        <div class="col-xs-4 text-right">
-                            {{ this.price }} CHF
-                        </div>
-                    </div>
-                    {{/each}}
-                    <div class="row">
-                        <div class="text-right">
-                            <div class="totalPrice">Total: {{ session.cart.totalPrice }} CHF</div>
-                            <a href="/cart/" class="btn btn-success">Procceed</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {{/if}}
-        </div>
-    </div>
-</div> --}}
-	<header id="header"><!--header-->
-		<div class="header_top"><!--header_top-->
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-6">
-						<div class="contactinfo">
-							<ul class="nav nav-pills">
-								<li><a href="#"><i class="fa fa-phone"></i> +84 123456789</a></li>
-								<li><a href="#"><i class="fa fa-envelope"></i> eshopper@gmail.com</a></li>
-							</ul>
+	<div class="col-xs-4">
+		<div class="pull-left">
+			<a href="/"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+		</div>
+	</div>
+	<div class="col-xs-8">
+		<div class="dropdown pull-right">
+			<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+				<i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart
+				{{# if session.cart.totalItems }}
+				<span>({{session.cart.totalItems}})</span>
+				{{/if}}
+			</a>
+			{{# if session.cart.totalItems }}
+			<div class="dropdown-menu">
+				<div class="cart">
+					{{# each session.cart.items }}
+					<div class="row">
+						<div class="col-xs-4">
+							{{ this.item.title }}
+						</div>
+						<div class="col-xs-4 text-right">
+							<span class="badge">{{ this.quantity }}</span>
+						</div>
+						<div class="col-xs-4 text-right">
+							{{ this.price }} CHF
 						</div>
 					</div>
-					<div class="col-sm-6">
-						<div class="social-icons pull-right">
-							<ul class="nav navbar-nav">
-								<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-								<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-								<li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-								<li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-								<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-							</ul>
+					{{/each}}
+					<div class="row">
+						<div class="text-right">
+							<div class="totalPrice">Total: {{ session.cart.totalPrice }} CHF</div>
+							<a href="/cart/" class="btn btn-success">Procceed</a>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div><!--/header_top-->
-		
-		<div class="header-middle"><!--header-middle-->
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-4">
-						<div class="logo pull-left">
-							<a href="/"><img src="images/home/logo.png" alt="" /></a>
-						</div>
-						{{!-- <div class="btn-group pull-right">
-							<div class="btn-group">
-								<button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-									VN
-									<span class="caret"></span>
-								</button>
-								<!-- <ul class="dropdown-menu">
+			{{/if}}
+		</div>
+	</div>
+</div> --}}
+<header id="header">
+	<!--header-->
+	<div class="header_top">
+		<!--header_top-->
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="contactinfo">
+						<ul class="nav nav-pills">
+							<li><a href="#"><i class="fa fa-phone"></i> +84 123456789</a></li>
+							<li><a href="#"><i class="fa fa-envelope"></i> eshopper@gmail.com</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="social-icons pull-right">
+						<ul class="nav navbar-nav">
+							<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+							<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+							<li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+							<li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+							<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--/header_top-->
+
+	<div class="header-middle">
+		<!--header-middle-->
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="logo pull-left">
+						<a href="/"><img src="images/home/logo.png" alt="" /></a>
+					</div>
+					{{!-- <div class="btn-group pull-right">
+						<div class="btn-group">
+							<button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
+								VN
+								<span class="caret"></span>
+							</button>
+							<!-- <ul class="dropdown-menu">
 									<li><a href="#">US</a></li>
 								</ul> -->
-							</div>
-							
-							<div class="btn-group">
-								<button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-									VND
-									<span class="caret"></span>
-								</button>
-								<!-- <ul class="dropdown-menu">
+						</div>
+
+						<div class="btn-group">
+							<button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
+								VND
+								<span class="caret"></span>
+							</button>
+							<!-- <ul class="dropdown-menu">
 									<li><a href="#">Dollar</a></li>
 								</ul> -->
-							</div>
-						</div> --}}
-					</div>
-					<div class="col-sm-8">
-						<div class="shop-menu pull-right">
-							<ul class="nav navbar-nav">
-								<li><a href="#"><i class="fa fa-user"></i> Tài khoản</a></li>
-								<li><a href="#"><i class="fa fa-star"></i> Danh sách</a></li>
-								<li><a href="/checkout"><i class="fa fa-crosshairs"></i> Thanh toán</a></li>
-								<li><a href="/cart"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
-								<li><a href="/login"><i class="fa fa-lock"></i> Đăng nhập</a></li>
-							</ul>
 						</div>
+					</div> --}}
+				</div>
+				<div class="col-sm-8">
+					<div class="shop-menu pull-right">
+						<ul class="nav navbar-nav">
+							<li><a href="/account"><i class="fa fa-user"></i> Tài khoản</a></li>
+							<li><a href="#"><i class="fa fa-star"></i> Danh sách</a></li>
+							<li><a href="/checkout"><i class="fa fa-crosshairs"></i> Thanh toán</a></li>
+							<li><a href="/cart"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
+							<li class="LoginHeaderButton"><a href="/login">Đăng nhập</a></li>
+							<li class="LogoutHeaderButton"><a>Đăng xuất</a></li>
+						</ul>
 					</div>
 				</div>
 			</div>
-		</div><!--/header-middle-->
-	
-		<div class="header-bottom"><!--header-bottom-->
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-9">
-						<div class="navbar-header">
-							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-								<span class="sr-only">Toggle navigation</span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-							</button>
-						</div>
-						<div class="mainmenu pull-left">
-							<ul class="nav navbar-nav collapse navbar-collapse">
-								<li><a href="/" class="active">Trang chủ</a></li>
-								<li class="dropdown"><a href="#">Cửa hàng<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="/product">Sản phẩm</a></li>
-										{{!-- <li><a href="/product-detail">Chi tiết sản phẩm</a></li>  --}}
-										<li><a href="/checkout">Thanh toán</a></li> 
-										<li><a href="/cart">Giỏ hàng</a></li> 
-										<li><a href="/login">Đăng nhập</a></li> 
-                                    </ul>
-                                </li> 
-								<li class="dropdown"><a href="#">Bài viết<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="/blog">Danh sách bài viết</a></li>
-                                    </ul>
-                                </li> 
-								<li><a href="/contact">Liên hệ</a></li>
-							</ul>
-						</div>
+		</div>
+	</div>
+	<!--/header-middle-->
+
+	<div class="header-bottom">
+		<!--header-bottom-->
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-9">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse"
+							data-target=".navbar-collapse">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
 					</div>
-					<div class="col-sm-3">
-						<div class="search_box pull-right">
-							<input type="text" placeholder="Tìm sản phẩm"/>
-						</div>
+					<div class="mainmenu pull-left">
+						<ul class="nav navbar-nav collapse navbar-collapse">
+							<li><a href="/" class="active">Trang chủ</a></li>
+							<li class="dropdown"><a href="#">Cửa hàng<i class="fa fa-angle-down"></i></a>
+								<ul role="menu" class="sub-menu">
+									<li><a href="/product">Sản phẩm</a></li>
+									{{!-- <li><a href="/product-detail">Chi tiết sản phẩm</a></li> --}}
+									<li><a href="/checkout">Thanh toán</a></li>
+									<li><a href="/cart">Giỏ hàng</a></li>
+									<li class="LoginHeaderButton"><a href="/login">Đăng nhập</a></li>
+									<li class="LogoutHeaderButton"><a>Đăng xuất</a></li>
+								</ul>
+							</li>
+							<li class="dropdown"><a href="#">Bài viết<i class="fa fa-angle-down"></i></a>
+								<ul role="menu" class="sub-menu">
+									<li><a href="/blog">Danh sách bài viết</a></li>
+								</ul>
+							</li>
+							<li><a href="/contact">Liên hệ</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<div class="search_box pull-right">
+						<input type="text" placeholder="Tìm sản phẩm" />
 					</div>
 				</div>
 			</div>
-		</div><!--/header-bottom-->
-	</header>
+		</div>
+	</div>
+	<!--/header-bottom-->
+</header>
+
+<script src="js/user/main.js">
+
+</script>

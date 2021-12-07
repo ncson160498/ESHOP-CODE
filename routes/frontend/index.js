@@ -1,5 +1,9 @@
 var express = require('express');
 var router = express.Router('');
+const bcrypt = require("bcryptjs")
+const helper = require("../../helpers/Helpers")
+const userModel = require("../../models/user")
+const productModel = require("../../models/product")
 var databaseConfig = require('../../models/db');
 
 var fs = require('fs');
@@ -23,44 +27,33 @@ router.get('/product', function (req, res, next) {
   //   title: 'Product',
   // }
   // );
-  databaseConfig.query('SELECT * FROM product ', function (err, rows) {
-    if (err) {
-      req.flash('error', err);
-      // render to views admin/product/index.ejs
-      res.render('/products/', { data: '' });
-    } else {
-      // render to views/books/index.ejs
-      res.render('partials/frontend/product',
-        {
-          title: 'Product',
-          data: rows,
-        });
-    }
+  productModel.all().then(rows => {
+
+    // render to views/books/index.ejs
+    res.render('partials/frontend/product',
+      {
+        title: 'Product',
+        data: rows,
+      });
 
   })
 });
 
 router.get('/product/detail/(:id)', function (req, res, next) {
   let id = req.params.id;
-  databaseConfig.query(`SELECT * FROM product where id =` + id, function (err, rows, fields) {
-    if (err) throw err
-    if (rows.length <= 0) {
-      req.flash('error', 'Product not found with id = ' + id)
-      res.redirect('/product/')
-    }
-    else {
-      res.render('partials/frontend/product-detail',
-        {
-          id:rows[0].id,
-          name: rows[0].name,
-          image: rows[0].image,
-          quanlity: rows[0].quanlity,
-          size: rows[0].size,
-          price: rows[0].price,
-        }
-      );
-    }
+  productModel.getById(id).then(rows => {
+    res.render('partials/frontend/product-detail',
+      {
+        id: rows[0].id,
+        name: rows[0].name,
+        image: rows[0].image,
+        quanlity: rows[0].quanlity,
+        size: rows[0].size,
+        price: rows[0].price,
+      }
+    );
   })
+
 });
 router.get('/checkout', function (req, res, next) {
   res.render('partials/frontend/checkout',
@@ -76,6 +69,7 @@ router.get('/cart', function (req, res, next) {
     }
   );
 });
+
 router.get('/login', function (req, res, next) {
   res.render('partials/frontend/login',
     {
@@ -83,6 +77,15 @@ router.get('/login', function (req, res, next) {
     }
   );
 });
+
+router.get('/account', function (req, res, next) {
+  res.render('partials/frontend/account',
+    {
+      title: 'Account',
+    }
+  );
+});
+
 
 router.get('/blog', function (req, res, next) {
   res.render('partials/frontend/blog',
@@ -103,35 +106,65 @@ router.get('/contact', function (req, res, next) {
 
 
 router.get('/admin', function (req, res, next) {
-  res.render('admin', 
-  { 
-    title: 'Admin',
-    layout:null
-  }
+  res.render('admin',
+    {
+      title: 'Admin',
+      layout: null
+    }
   );
 });
+
 router.get('/admin/login', function (req, res, next) {
-  res.render('partials/admin/login', 
-  { 
-    title: 'Admin-Login',
-    layout:null
-  }
+  res.render('partials/admin/login',
+    {
+      title: 'Admin-Login',
+      layout: null
+    }
   );
 });
+
+router.post(`/admin/login`, function (req, res, next) {
+  const email = req.body.email
+  const password = req.body.password
+  userModel.getUserByEmail(email).then(rows => {
+    if (rows == null) {
+      res.send({
+        Status: 0,
+        Message: "Không tồn tại tài khoản"
+      })
+    }
+    const user = rows[0];
+    const ret = bcrypt.compareSync(password, user.password)
+    if (ret) {
+      res.send({
+        Status: 1,
+        Message: "Thành công",
+        data: user
+      })
+    }
+    else {
+      res.send({
+        Status: 0,
+        Message: "Không đúng mật khẩu"
+      })
+    }
+  })
+})
+
 router.get('/admin/register', function (req, res, next) {
-  res.render('partials/admin/register', 
-  { 
-    title: 'Admin-Register',
-    layout:null
-  }
+  res.render('partials/admin/register',
+    {
+      title: 'Admin-Register',
+      layout: null
+    }
   );
 });
 router.get('/forgotPassword', function (req, res, next) {
-  res.render('partials/admin/forgotPass', 
-  { 
-    title: 'Admin-ForgotPass',
-    layout:null
-  }
+  res.render('partials/admin/forgotPass',
+    {
+      title: 'Admin-ForgotPass',
+      layout: null
+    }
   );
 });
 
