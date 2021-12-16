@@ -83,3 +83,16 @@ CREATE TABLE user
     root boolean default 0,
     primary key(id)
 );
+CREATE TABLE comment
+(
+  id mediumint not null auto_increment,
+  userid mediumint,
+  productid int(10),
+  rating int not null default 5,
+  content text,
+  PRIMARY key(id)
+);
+
+ALTER TABLE comment
+ADD CONSTRAINT FK_comment_user FOREIGN KEY(userid) REFERENCES user(id), 
+ADD CONSTRAINT FK_comment_product FOREIGN KEY(productid) REFERENCES product(id); 
