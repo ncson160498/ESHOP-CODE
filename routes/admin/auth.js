@@ -6,15 +6,6 @@ const passport = require("passport")
 const user = require("../../models/user")
 const router = express.Router()
 
-router.get('/is-available-email', (req, res, next) => {
-    var user = req.query.email;
-    userModel.getUserByEmail(user).then(rows => {
-        if (rows.length > 0) {
-            return res.json(false);
-        }
-        return res.json(true);
-    })
-})
 
 //Tạo tài khoản admin
 router.post("/register", async (req, res, next) => {

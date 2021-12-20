@@ -9,7 +9,7 @@ $(document).ready(function () {
         const trademarkInput = $("#trademarkSelected").val().toString()
 
         $.ajax({
-            url: '/admin/product/edit',
+            url: '/admin/product/edit/'+ id,
             type: 'POST',
             cache: false,
             data: { 
@@ -34,8 +34,6 @@ $(document).ready(function () {
                 alert('Không thành công')
             }
         })
-
-
     })
 })
 

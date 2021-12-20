@@ -7,7 +7,7 @@ $(document).ready(function () {
         const addressInput = $("#exampleInputAddressEdit").val().toString()
 
         $.ajax({
-            url: '/admin/client/edit',
+            url: '/admin/client/edit/' + id,
             type: 'POST',
             cache: false,
             data: { 

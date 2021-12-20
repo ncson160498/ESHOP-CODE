@@ -42,7 +42,7 @@ router.get('/', function (req, res, next) {
     })
   })
 });
-// PRODUCT VIEW
+// product view and search product
 router.get('/product', function (req, res, next) {
   let search = '%' + (req.query.search || '')
 
@@ -77,49 +77,6 @@ router.get('/product/detail/(:id)', function (req, res, next) {
     })
   })
 });
-
-router.post('/admin/product/edit', function (req, res, next) {
-  if(req.user != null){
-    var entity = {
-      id: req.body.id,
-      name: req.body.name,
-      quanlity: req.body.quanlity,
-      size: req.body.size,
-      price: req.body.price,
-      category_id: req.body.category,
-      trademark_id: req.body.trademark,
-    }
-
-      productModel.update(entity).then(result => {
-        productModel.getById(entity.id).then(rows => {
-          res.status(200).json({Status: 1, Message: 'success', data: rows[0]});
-        })
-      }).catch(err => {
-        console.log(err)
-    })
-  }
-  else{
-      res.redirect('/admin')
-  }
-})
-
-// delete product
-
-router.get('/admin/product/delete/(:id)', function (req, res, next) {
-  let id = req.params.id;
-  if(req.user != null){
-      productModel.getById(id).then(result => {
-        productModel.deleteProduct(result[0]).then(rows => {
-          res.redirect('/admin/product')
-        })
-      }).catch(err => {
-        console.log(err)
-    })
-  }
-  else{
-      res.redirect('/admin')
-  }
-})
 
 // chưa làm. nhớ cmt
 
@@ -196,128 +153,6 @@ router.get('/contact', function (req, res, next) {
   res.render('partials/frontend/contact',
     {
       title: 'Contact',
-    }
-  );
-});
-
-//render view admin,login,register
-
-router.get('/admin', function (req, res, next) {
-  if(req.user != null){
-    res.render('partials/frontend/admin',
-    {
-      title: 'Admin',
-      layout: null
-    }
-  );
-  }
-  else
-  {
-    res.redirect('/admin/login')
-  }
-
-});
-
-router.get('/admin/login', function (req, res, next) {
-  res.render('partials/admin/login',
-    {
-      title: 'Admin-Login',
-      layout: null
-    }
-  );
-});
-
-router.get('/admin/register', function (req, res, next) {
-  res.render('partials/admin/register',
-    {
-      title: 'Admin-Register',
-      layout: null
-    }
-  );
-});
-
-// management client by admin
-
-router.get('/admin/client', function (req, res, next) {
-  if(req.user != null){
-      userModel.allUser().then(result => {
-          res.render('admin/client/client',
-          {
-              layout: 'orther',
-              data: result,
-          });
-      })
-  }
-  else{
-      res.redirect('/admin')
-  }
-})
-
-//edit infor client by admin
-
-router.get('/admin/client/edit/(:id)', function (req, res, next) {
-  let id = req.params.id;
-  if(req.user != null){
-      userModel.getUserById(id).then(result => {
-          res.render('admin/client/editclient',
-          {
-              layout: 'orther',
-              data: result[0],
-          });
-      })
-  }
-  else{
-      res.redirect('/admin')
-  }
-})
-
-router.post('/admin/client/edit', function (req, res, next) {
-  var entity = {
-    id: req.body.id,
-    name: req.body.name,
-    email: req.body.email,
-    phone: req.body.phone,
-    address: req.body.address,
-  }
-  if(req.user != null){
-      userModel.update(entity).then(result => {
-        userModel.getUserById(entity.id).then(rows => {
-          res.status(200).json({Status: 1, Message: 'success', data: rows[0]});
-        })
-      }).catch(err => {
-        console.log(err)
-    })
-  }
-  else{
-      res.redirect('/admin')
-  }
-})
-
-//delete client by admin
-
-router.get('/admin/client/delete/(:id)', function (req, res, next) {
-  let id = req.params.id;
-  if(req.user != null){
-      userModel.getUserById(id).then(result => {
-        userModel.deleteUser(result[0]).then(rows => {
-          res.redirect('/admin/client')
-        })
-      }).catch(err => {
-        console.log(err)
-    })
-  }
-  else{
-      res.redirect('/admin')
-  }
-})
-
-// chưa làm. làm nhớ cmt
-
-router.get('/admin/forgotPass', function (req, res, next) {
-  res.render('partials/admin/forgotPass',
-    {
-      title: 'Admin-ForgotPass',
-      layout: null
     }
   );
 });
