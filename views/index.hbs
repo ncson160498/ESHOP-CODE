@@ -1,24 +1,4 @@
-{{!-- <h1>{{title}}</h1>
-<p>Welcome to the {{title}}</p>
 
-{{# each products }}
-<div class="row">
-	<div class="col-md-12">
-		<div class="thumbnail">
-			<div class="caption">
-				<h3>{{ this.title }}</h3>
-				<p class="description">{{{this.description}}}</p>
-				<div class="clearfix">
-					<div class="price pull-left"><i class="fa fa-tag" aria-hidden="true"></i> {{ this.price }} CHF</div>
-					<a href="/add/{{ this.id }}" class="btn btn-default pull-right" role="button"><i
-							class="fa fa-shopping-cart" aria-hidden="true"></i> Add to cart</a>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-{{/each}} --}}
-<!--/header-->
 
 <section id="slider">
 	<!--slider-->
@@ -229,28 +209,30 @@
 				<div class="features_items">
 					<!--features_items-->
 					<h2 class="title text-center">Các mẫu sản phẩm</h2>
+					{{#each data}}
 					<div class="col-sm-4">
 						<div class="product-image-wrapper">
 							<div class="single-products">
 								<div class="productinfo text-center">
-									<img src="images/home/product1.jpg" alt="" />
-									<h2>$56</h2>
-									<p>Easy Polo Black Edition</p>
-									<a href="#" class="btn btn-default add-to-cart"><i
-											class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
+									<img src="/img/upload/{{image}}" alt="" width="260" height="300"/>
+									<h2>{{price}} VND</h2>
+									<p>{{name}}</p>
+									<a href="/product/detail/{{id}}" class="btn btn-default add-to-cart"><i
+											class="fa fa-shopping-cart"></i>Xem chi tiết</a>
 								</div>
 								<div class="product-overlay">
 									<div class="overlay-content">
-										<h2>$56</h2>
-										<p>Easy Polo Black Edition</p>
-										<a href="#" class="btn btn-default add-to-cart"><i
+									<h2>{{price}} VND</h2>
+									<p>{{name}}</p>
+										<a href="/product/detail/{{id}}" class="btn btn-default add-to-cart"><i
 												class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-4">
+					{{/each}}
+					{{!-- <div class="col-sm-4">
 						<div class="product-image-wrapper">
 							<div class="single-products">
 								<div class="productinfo text-center">
@@ -360,7 +342,7 @@
 							</div>
 
 						</div>
-					</div>
+					</div> --}}
 
 				</div>
 				<!--features_items-->
@@ -369,266 +351,104 @@
 					<!--category-tab-->
 					<div class="col-sm-12">
 						<ul class="nav nav-tabs">
-							<li class="active"><a href="#tshirt" data-toggle="tab">Áo thun</a></li>
-							<li><a href="#blazers" data-toggle="tab">Áo khoác</a></li>
-							<li><a href="#sunglass" data-toggle="tab">Quần</a></li>
+							<li class="active"><a href="#tshirt" data-toggle="tab">Áo</a></li>
+							<li><a href="#blazers" data-toggle="tab">Quần</a></li>
+							<li><a href="#sunglass" data-toggle="tab">Giày</a></li>
 							<li><a href="#kids" data-toggle="tab">Trẻ em</a></li>
-							<li><a href="#poloshirt" data-toggle="tab">Áo có cổ</a></li>
+							<li><a href="#poloshirt" data-toggle="tab">Thể Thao</a></li>
 						</ul>
 					</div>
 					<div class="tab-content">
 						<div class="tab-pane fade active in" id="tshirt">
+							{{#each dataShirt}}
 							<div class="col-sm-3">
 								<div class="product-image-wrapper">
 									<div class="single-products">
 										<div class="productinfo text-center">
-											<img src="images/home/gallery1.jpg" alt="" />
-											<h2>$56</h2>
-											<p>Easy Polo Black Edition</p>
-											<a href="#" class="btn btn-default add-to-cart"><i
-													class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
+										<img src="/img/upload/{{image}}" alt="" width="200" height="210"/>
+										<h2>{{price}} VND</h2>
+										<p>{{name}}</p>
+											<a href="/product/detail/{{id}}" class="btn btn-default add-to-cart"><i
+													class="fa fa-shopping-cart"></i>Xem chi tiết</a>
 										</div>
-
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-3">
-								<div class="product-image-wrapper">
-									<div class="single-products">
-										<div class="productinfo text-center">
-											<img src="images/home/gallery2.jpg" alt="" />
-											<h2>$56</h2>
-											<p>Easy Polo Black Edition</p>
-											<a href="#" class="btn btn-default add-to-cart"><i
-													class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
-										</div>
-
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-3">
-								<div class="product-image-wrapper">
-									<div class="single-products">
-										<div class="productinfo text-center">
-											<img src="images/home/gallery3.jpg" alt="" />
-											<h2>$56</h2>
-											<p>Easy Polo Black Edition</p>
-											<a href="#" class="btn btn-default add-to-cart"><i
-													class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
-										</div>
-
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-3">
-								<div class="product-image-wrapper">
-									<div class="single-products">
-										<div class="productinfo text-center">
-											<img src="images/home/gallery4.jpg" alt="" />
-											<h2>$56</h2>
-											<p>Easy Polo Black Edition</p>
-											<a href="#" class="btn btn-default add-to-cart"><i
-													class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
-										</div>
-
-									</div>
-								</div>
-							</div>
+							{{/each}}
 						</div>
 
 						<div class="tab-pane fade" id="blazers">
+							{{#each dataPants}}
 							<div class="col-sm-3">
 								<div class="product-image-wrapper">
 									<div class="single-products">
 										<div class="productinfo text-center">
-											<img src="images/home/gallery4.jpg" alt="" />
-											<h2>$56</h2>
-											<p>Easy Polo Black Edition</p>
-											<a href="#" class="btn btn-default add-to-cart"><i
-													class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
+										<img src="/img/upload/{{image}}" alt="" width="200" height="210"/>
+										<h2>{{price}} VND</h2>
+										<p>{{name}}</p>
+											<a href="/product/detail/{{id}}" class="btn btn-default add-to-cart"><i
+													class="fa fa-shopping-cart"></i>Xem chi tiết</a>
 										</div>
-
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-3">
-								<div class="product-image-wrapper">
-									<div class="single-products">
-										<div class="productinfo text-center">
-											<img src="images/home/gallery3.jpg" alt="" />
-											<h2>$56</h2>
-											<p>Easy Polo Black Edition</p>
-											<a href="#" class="btn btn-default add-to-cart"><i
-													class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
-										</div>
+							{{/each}}
 
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-3">
-								<div class="product-image-wrapper">
-									<div class="single-products">
-										<div class="productinfo text-center">
-											<img src="images/home/gallery2.jpg" alt="" />
-											<h2>$56</h2>
-											<p>Easy Polo Black Edition</p>
-											<a href="#" class="btn btn-default add-to-cart"><i
-													class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
-										</div>
-
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-3">
-								<div class="product-image-wrapper">
-									<div class="single-products">
-										<div class="productinfo text-center">
-											<img src="images/home/gallery1.jpg" alt="" />
-											<h2>$56</h2>
-											<p>Easy Polo Black Edition</p>
-											<a href="#" class="btn btn-default add-to-cart"><i
-													class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
-										</div>
-
-									</div>
-								</div>
-							</div>
 						</div>
 
 						<div class="tab-pane fade" id="sunglass">
+							{{#each dataShose}}
 							<div class="col-sm-3">
 								<div class="product-image-wrapper">
 									<div class="single-products">
 										<div class="productinfo text-center">
-											<img src="images/home/gallery3.jpg" alt="" />
-											<h2>$56</h2>
-											<p>Easy Polo Black Edition</p>
-											<a href="#" class="btn btn-default add-to-cart"><i
-													class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
+										<img src="/img/upload/{{image}}" alt="" width="200" height="210">
+										<h2>{{price}} VND</h2>
+										<p>{{name}}</p>
+											<a href="/product/detail/{{id}}" class="btn btn-default add-to-cart"><i
+													class="fa fa-shopping-cart"></i>Xem chi tiết</a>
 										</div>
-
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-3">
-								<div class="product-image-wrapper">
-									<div class="single-products">
-										<div class="productinfo text-center">
-											<img src="images/home/gallery4.jpg" alt="" />
-											<h2>$56</h2>
-											<p>Easy Polo Black Edition</p>
-											<a href="#" class="btn btn-default add-to-cart"><i
-													class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
-										</div>
-
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-3">
-								<div class="product-image-wrapper">
-									<div class="single-products">
-										<div class="productinfo text-center">
-											<img src="images/home/gallery1.jpg" alt="" />
-											<h2>$56</h2>
-											<p>Easy Polo Black Edition</p>
-											<a href="#" class="btn btn-default add-to-cart"><i
-													class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
-										</div>
-
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-3">
-								<div class="product-image-wrapper">
-									<div class="single-products">
-										<div class="productinfo text-center">
-											<img src="images/home/gallery2.jpg" alt="" />
-											<h2>$56</h2>
-											<p>Easy Polo Black Edition</p>
-											<a href="#" class="btn btn-default add-to-cart"><i
-													class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
-										</div>
-
-									</div>
-								</div>
-							</div>
+							{{/each}}
 						</div>
 
 						<div class="tab-pane fade" id="kids">
+							{{#each dataChild}}
 							<div class="col-sm-3">
 								<div class="product-image-wrapper">
 									<div class="single-products">
 										<div class="productinfo text-center">
-											<img src="images/home/gallery1.jpg" alt="" />
-											<h2>$56</h2>
-											<p>Easy Polo Black Edition</p>
-											<a href="#" class="btn btn-default add-to-cart"><i
-													class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
+										<img src="/img/upload/{{image}}" alt="" width="200" height="210"/>
+										<h2>{{price}} VND</h2>
+										<p>{{name}}</p>
+											<a href="/product/detail/{{id}}" class="btn btn-default add-to-cart"><i
+													class="fa fa-shopping-cart"></i>Xem chi tiết</a>
 										</div>
-
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-3">
-								<div class="product-image-wrapper">
-									<div class="single-products">
-										<div class="productinfo text-center">
-											<img src="images/home/gallery2.jpg" alt="" />
-											<h2>$56</h2>
-											<p>Easy Polo Black Edition</p>
-											<a href="#" class="btn btn-default add-to-cart"><i
-													class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
-										</div>
-
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-3">
-								<div class="product-image-wrapper">
-									<div class="single-products">
-										<div class="productinfo text-center">
-											<img src="images/home/gallery3.jpg" alt="" />
-											<h2>$56</h2>
-											<p>Easy Polo Black Edition</p>
-											<a href="#" class="btn btn-default add-to-cart"><i
-													class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
-										</div>
-
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-3">
-								<div class="product-image-wrapper">
-									<div class="single-products">
-										<div class="productinfo text-center">
-											<img src="images/home/gallery4.jpg" alt="" />
-											<h2>$56</h2>
-											<p>Easy Polo Black Edition</p>
-											<a href="#" class="btn btn-default add-to-cart"><i
-													class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
-										</div>
-
-									</div>
-								</div>
-							</div>
+							{{/each}}
 						</div>
 
 						<div class="tab-pane fade" id="poloshirt">
+							{{#each dataSport}}
 							<div class="col-sm-3">
 								<div class="product-image-wrapper">
 									<div class="single-products">
 										<div class="productinfo text-center">
-											<img src="images/home/gallery2.jpg" alt="" />
-											<h2>$56</h2>
-											<p>Easy Polo Black Edition</p>
-											<a href="#" class="btn btn-default add-to-cart"><i
-													class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
+										<img src="/img/upload/{{image}}" alt="" width="200" height="210"/>
+										<h2>{{price}} VND</h2>
+										<p>{{name}}</p>
+											<a href="/product/detail/{{id}}" class="btn btn-default add-to-cart"><i
+													class="fa fa-shopping-cart"></i>Xem chi tiết</a>
 										</div>
-
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-3">
+							{{/each}}
+							{{!-- <div class="col-sm-3">
 								<div class="product-image-wrapper">
 									<div class="single-products">
 										<div class="productinfo text-center">
@@ -669,7 +489,7 @@
 
 									</div>
 								</div>
-							</div>
+							</div> --}}
 						</div>
 					</div>
 				</div>
@@ -680,94 +500,40 @@
 					<h2 class="title text-center">recommended items</h2>
 
 					<div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
-						<div class="carousel-inner">
+						<div class="carousel-inner">							
 							<div class="item active">
+								{{#each dataRecommend1}}
 								<div class="col-sm-4">
 									<div class="product-image-wrapper">
 										<div class="single-products">
 											<div class="productinfo text-center">
-												<img src="images/home/recommend1.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
+												<img src="/img/upload/{{image}}" alt="" width="255.48" height="255.48"/>
+												<h2>${{price}}</h2>
+												<p>{{name}}</p>
+												<a href="/product/detail/{{id}}" class="btn btn-default add-to-cart"><i
+														class="fa fa-shopping-cart"></i>Thêm Chi Tiết</a>
 											</div>
-
 										</div>
 									</div>
 								</div>
-								<div class="col-sm-4">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="images/home/recommend2.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
-											</div>
-
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-4">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="images/home/recommend3.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
-											</div>
-
-										</div>
-									</div>
-								</div>
+								{{/each}}
 							</div>
 							<div class="item">
+								{{#each dataRecommend2}}
 								<div class="col-sm-4">
 									<div class="product-image-wrapper">
 										<div class="single-products">
 											<div class="productinfo text-center">
-												<img src="images/home/recommend1.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
+												<img src="/img/upload/{{image}}" alt="" width="255.48" height="255.48"/>
+												<h2>${{price}}</h2>
+												<p>{{name}}</p>
+												<a href="/product/detail/{{id}}" class="btn btn-default add-to-cart"><i
+														class="fa fa-shopping-cart"></i>Xem Chi Tiết</a>
 											</div>
-
 										</div>
 									</div>
 								</div>
-								<div class="col-sm-4">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="images/home/recommend2.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
-											</div>
-
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-4">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="images/home/recommend3.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
-											</div>
-
-										</div>
-									</div>
-								</div>
+								{{/each}}
 							</div>
 						</div>
 						<a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">

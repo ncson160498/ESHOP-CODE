@@ -16,23 +16,40 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1">Name products</label>
                         <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                            placeholder="" name="name" value="{{name}}">
+                             name="name" value="{{name}}">
                         <small id="emailHelp" class="form-text text-muted"></small>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Quanlity</label>
-                        <input type="quanlity" class="form-control" id="exampleInputPassword1" placeholder=""
+                        <input type="quanlity" class="form-control" id="exampleInputQuanlity" 
                             name="quanlity" value="{{quanlity}}">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Size</label>
-                        <input type="text" class="form-control" id="exampleInputPassword1" placeholder=""
+                        <input type="text" class="form-control" id="exampleInputSize" 
                             name="size" value="{{size}}">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Price</label>
-                        <input type="number" class="form-control" id="exampleInputPassword1" placeholder=""
+                        <input type="number" class="form-control" id="exampleInputPrice" 
                             name="price" value="{{price}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Category</label>
+                        
+                        <select name="category" id="dataCategory" class="form-select" aria-label="Default select example">
+                            <option selected>Open this select menu</option>
+                            {{#with dataCategory}}
+                            <option value="{{id}}">{{name}}</option>
+                            {{/with}}
+                        </select>
+                        {{!-- <input type="number" class="form-control" id="exampleInputCategory" 
+                            name="category" value="{{id}}"> --}}
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">TradeMark</label>
+                        {{!-- <input type="number" class="form-control" id="exampleInputTrademark" 
+                            name="trademark" value="{{id}}"> --}}
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlFile1">Image</label>

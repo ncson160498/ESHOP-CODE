@@ -16,7 +16,7 @@ module.exports = {
         );
     },
     update: entity => {
-        return db.update("account", "id", entity);
+        return db.update("user", entity);
     },
     getUserById: id => {
         return db.load(`select * from user where id=${id}`)
@@ -24,4 +24,7 @@ module.exports = {
     addNewUser: (entity) => {
         return db.add('user', entity)
     },
+    deleteUser: (entity) => {
+        return db.delete('user', entity)
+    }
 };

@@ -21,22 +21,22 @@
                                     <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1"
                                         colspan="1" aria-sort="ascending"
                                         aria-label="Name: activate to sort column descending" style="width: 261.812px;">
-                                        #</th>
+                                        Id</th>
                                     <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1"
                                         colspan="1" aria-sort="ascending"
                                         aria-label="Name: activate to sort column descending" style="width: 261.812px;">
                                         Name</th>
                                     <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
                                         aria-label="Position: activate to sort column ascending"
-                                        style="width: 429.484px;">Image</th>
+                                        style="width: 429.484px;">Email</th>
                                     <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
-                                        aria-label="Office: activate to sort column ascending">Quanlity</th>
+                                        aria-label="Office: activate to sort column ascending">Phone</th>
                                     <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
                                         aria-label="Age: activate to sort column ascending" style="width: 100.453px;">
-                                        Size</th>
+                                        Address</th>
                                     <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
-                                        aria-label="Age: activate to sort column ascending" style="width: 194.359px;">
-                                        Price</th>
+                                        aria-label="Age: activate to sort column ascending" style="width: 100.453px;">
+                                        Created</th>
                                     <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
                                         aria-label="Position: activate to sort column ascending"
                                         style="width: 429.484px;">Action</th>
@@ -49,15 +49,15 @@
                                 <tr class="odd">
                                     <td class="sorting_1">{{id}}</td>
                                     <td>{{name}}</td>
-                                    <td><img style="width:100px;height:100px" src="/img/upload/{{image}}" alt=""></td>
-                                    <td>{{quanlity}}</td>
-                                    <td>{{size}}</td>
-                                    <td>{{price}} VNĐ</td>
+                                    <td>{{email}}</td>
+                                    <td>{{phone}}</td>
+                                    <td>{{address}}</td>
+                                    <td>{{created}}</td>
 
                                     <td>
-                                        <a class="btn btn-success edit" href="/admin/product/edit/{{id}}">Edit</a>
+                                        <a class="btn btn-success edit" href="/admin/client/edit/{{id}}">Edit</a>
                                         <a class="btn btn-danger delete" onclick="return confirm('Are You sure?')"
-                                            href="/admin/product/delete/{{id}}">Delete</a>
+                                            href="/admin/client/delete/{{id}}">Delete</a>
                                     </td>
                                 </tr>
                                 {{/each}}

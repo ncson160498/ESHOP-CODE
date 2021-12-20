@@ -3,16 +3,27 @@ $(document).ready(function () {
 
         const emailInput = $("#registerEmail").val().toString()
         const nameInput = $("#registerName").val().toString()
-        const passwordInput = $("#registerPass").val().toString()
+        const phoneInput = $("#registerPhone").val().toString()
+        const addressInput = $("#registerAddress").val().toString()
+        const passwordInput = $("#registerPass").val().toString() 
         $.ajax({
             url: 'auth/register',
             type: 'POST',
             cache: false,
-            data: { email: emailInput, username: nameInput, password: passwordInput },
+            data: { 
+                email: emailInput, 
+                phone: phoneInput,
+                username: nameInput, 
+                address: addressInput,
+                password: passwordInput, 
+            },
             success: function (data) {
                 if (data.Status === 1) {
                     alert("Tạo mới tài khoản thành công")
                     location.reload()
+                }else{
+                    alert(data.Message)
+                    return
                 }
             }
             , error: function (jqXHR, textStatus, err) {
@@ -45,12 +56,7 @@ $(document).ready(function () {
                 alert('Không thành công')
             }
         })
-        // $.post('auth/login', { email: emailInput, password: passwordInput }, function () {
-        //     console.log("res", res)
-        // }).fail(function (xhr, status, error) {
-        //     console.log("error", error)
-        //     $("#report").show()
-        // });
+
 
     })
 })

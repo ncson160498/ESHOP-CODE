@@ -1,45 +1,4 @@
-{{!-- <div class="row">
-	<div class="col-xs-4">
-		<div class="pull-left">
-			<a href="/"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
-		</div>
-	</div>
-	<div class="col-xs-8">
-		<div class="dropdown pull-right">
-			<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-				<i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart
-				{{# if session.cart.totalItems }}
-				<span>({{session.cart.totalItems}})</span>
-				{{/if}}
-			</a>
-			{{# if session.cart.totalItems }}
-			<div class="dropdown-menu">
-				<div class="cart">
-					{{# each session.cart.items }}
-					<div class="row">
-						<div class="col-xs-4">
-							{{ this.item.title }}
-						</div>
-						<div class="col-xs-4 text-right">
-							<span class="badge">{{ this.quantity }}</span>
-						</div>
-						<div class="col-xs-4 text-right">
-							{{ this.price }} CHF
-						</div>
-					</div>
-					{{/each}}
-					<div class="row">
-						<div class="text-right">
-							<div class="totalPrice">Total: {{ session.cart.totalPrice }} CHF</div>
-							<a href="/cart/" class="btn btn-success">Procceed</a>
-						</div>
-					</div>
-				</div>
-			</div>
-			{{/if}}
-		</div>
-	</div>
-</div> --}}
+
 <header id="header">
 	<!--header-->
 	<div class="header_top">
@@ -78,27 +37,6 @@
 					<div class="logo pull-left">
 						<a href="/"><img src="images/home/logo.png" alt="" /></a>
 					</div>
-					{{!-- <div class="btn-group pull-right">
-						<div class="btn-group">
-							<button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-								VN
-								<span class="caret"></span>
-							</button>
-							<!-- <ul class="dropdown-menu">
-									<li><a href="#">US</a></li>
-								</ul> -->
-						</div>
-
-						<div class="btn-group">
-							<button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-								VND
-								<span class="caret"></span>
-							</button>
-							<!-- <ul class="dropdown-menu">
-									<li><a href="#">Dollar</a></li>
-								</ul> -->
-						</div>
-					</div> --}}
 				</div>
 				<div class="col-sm-8">
 					<div class="shop-menu pull-right">
@@ -106,7 +44,11 @@
 							<li><a href="/account"><i class="fa fa-user"></i> Tài khoản</a></li>
 							<li><a href="#"><i class="fa fa-star"></i> Danh sách</a></li>
 							<li><a href="/checkout"><i class="fa fa-crosshairs"></i> Thanh toán</a></li>
-							<li><a href="/cart"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
+							<li style="position: relative;"><a href="/cart"><i class="fa fa-shopping-cart"></i> Giỏ hàng  <a style="position: absolute;
+    top: -19px;
+    right: 0;
+    color: red;
+    font-weight: 800;" id="number_item_in_cart">123</a></a> </li>
 							<li class="LoginHeaderButton"><a href="/login">Đăng nhập</a></li>
 							<li class="LogoutHeaderButton"><a>Đăng xuất</a></li>
 						</ul>
@@ -139,9 +81,9 @@
 									<li><a href="/product">Sản phẩm</a></li>
 									{{!-- <li><a href="/product-detail">Chi tiết sản phẩm</a></li> --}}
 									<li><a href="/checkout">Thanh toán</a></li>
-									<li><a href="/cart">Giỏ hàng</a></li>
+									<li><a href="/cart">Giỏ hàng</a> </li>
 									<li class="LoginHeaderButton"><a href="/login">Đăng nhập</a></li>
-									<li class="LogoutHeaderButton"><a>Đăng xuất</a></li>
+									<li class="LogoutHeaderButton"><a href="/auth/logout">Đăng xuất</a></li>
 								</ul>
 							</li>
 							<li class="dropdown"><a href="#">Bài viết<i class="fa fa-angle-down"></i></a>
@@ -155,7 +97,8 @@
 				</div>
 				<div class="col-sm-3">
 					<div class="search_box pull-right">
-						<input type="text" placeholder="Tìm sản phẩm" />
+						<input type="text" id="text_search" placeholder="Tìm sản phẩm" />
+						<button id='button_search'>search</button>
 					</div>
 				</div>
 			</div>
@@ -163,7 +106,4 @@
 	</div>
 	<!--/header-bottom-->
 </header>
-
-<script src="js/user/main.js">
-
-</script>
+<script src="js/user/main.js"></script>

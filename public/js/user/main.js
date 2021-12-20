@@ -10,9 +10,14 @@ $(document).ready(function () {
         $(".LoginHeaderButton").show()
     }
 
-    $(".LogoutHeaderButton").on("click", function () {
-        localStorage.removeItem("login")
-        localStorage.removeItem("userInfo")
-        $(location).prop('href', '/')
+    $('.LogoutHeaderButton').click(()=>{
+        localStorage.clear()
+        $(location).prop('href', '/auth/logout')
     })
+
+    $('#button_search').click(()=>{
+        let textSearch = $("#text_search").val()
+        document.location.href = `/product/?search=${textSearch}`
+    })
+    
 })

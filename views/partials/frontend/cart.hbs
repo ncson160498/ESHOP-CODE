@@ -13,27 +13,28 @@
 							<td class="image">Sản phẩm</td>
 							<td class="description"></td>
 							<td class="price">Giá tiền</td>
-							<td class="quantity">Chất lượng</td>
+							<td class="quantity">Số lượng</td>
 							<td class="total">Tổng</td>
 							<td></td>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
+
+						<tr>							
 							<td class="cart_product">
-								<a href=""><img src="images/cart/one.png" alt=""></a>
+								<a href=""><img src=""/img/upload/{{image}}"" alt=""></a>
 							</td>
 							<td class="cart_description">
-								<h4><a href="">Colorblock Scuba</a></h4>
+								<h4><a href="">{{name}}</a></h4>
 								<p>Web ID: 1089772</p>
 							</td>
 							<td class="cart_price">
-								<p>1.000.000 VND</p>
+								<p>{{price}} VND</p>
 							</td>
 							<td class="cart_quantity">
 								<div class="cart_quantity_button">
 									<a class="cart_quantity_up" href=""> + </a>
-									<input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
+									<input class="cart_quantity_input" type="text" name="quantity" value="{{quantily}}" autocomplete="off" size="3">
 									<a class="cart_quantity_down" href=""> - </a>
 								</div>
 							</td>
@@ -70,6 +71,7 @@
 								<a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
 							</td>
 						</tr>
+
 						<tr>
 							<td class="cart_product">
 								<a href=""><img src="images/cart/three.png" alt=""></a>

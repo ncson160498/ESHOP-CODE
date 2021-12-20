@@ -1,21 +1,4 @@
-// var mysql = require('mysql');
 
-// var mysqlConnection = mysql.createConnection({
-//   host: 'localhost',
-//   user: 'root',
-//   password: '1234',
-//   database: 'shop',
-//   multipleStatements: true
-// });
-
-// mysqlConnection.connect((err) => {
-//   if (!err)
-//     console.log('DB connection success');
-//   else
-//     console.log('DB connection failed \n Error : ' + JSON.stringify(err, undefined, 2));
-// });
-
-// module.exports = mysqlConnection;
 
 var mysql = require("mysql")
 
@@ -24,9 +7,9 @@ var createConnection = () => {
   return mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '1234',
+    password: '',
     database: 'shop',
-    port:'3307',
+    port:'3306',
     multipleStatements: true,
     charset: 'utf8mb4'
   })
@@ -79,7 +62,6 @@ module.exports = {
       });
     })
   },
-
   delete: (tableName, entity) => {
     return new Promise((resolve, reject) => {
       var sql = `DELETE from ${tableName} WHERE id = ?`;
