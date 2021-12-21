@@ -1,10 +1,9 @@
 var express = require('express');
 var router = express.Router('');
-const bcrypt = require("bcryptjs")
-const helper = require("../../helpers/Helpers")
 const userModel = require("../../models/user")
 const productModel = require("../../models/product")
-var databaseConfig = require('../../models/db');
+const commentModel = require("../../models/comment")
+
 
 var fs = require('fs');
 
@@ -56,26 +55,45 @@ router.get('/product', function (req, res, next) {
   })
 });
 
-// edit product
+// detail product
 
 router.get('/product/detail/(:id)', function (req, res, next) {
   let id = req.params.id;
   productModel.getById(id).then(rows => {
     productModel.getByKeyWord("%Thời Trang").then(rowRe=> {
-      res.render('partials/frontend/product-detail',
-      {
-        id: rows[0].id,
-        name: rows[0].name,
-        image: rows[0].image,
-        quanlity: rows[0].quanlity,
-        size: rows[0].size,
-        price: rows[0].price,
-        dataRe: rowRe.slice(0,3),
-        dataRe2: rowRe.slice(4,7),
-      }
-    );
+      commentModel.getByIdProduct(id).then(result => {
+        res.render('partials/frontend/product-detail',
+        {
+          id: rows[0].id,
+          name: rows[0].name,
+          image: rows[0].image,
+          quanlity: rows[0].quanlity,
+          size: rows[0].size,
+          price: rows[0].price,
+          dataRe: rowRe.slice(0,3),
+          dataRe2: rowRe.slice(4,7),
+          comment: result,
+        }
+      );
+      })
     })
   })
+});
+
+router.post('/product/detail/(:id)', function (req, res, next) {
+  var id = req.params.id
+  var entity = {
+    product_id: id,
+    name: req.body.textNameInput,
+    email: req.body.textEmailInput,
+    content: req.body.textContentInput,
+  }
+  commentModel.addNewComment(entity).then(result => {
+    res.redirect('/product/detail/' + id);
+  }).catch(err => {
+    console.log(err)
+})
+  
 });
 
 // chưa làm. nhớ cmt

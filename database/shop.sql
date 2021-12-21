@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 20, 2021 lúc 12:58 PM
+-- Thời gian đã tạo: Th12 21, 2021 lúc 07:09 AM
 -- Phiên bản máy phục vụ: 10.4.21-MariaDB
 -- Phiên bản PHP: 8.0.12
 
@@ -62,6 +62,16 @@ CREATE TABLE `comment` (
   `email` varchar(45) NOT NULL,
   `content` varchar(600) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `comment`
+--
+
+INSERT INTO `comment` (`id`, `product_id`, `name`, `email`, `content`) VALUES
+(1, 25, 'do', 'vy@gmail.com', 'xinh quá'),
+(2, 25, 'sang', 'sang@gmail.com', 'ngiu tui'),
+(3, 25, 'sang', 'sang@gmail.com', 'ngiu tui'),
+(4, 25, 'sang', 'sang@gmail.com', 'ngiu tui');
 
 -- --------------------------------------------------------
 
@@ -127,8 +137,9 @@ INSERT INTO `product` (`id`, `category_id`, `trademark_id`, `name`, `quanlity`, 
 (11, 5, 2, 'Áo Thời Trang Gucci Đen', 50, 'XXL', '3000000', 'shirt-gucci-sxxl.jpg', '2021-12-14 16:17:21', 0),
 (13, 9, 4, 'Giày Thời Trang Nike', 10, '41', '7000000', 'shose-nike-s41.jpg', '2021-12-14 16:19:42', 0),
 (14, 9, 4, 'Giày Thể Thao Nike', 10, '42', '9000000', 'shose-nike-s42.jpg', '2021-12-14 16:21:34', 0),
-(19, 1, 1, 'Ngoc Son', 10, '42', '0', '18-12-2021-2-45-27-Project1.png', '2021-12-17 19:45:27', 0),
-(21, 1, 2, 'Ngoc Son', 10, '42', '100', '20-12-2021-4-9-8-avatar.jpg', '2021-12-20 11:36:58', 0);
+(23, 2, 3, 'Ngoc Son', 10, '42', '6999999', '20-12-2021-23-25-50-2.jpg', '2021-12-20 16:44:58', 0),
+(24, 2, 2, 'Sản phẩm', 30, '42', '70000000', '20-12-2021-23-43-9-10.jpg', '2021-12-20 16:43:09', 0),
+(25, 2, 2, 'Siêu Phẩm', 30, '41', '7777777', '20-12-2021-23-44-23-13.jpg', '2021-12-20 16:44:23', 0);
 
 -- --------------------------------------------------------
 
@@ -177,7 +188,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `name`, `email`, `phone`, `address`, `password`, `admin`, `created`) VALUES
-(25, 'ss', 's@gmail.com', '0332458585', 'Đồng nai 2', '$2a$10$l.1QWy8Cwu8ubM0.ADqz4OIxZD1x9CfM9Snden/fSY6x.8Pdv4Zde', 0, '2021-12-20 07:57:57'),
+(25, 'ss', 's@gmail.com', '0332458585', 'Đồng nai 2', '$2a$10$l.1QWy8Cwu8ubM0.ADqz4OIxZD1x9CfM9Snden/fSY6x.8Pdv4Zde', 0, '2021-12-20 16:34:55'),
 (26, 'NGOCSON', 'ss@gmail.com', '033', 'VT', '$2a$10$EPGPP0S1/J3m7Mmme.SN2e8EF5/XGmjniVaipHlOm8381e7s3UfUe', 1, '2021-12-19 14:21:00'),
 (28, 'son1', 'son1@gmail.com', '033245', 'Đà Lạt', '$2a$10$sfNVyh1OK3gbkf5BrUpzzO29A0HZd3SohjOCkhnRuaXBMaE1ejZ.G', 0, '2021-12-19 17:20:19'),
 (29, 'NGOCSON', 'ad@gmail.com', '0332458585', '38/4, Tây Hòa', '$2a$10$.S1OLWi/7whX7CssErFzC.7wTBCjGPMOcm7o7ED7J2v3u.ANIu1jO', 1, '2021-12-19 17:28:44');
@@ -244,7 +255,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT cho bảng `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `contact`
@@ -262,7 +273,7 @@ ALTER TABLE `payment`
 -- AUTO_INCREMENT cho bảng `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT cho bảng `trademark`
