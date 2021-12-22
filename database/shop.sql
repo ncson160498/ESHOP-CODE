@@ -58,20 +58,13 @@ DROP TABLE IF EXISTS `comment`;
 CREATE TABLE `comment` (
   `id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `name` varchar(45) NOT NULL,
-  `email` varchar(45) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `rating` varchar(45) NOT NULL,
   `content` varchar(600) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Đang đổ dữ liệu cho bảng `comment`
---
 
-INSERT INTO `comment` (`id`, `product_id`, `name`, `email`, `content`) VALUES
-(1, 25, 'do', 'vy@gmail.com', 'xinh quá'),
-(2, 25, 'sang', 'sang@gmail.com', 'ngiu tui'),
-(3, 25, 'sang', 'sang@gmail.com', 'ngiu tui'),
-(4, 25, 'sang', 'sang@gmail.com', 'ngiu tui');
 
 -- --------------------------------------------------------
 
@@ -250,12 +243,27 @@ ALTER TABLE `user`
 --
 ALTER TABLE `category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  
+-- AUTO_INCREMENT cho bảng `product`
+--
+ALTER TABLE `product`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
+-- AUTO_INCREMENT cho bảng `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  
+-- AUTO_INCREMENT cho bảng `comment`
 --
 -- AUTO_INCREMENT cho bảng `comment`
 --
 ALTER TABLE `comment`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `comment`
+  ADD CONSTRAINT fk_comment_product FOREIGN KEY(product_id) REFERENCES product(id),
+  ADD CONSTRAINT fk_commnet_user FOREIGN KEY(user_id) REFERENCES user(id);
+--
 
 --
 -- AUTO_INCREMENT cho bảng `contact`
@@ -282,12 +290,16 @@ ALTER TABLE `trademark`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT cho bảng `user`
---
-ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
---
+
+
+-- insert data cho cho bảng `comment`
+
+INSERT INTO `comment` (`id`, `product_id`, `user_id`, `rating`, `content`) VALUES
+(1, 25, 25,5, 'xinh quá'),
+(2, 25,26,5, 'ngiu tui'),
+(3, 25,28,5, 'ngiu tui'),
+(4, 25, 29,5, 'ngiu tui');
 -- Các ràng buộc cho các bảng đã đổ
 --
 
