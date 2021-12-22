@@ -3,6 +3,9 @@ var router = express.Router('');
 const userModel = require("../../models/user")
 const productModel = require("../../models/product")
 const commentModel = require("../../models/comment")
+const categoryModel = require("../../models/category")
+const trademarkModel = require("../../models/trademark")
+
 
 
 var fs = require('fs');
@@ -10,75 +13,138 @@ var fs = require('fs');
 var Cart = require('../../models/cart');
 var products = JSON.parse(fs.readFileSync('./data/products.json', 'utf8'));
 
+const perPage = 6
+const stepConst = 3
+
+function numberPage (quanlity,number) {
+ if((quanlity%number) == 0)
+ {
+   return quanlity/number
+ }
+  return Math.floor(quanlity/number + 1)
+};
+
+function pageToArry (number) {
+  var result = [];
+  for(let i = 1; i <= number; i++){
+    var entity = {
+      page: i,
+    }
+    result.push(entity)
+  }
+  return result
+ };
+
 // render /
 
 router.get('/', function (req, res, next) {
-  productModel.all().then(rowsAll => {
-    productModel.getByKeyWord("Áo").then(rowsShirt => {
-      productModel.getByKeyWord("Giày").then(rowShoes => {
-        productModel.getByKeyWord("Quần").then(rowPants => {
-          productModel.getByKeyWord("%Trẻ Em").then(rowChild => {
-            productModel.getByKeyWord("%Thể Thao").then(rowSport => {
-              productModel.getByKeyWord("%Thời Trang").then(rowRecommend => {
-                res.render('index',
-                {
-                  title: 'NodeJS Shopping Cart',
-                  // layout:layout,
-                  data: rowsAll,
-                  dataShirt: rowsShirt,
-                  dataPants: rowPants,
-                  dataShose: rowShoes,
-                  dataChild: rowChild,
-                  dataSport: rowSport,
-                  dataRecommend1: rowRecommend.slice(0,3),
-                  dataRecommend2: rowRecommend.slice(4,7),
-                });
-              })
-            })
-          })
-        })
-      })
-    })
+  let page = parseInt(req.query.page || 1)
+  let start = (page - 1)*perPage
+  Promise.all( [
+    productModel.getLimit(start,perPage),
+    productModel.getByKeyWord("Áo"),
+    productModel.getByKeyWord("Giày"),
+    productModel.getByKeyWord("Quần"),
+    productModel.getByKeyWord("%Trẻ Em"),
+    productModel.getByKeyWord("%Thể Thao"),
+    productModel.getByKeyWord("%Thời Trang"),
+    productModel.getQuantily(),
+    productModel.getByKeyWord("%GUCCI"),
+    categoryModel.all(),
+    trademarkModel.all(),
+  ]).then(result => {
+    
+    let page = numberPage(result[7][0].totalCount,perPage)
+    let arrPage = pageToArry(page)
+
+    res.render('index',
+    {
+      title: 'NodeJS Shopping Cart',
+      // layout:layout,
+      data: result[0],
+      dataShirt: result[1].slice(0,4),
+      dataPants: result[2].slice(0,4),
+      dataShose: result[3].slice(0,4),
+      dataChild: result[4].slice(0,4),
+      dataSport: result[5].slice(0,4),
+      dataRecommend1: result[6].slice(0,3),
+      dataRecommend2: result[8].slice(0,3),
+      dataCategory: result[9],
+      dataTrademark: result[10],
+      numberPage: arrPage,
+    });
   })
+
+
 });
 // product view and search product
 router.get('/product', function (req, res, next) {
   let search = '%' + (req.query.search || '')
+  let category = req.query.category || 0
+  let trademark = req.query.trademark || 0
 
-  productModel.getByKeyWord(search).then(rowSearch => {
+  Promise.all([
+    productModel.getByKeyWord(search),
+    categoryModel.all(),
+    trademarkModel.all(),
+    productModel.getByCategoryId(category),
+    productModel.getByTrademarkId(trademark),
+  ]).then(result => {
+    var main
+    if(category != 0){
+      main = result[3]
+    }else if(trademark != 0){
+      main = result[4]      
+    }else{
+      main = result[0]
+    }
+
+    let page = numberPage(main.length,perPage)
+    let arrPage = pageToArry(page)
+
     res.render('partials/frontend/product',
     {
       title: 'Product',
-      data: rowSearch,
+      data: main,
+      dataCategory: result[1],
+      dataTrademark: result[2],
+      dataCate: result[3],
+      dataTrade: result[4],
+      numberPage: arrPage,
       // dataRecommend: rowRecommend,
     });
   })
+
 });
 
 // detail product
 
 router.get('/product/detail/(:id)', function (req, res, next) {
   let id = req.params.id;
-  productModel.getById(id).then(rows => {
-    productModel.getByKeyWord("%Thời Trang").then(rowRe=> {
-      commentModel.getByIdProduct(id).then(result => {
-        res.render('partials/frontend/product-detail',
-        {
-          id: rows[0].id,
-          name: rows[0].name,
-          image: rows[0].image,
-          quanlity: rows[0].quanlity,
-          size: rows[0].size,
-          price: rows[0].price,
-          dataRe: rowRe.slice(0,3),
-          dataRe2: rowRe.slice(4,7),
-          comment: result,
-        }
-      );
-      })
-    })
+
+  Promise.all([
+    productModel.getById(id),
+    productModel.getByKeyWord("%Thời Trang"),
+    productModel.getByKeyWord("%GUCCI"),
+    commentModel.getByIdProduct(id),
+  ]).then(result => {
+    res.render('partials/frontend/product-detail',
+    {
+      id: result[0][0].id,
+      name: result[0][0].name,
+      image: result[0][0].image,
+      quanlity: result[0][0].quanlity,
+      size: result[0][0].size,
+      price: result[0][0].price,
+      dataRe: result[1].slice(0,3),
+      dataRe2: result[2].slice(0,3),
+      comment: result[3],
+    }
+  );
   })
 });
+
+
 
 router.post('/product/detail/(:id)', function (req, res, next) {
   var id = req.params.id

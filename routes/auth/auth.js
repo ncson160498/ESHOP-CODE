@@ -38,7 +38,6 @@ router.post("/register", async (req, res, next) => {
 
 })
 
-
 //Đăng nhập cho khách hàng
 router.post('/login', (req,res,next)=>{
     passport.authenticate('local', function(err, user, info) {
@@ -62,8 +61,6 @@ router.post('/login', (req,res,next)=>{
 
   );
   
-
-
 //Đăng xuất cho khách hàng
 
 router.get('/logout', function(req, res){

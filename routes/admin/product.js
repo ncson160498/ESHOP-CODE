@@ -4,7 +4,6 @@ var productModel = require("../../models/product")
 var userModel = require("../../models/user")
 var categoryModel = require("../../models/category")
 var trademarkModel = require("../../models/trademark")
-var databaseConfig = require('../../models/db');
 var fs = require('fs');
 const multer = require('multer')
 
