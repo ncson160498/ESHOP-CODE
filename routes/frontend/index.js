@@ -146,27 +146,40 @@ router.get('/product/detail/(:id)', function (req, res, next) {
 
   Promise.all([
     productModel.getById(id),
-    productModel.getByKeyWord("%Thời Trang"),
-    productModel.getByKeyWord("%GUCCI"),
     commentModel.getByIdProduct(id),
     categoryModel.all(),
     trademarkModel.all(),
   ]).then(result => {
-    res.render('partials/frontend/product-detail',
-    {
-      id: result[0][0].id,
-      name: result[0][0].name,
-      image: result[0][0].image,
-      quanlity: result[0][0].quanlity,
-      size: result[0][0].size,
-      price: result[0][0].price,
-      dataRe: result[1].slice(0,3),
-      dataRe2: result[2].slice(0,3),
-      comment: result[3],
-      dataCategory: result[4],
-      dataTrademark: result[5],
+    var entity = {
+      id: id,
+      view: parseInt(result[0][0].view) + 1
     }
-  );
+    Promise.all([
+      productModel.getByCategoryId(result[0][0].category_id),
+      productModel.getByTrademarkId(result[0][0].trademark_id),
+      productModel.update(entity),
+    ]).then(rows => {
+      console.log()
+      res.render('partials/frontend/product-detail',
+      {
+        id: result[0][0].id,
+        name: result[0][0].name,
+        image: result[0][0].image,
+        quanlity: result[0][0].quanlity,
+        size: result[0][0].size,
+        price: result[0][0].price,
+        views: result[0][0].view,
+
+        comment: result[1],
+        dataCategory: result[2],
+        dataTrademark: result[3],
+
+        dataRecommend1: rows[0].slice(0,3),
+        dataRecommend2: rows[1].slice(0,3),
+
+      }
+    );
+    })
   })
 });
 
@@ -250,11 +263,19 @@ router.post('/account', function (req, res, next) {
 // chưa làm. làm nhớ cmt
 
 router.get('/blog', function (req, res, next) {
-  res.render('partials/frontend/blog',
+
+  Promise.all([
+    categoryModel.all(),
+    trademarkModel.all(),
+  ]).then(result => {
+    res.render('partials/frontend/blog',
     {
       title: 'Blog',
+      dataCategory: result[0],
+      dataTrademark: result[1],
     }
   );
+  })
 });
 
 // chưa làm. làm nhớ cmt
