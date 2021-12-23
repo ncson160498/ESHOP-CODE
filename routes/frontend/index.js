@@ -149,6 +149,8 @@ router.get('/product/detail/(:id)', function (req, res, next) {
     productModel.getByKeyWord("%Thời Trang"),
     productModel.getByKeyWord("%GUCCI"),
     commentModel.getByIdProduct(id),
+    categoryModel.all(),
+    trademarkModel.all(),
   ]).then(result => {
     res.render('partials/frontend/product-detail',
     {
@@ -161,6 +163,8 @@ router.get('/product/detail/(:id)', function (req, res, next) {
       dataRe: result[1].slice(0,3),
       dataRe2: result[2].slice(0,3),
       comment: result[3],
+      dataCategory: result[4],
+      dataTrademark: result[5],
     }
   );
   })
