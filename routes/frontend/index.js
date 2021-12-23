@@ -35,6 +35,18 @@ function pageToArry (number) {
   return result
  };
 
+ function pageSearchToArry (number, link) {
+  var result = [];
+  for(let i = 1; i <= number; i++){
+    var entity = {
+      page: i,
+      link: link,
+    }
+    result.push(entity)
+  }
+  return result
+ };
+
 // render /
 
 router.get('/', function (req, res, next) {
@@ -83,6 +95,11 @@ router.get('/product', function (req, res, next) {
   let category = req.query.category || 0
   let trademark = req.query.trademark || 0
 
+  let page = parseInt(req.query.page || 1)
+  // let start = (page - 1)*perPage
+  let start = (page - 1)*perPage
+  let end = (page - 1)*perPage + perPage
+  
   Promise.all([
     productModel.getByKeyWord(search),
     categoryModel.all(),
@@ -91,26 +108,31 @@ router.get('/product', function (req, res, next) {
     productModel.getByTrademarkId(trademark),
   ]).then(result => {
     var main
+    var link
     if(category != 0){
       main = result[3]
+      link = '?category=' + category
     }else if(trademark != 0){
-      main = result[4]      
+      main = result[4]
+      link = '?trademark=' + trademark
     }else{
       main = result[0]
-    }
+      link = '?search=' + search
+    } 
 
-    let page = numberPage(main.length,perPage)
-    let arrPage = pageToArry(page)
+    let pageAmout = numberPage(main.length,perPage)
+    let arrPage = pageSearchToArry(pageAmout,link)
 
     res.render('partials/frontend/product',
     {
       title: 'Product',
-      data: main,
+      data: main.slice(start,end),
       dataCategory: result[1],
       dataTrademark: result[2],
       dataCate: result[3],
       dataTrade: result[4],
       numberPage: arrPage,
+      link: link,
       // dataRecommend: rowRecommend,
     });
   })
