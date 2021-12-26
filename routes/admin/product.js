@@ -4,6 +4,9 @@ var productModel = require("../../models/product")
 var userModel = require("../../models/user")
 var categoryModel = require("../../models/category")
 var trademarkModel = require("../../models/trademark")
+const passport = require("passport")
+const helper = require("../../helpers/Helpers")
+
 var fs = require('fs');
 const multer = require('multer')
 
@@ -196,10 +199,11 @@ router.get('/product/delete/(:id)', function (req, res, next) {
 
 router.get('/', function (req, res, next) {
     if(req.user != null){
-      res.render('partials/frontend/admin',
+      res.render('partials/admin/admin',
       {
         title: 'Admin',
-        layout: null
+        layout: null,
+        nameAdmin: req.user.name,
       }
     );
     }
@@ -227,7 +231,123 @@ router.get('/', function (req, res, next) {
       }
     );
   });
+
+// login, register, logout
+
+//Tạo tài khoản admin
+router.post("/register", async (req, res, next) => {
+  userModel.getUserByEmail( req.body.email).then(rows => {
+      if(rows.length > 0){
+          res.send({
+              Status: 0,
+              Message: "Đã tồn tại tài khoản"
+          })
+      }
+      else
+      {
+          var hash = helper.hash_password(req.body.password)
+          var entity = {
+              name: req.body.username,
+              phone: req.body.phone,
+              address: req.body.address,
+              password: hash,
+              email: req.body.email,
+              admin: 1
+          }
+          userModel.addNewUser(entity).then(id => {
+              res.send({
+                  Status: 1,
+                  Message: "Thành công",
+              })
+          }).catch(err => {
+              console.log(err)
+          })
+      }
+  })
+
+})
+
+// đăng nhập tài khoản admin
+
+router.post('/login', (req,res,next)=>{
+  passport.authenticate('local', function(err, user, info) {
+      if (err) {
+        return res.json({Status: 2, Message: 'Không tồn tại tài khoản'});
+      }
+      if (! user) {
+        return res.json({Status: 2, Message: 'Không đúng mật khẩu'});
+      }
+      req.login(user, loginErr => {
+        if (loginErr) {
+          return res.json({Status: 2, Message: 'Error'});
+        }
+        if(user.admin === 0){
+          return res.json({Status: 0, Message: 'Không phải tài khoản admin'});
+        }
+        return res.status(200).json({Status: 1, Message: 'success', data: user});
+      });      
+    })(req, res, next);
+}
+
+);
+
+router.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/admin/login');
+});
+
+ // forgotPass Admin
+
+router.get('/fogotpassword', function (req, res, next) {
+  res.render('partials/admin/forgotPass',
+  {
+      layout: null,
+  });
+})
+
+// account
+
+router.get('/account', function (req, res, next) {
+  if(req.user != null){
+    userModel.getUserById(req.user.id).then(result => {
+      res.render('admin/products/account',
+      {
+          layout: 'orther',
+          id: result[0].id,
+          name: result[0].name,
+          email: result[0].email,
+          phone: result[0].phone,
+          address: result[0].address,
+          created: result[0].created,
+      });
+    })
+  }
+  else{
+      res.redirect('/admin')
+  }
+})
+
+router.post('/account', function (req, res, next) {
+  var entity = {
+    id: req.body.id,
+    name: req.body.name,
+    phone: req.body.phone,
+    address: req.body.address,
+  }
+
+  if(req.user != null){
+    userModel.update(entity).then(result => {
+      res.status(200).json({Status: 1, Message: 'success'});
+    }).catch(err => {
+      res.status(500).json({Status: 'fail', Message: 'fail'});
+  })
+}
+else{
+    res.redirect('/admin')
+}
   
+})
+
   // management client by admin
   
   router.get('/client', function (req, res, next) {
@@ -245,7 +365,7 @@ router.get('/', function (req, res, next) {
     }
   })
   
-  //edit infor client by admin
+  //edit information client by admin
   
   router.get('/client/edit/(:id)', function (req, res, next) {
     let id = req.params.id;
@@ -303,16 +423,8 @@ router.get('/', function (req, res, next) {
     }
   })
   
-  // chưa làm. làm nhớ cmt
-  
-  router.get('/forgotPass', function (req, res, next) {
-    res.render('partials/admin/forgotPass',
-      {
-        title: 'Admin-ForgotPass',
-        layout: null
-      }
-    );
-  });
+ // forgotPass Admin
+
 
 
 

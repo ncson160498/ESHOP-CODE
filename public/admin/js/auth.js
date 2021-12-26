@@ -10,7 +10,7 @@ $(document).ready(function () {
         const addressInput = $("#exampleInputAddress").val().toString()
         if(passwordInput == repasswordInput){
             $.ajax({
-                url: '/adminauth/register',
+                url: '/admin/register',
                 type: 'POST',
                 cache: false,
                 data: { 
@@ -48,7 +48,7 @@ $(document).ready(function () {
         const passwordInput = $("#loginInputPassword").val().toString()
 
         $.ajax({
-            url: '/adminauth/login',
+            url: '/admin/login',
             type: 'POST',
             cache: false,
             data: { email: emailInput, password: passwordInput },

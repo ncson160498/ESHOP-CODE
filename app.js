@@ -19,7 +19,6 @@ const app = express();
 
 //router 
 const adminProductRouter = require('./routes/admin/product');
-const adminAuthRouter = require('./routes/admin/auth')
 const authRouter = require('./routes/auth/auth')
 const index = require('./routes/frontend/index');
 
@@ -82,7 +81,6 @@ app.use((req, res, next) => {
 app.use('/', index);
 app.use('/admin', adminProductRouter);
 app.use('/auth', authRouter);
-app.use('/adminauth',adminAuthRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

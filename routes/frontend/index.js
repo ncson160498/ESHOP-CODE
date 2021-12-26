@@ -141,7 +141,7 @@ router.get('/product', function (req, res, next) {
 
 // detail product
 
-router.get('/product/detail/(:id)', function (req, res, next) {
+router.get('/product/detail/(:id)', function (req, res, next) { 
   let id = req.params.id;
 
   Promise.all([
@@ -255,9 +255,8 @@ router.post('/account', function (req, res, next) {
         res.status(200).json({Status: 1, Message: 'success', data: rows});
       })
     }).catch(err => {
-      console.log(err)
+      res.status(500).json({Status: 'fail', Message: 'fail'});
   })
-
 })
 
 // chưa làm. làm nhớ cmt
