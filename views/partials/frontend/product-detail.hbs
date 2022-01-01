@@ -11,6 +11,7 @@
   <title>{{title}}</title>
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/font-awesome.min.css" rel="stylesheet">
+  <link href="css/pagination.css" rel="stylesheet">
   <link href="css/prettyPhoto.css" rel="stylesheet">
   <link href="css/price-range.css" rel="stylesheet">
   <link href="css/animate.css" rel="stylesheet">
@@ -61,6 +62,7 @@
 							
 						</div><!--/category-productsr-->
 					
+					
 						<div class="brands_products"><!--brands_products-->
 							<h2>Thương hiệu	</h2>
 							<div class="brands-name">		
@@ -71,6 +73,7 @@
 							{{/each}}		
 							</div>											
 						</div><!--/brands_products-->
+						
 						
 						<div class="price-range"><!--price-range-->
 							<h2>Phạm vi giá</h2>
@@ -138,12 +141,12 @@
 									<span>{{price}} VND</span>
 									<label>Số lượng:</label>
 									<input type="text" value="{{quanlity}}">
+									<label>Lượt xem: {{views}}</label>
 									<button type="button" class="btn btn-fefault cart" id="button_add_cart">
 										<i class="fa fa-shopping-cart"></i>
 										Thêm vào giỏ hàng
 									</button>
 								</span>
-								<p><b>Lượt Xem:</b> {{views}}</p>
 
 								{{!-- <p><b>Trạng thái:</b> Trong kho</p>
 								<p><b>Tình trạng:</b> Mới</p>
@@ -160,7 +163,7 @@
 								<li><a href="#details" data-toggle="tab">Chi tiết</a></li>
 								<li><a href="#companyprofile" data-toggle="tab">Hồ sơ công ty</a></li>
 								<li><a href="#tag" data-toggle="tab">Tag</a></li>
-								<li class="active"><a href="#reviews" data-toggle="tab">Nhận xét (5)</a></li>
+								<li class="active"><a href="product/detail/{{id}}/page=1" data-toggle="tab">Nhận xét</a></li>
 							</ul>
 						</div>
 						<div class="tab-content">
@@ -324,22 +327,25 @@
 										<li><a href=""><i class="fa fa-clock-o"></i>12:41 PM</a></li>
 										<li><a href=""><i class="fa fa-calendar-o"></i>31 DEC 2014</a></li>
 									</ul>
-									{{#each comment}}
-									<p>{{name}}: {{content}}</p>
-									{{!-- <p>{{content}}</p> --}}
-									{{/each}}
-									<p><b>Write Your Review</b></p>
-									
-									<form action="/product/detail/{{id}}" method="post">
-										<span>
-											<input type="text" name="textNameInput" placeholder="Your Name">
-											<input type="email" name="textEmailInput" placeholder="Email Address">
-										</span>
-										<textarea name="textContentInput"></textarea>
+								</ul>
+									<div id="ratings"></div>					
+									{{!-- <form id = "comment" action="#">
+										<input type="hidden" name="id" value="{{this.id}}">
+										<textarea  name="content"></textarea>
 										<b>Xếp hạng: </b> <img src="images/product-details/rating.png" alt="">
-										<button type="submit" class="btn btn-default pull-right">
+										<button id="submit-comment" type="submit" class="btn btn-default pull-right">
 											Submit
 										</button>
+									</form> --}}
+									<form id="comment" action="#" >
+										<input name="productid" type="hidden" value="{{this.id}}">
+										{{#if currentUser}}
+											<input type="hidden" name="username" value="">
+										{{else}}
+											<input type="text" name="username" placeholder="Your Name">
+										{{/if}}
+										<textarea name="content"></textarea>
+										<button id="submit-comment" type="submit" class="btn btn-default pull-right">Submit</button>
 									</form>
 								</div>
 							</div>
@@ -347,69 +353,127 @@
 						</div>
 					</div><!--/category-tab-->
 					
-				<div class="recommended_items">
-					<!--recommended_items-->
-					<h2 class="title text-center">recommended items</h2>
-
-					<div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
-						<div class="carousel-inner">							
-							<div class="item active">
-								{{#each dataRecommend1}}
-								<div class="col-sm-4">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="/img/upload/{{image}}" alt="" width="255.48" height="255.48"/>
-												<h2>{{price}} VND</h2>
-												<p>{{name}}</p>
-												<a href="/product/detail/{{id}}" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Thêm Chi Tiết</a>
+					<div class="recommended_items"><!--recommended_items-->
+						<h2 class="title text-center">Đề xuất sản phẩm</h2>
+						
+						<div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+							<div class="carousel-inner">
+								<div class="item active">	
+									{{#each dataRecommend1}}
+									<div class="col-sm-4">
+										<div class="product-image-wrapper">
+											<div class="single-products">
+												<div class="productinfo text-center">
+													<img src="/img/upload/{{image}}" alt="" width="255.48" height="255.48"/>
+													<h2>${{price}}</h2>
+													<p>{{name}}</p>
+													<a href="/product/detail/{{id}}" class="btn btn-default add-to-cart"><i
+															class="fa fa-shopping-cart"></i>Xem Chi Tiết</a>
+												</div>
 											</div>
 										</div>
 									</div>
+									{{/each}}
 								</div>
-								{{/each}}
-							</div>
-							<div class="item">
-								{{#each dataRecommend2}}
-								<div class="col-sm-4">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="/img/upload/{{image}}" alt="" width="255.48" height="255.48"/>
-												<h2>${{price}}</h2>
-												<p>{{name}}</p>
-												<a href="/product/detail/{{id}}" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Xem Chi Tiết</a>
+								<div class="item">	
+									{{#each dataRecommend2}}
+									<div class="col-sm-4">
+										<div class="product-image-wrapper">
+											<div class="single-products">
+												<div class="productinfo text-center">
+													<img src="/img/upload/{{image}}" alt="" width="255.48" height="255.48"/>
+													<h2>${{price}}</h2>
+													<p>{{name}}</p>
+													<a href="/product/detail/{{id}}" class="btn btn-default add-to-cart"><i
+															class="fa fa-shopping-cart"></i>Xem Chi Tiết</a>
+												</div>
 											</div>
 										</div>
 									</div>
+									{{/each}}
 								</div>
-								{{/each}}
 							</div>
+							 <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+								<i class="fa fa-angle-left"></i>
+							  </a>
+							  <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+								<i class="fa fa-angle-right"></i>
+							  </a>			
 						</div>
-						<a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
-							<i class="fa fa-angle-left"></i>
-						</a>
-						<a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
-							<i class="fa fa-angle-right"></i>
-						</a>
-					</div>
-				</div>
-				<!--/recommended_items-->
-
+					</div><!--/recommended_items-->
 					
 				</div>
 			</div>
 		</div>
 	</section>
+	<script>
+     $("#submit-comment ").on( 'click', e => {
+        e.preventDefault();
+        const productid = $('input[name=productid]').val().toString()
+		const username = $('input[name=username]').val().toString()
+        const content = $('textarea[name=content]').val().toString()
+        $.ajax({
+            url: '/api/product/rate',
+            method: 'POST',
+            cache: false,
+            data: { productid,username, content },
+            success: function (data) {
+                //console.log(data);
+				loadRating();
+            }
+        })
+	 })
+	 function loadRating(){
+		 try{
+			const productid = $('input[name=productid]').val().toString();
+			const page = {{page}};
+
+			const url = '/api/product/'+productid+'/rating/?page='+page;
+			$.getJSON(url, function(data){
+			 let html ='';
+			 const list = data.ratings;
+			 const pages = data.pages;
+			 const curPage = data.curPage;
+			 for(const rate of list){
+				 console.log(list)
+				 html += `<b>${rate.user_name}</b>`;
+				 html += `<p>${rate.content}</p>`;
+			 }
+			 if(pages > 1)
+			 {
+				html += `<div class="pagination">`;
+ 				html += `<a href="#">&laquo;</a>`;
+				 for(let i = 1; i <= pages; i++)
+				 {
+					html += `<a  href="/product/detail/${productid}?page=${i}">&nbsp&nbsp${i}&nbsp&nbsp</a>`
+				 }
+				html += `<a href="#">&raquo;</a>`;
+				html += `</div>`;
+			 }
+			 $('#ratings').html(html)
+			 });
+		 }
+		 catch(err){
+			 console.log(err)
+		 }
+
+	 }
+	 loadRating();
+	 $("#changPage").click(function(){
+		 console.log("click")
+	 });
+	</script>
 <script src="js/jquery.js"></scrip>
 <script src="js/bootstrap.min.js"></scrip>
 <script src="js/jquery.scrollUp.min.js"></script>
 <script src="js/price-range.js"></script>
 <script src="js/jquery.prettyPhoto.js"></script>
 <script src="js/main.js"></script>
+<<<<<<< HEAD
 <script src="/js/user/main.js"></script>
 <script src="/js/cart/quantily.js"></script>
 
+=======
+<script src="js/cart/quantily.js"></script>
+>>>>>>> 98a2244bce3692134e2a232f049841d8c8b1f413
 </html>

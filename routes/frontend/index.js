@@ -143,10 +143,11 @@ router.get('/product', function (req, res, next) {
 
 router.get('/product/detail/(:id)', function (req, res, next) { 
   let id = req.params.id;
-
+  var page = req.query.page;
+  if(typeof(page) != "string")
+      page = "1"
   Promise.all([
     productModel.getById(id),
-    commentModel.getByIdProduct(id),
     categoryModel.all(),
     trademarkModel.all(),
   ]).then(result => {
@@ -159,7 +160,7 @@ router.get('/product/detail/(:id)', function (req, res, next) {
       productModel.getByTrademarkId(result[0][0].trademark_id),
       productModel.update(entity),
     ]).then(rows => {
-      console.log()
+      console.log(result[2])
       res.render('partials/frontend/product-detail',
       {
         id: result[0][0].id,
@@ -169,37 +170,18 @@ router.get('/product/detail/(:id)', function (req, res, next) {
         size: result[0][0].size,
         price: result[0][0].price,
         views: result[0][0].view,
-
-        comment: result[1],
-        dataCategory: result[2],
-        dataTrademark: result[3],
+        dataCategory: result[1],
+        dataTrademark: result[2],
 
         dataRecommend1: rows[0].slice(0,3),
         dataRecommend2: rows[1].slice(0,3),
-
+        page,
       }
     );
     })
   })
 });
 
-
-
-router.post('/product/detail/(:id)', function (req, res, next) {
-  var id = req.params.id
-  var entity = {
-    product_id: id,
-    name: req.body.textNameInput,
-    email: req.body.textEmailInput,
-    content: req.body.textContentInput,
-  }
-  commentModel.addNewComment(entity).then(result => {
-    res.redirect('/product/detail/' + id);
-  }).catch(err => {
-    console.log(err)
-})
-  
-});
 
 // chưa làm. nhớ cmt
 
