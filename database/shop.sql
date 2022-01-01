@@ -58,7 +58,7 @@ DROP TABLE IF EXISTS `comment`;
 CREATE TABLE `comment` (
   `id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `user_name` varchar(45) NOT NULL,
   `rating` varchar(45) NOT NULL,
   `content` varchar(600) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -261,9 +261,7 @@ ALTER TABLE `user`
 ALTER TABLE `comment`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 ALTER TABLE `comment`
-  ADD CONSTRAINT fk_comment_product FOREIGN KEY(product_id) REFERENCES product(id),
-  ADD CONSTRAINT fk_commnet_user FOREIGN KEY(user_id) REFERENCES user(id);
---
+  ADD CONSTRAINT fk_comment_product FOREIGN KEY(product_id) REFERENCES product(id);
 
 --
 -- AUTO_INCREMENT cho bảng `contact`
@@ -295,11 +293,11 @@ ALTER TABLE `trademark`
 
 -- insert data cho cho bảng `comment`
 
-INSERT INTO `comment` (`id`, `product_id`, `user_id`, `rating`, `content`) VALUES
-(1, 25, 25,5, 'xinh quá'),
-(2, 25,26,5, 'ngiu tui'),
-(3, 25,28,5, 'ngiu tui'),
-(4, 25, 29,5, 'ngiu tui');
+INSERT INTO `comment` (`id`, `product_id`, `user_name`, `rating`, `content`) VALUES
+(1, 25, 'HN',5, 'xinh quá'),
+(2, 25,"HoangNguyen",5, 'ngiu tui'),
+(3, 25,'NS',5, 'ngiu tui'),
+(4, 25, 'NgocSOn',5, 'ngiu tui');
 -- Các ràng buộc cho các bảng đã đổ
 --
 
