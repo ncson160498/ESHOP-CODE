@@ -48,7 +48,7 @@
     top: -19px;
     right: 0;
     color: red;
-    font-weight: 800;" id="number_item_in_cart">123</a></a> </li>
+    font-weight: 800;" id="number_item_in_cart">0</a></a> </li>
 							<li class="LoginHeaderButton"><a href="/login">Đăng nhập</a></li>
 							<li class="LogoutHeaderButton"><a>Đăng xuất</a></li>
 						</ul>
@@ -106,4 +106,9 @@
 	</div>
 	<!--/header-bottom-->
 </header>
-<script src="js/user/main.js"></script>
+<script src="/js/user/main.js"></script>
+<script>
+	$(document).ready(function () {
+		$("#number_item_in_cart").innerHTML = localStorage.getItem('cart') || 0
+    })	 
+</script>
