@@ -22,7 +22,7 @@ $(document).ready(function () {
                 },
                 success: function (data) {
                     if (data.Status === 1) {
-                        alert("Tạo mới tài khoản thành công")
+                        alert(data.Message)
                         // location.reload()
                         $(location).prop('href', '/admin/login')
                     }
@@ -33,12 +33,12 @@ $(document).ready(function () {
                     }
                 }
                 , error: function (jqXHR, textStatus, err) {
-                    alert('that bai')
+                    alert('Không thành công')
                 }
             })
 
         }else{
-            alert("Mật khẩu không giống nhau!")
+            alert("Mật Khẩu Nhập Lại Không Giống Nhau!")
         }
     })
 

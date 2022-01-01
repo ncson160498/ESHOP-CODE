@@ -10,6 +10,16 @@ const helper = require("../../helpers/Helpers")
 var fs = require('fs');
 const multer = require('multer')
 
+const nodemailer = require('nodemailer');
+
+const transporter = nodemailer.createTransport({
+  service: 'Gmail',
+  auth: {
+      user: 'sonadweb2022@gmail.com',
+      pass: 'abc123_123'
+  }
+});
+
 const imageUploader = multer({
     storage: multer.diskStorage({
         filename: (req, file, cb) => {
@@ -236,7 +246,7 @@ router.get('/', function (req, res, next) {
 
 //Tạo tài khoản admin
 router.post("/register", async (req, res, next) => {
-  userModel.getUserByEmail( req.body.email).then(rows => {
+  userModel.getUserByEmail(req.body.email).then(rows => {
       if(rows.length > 0){
           res.send({
               Status: 0,
@@ -245,6 +255,23 @@ router.post("/register", async (req, res, next) => {
       }
       else
       {
+        var mailOptions = {
+          from: 'sonadweb2022@gmail.com',
+          to: req.body.email,
+          subject: 'Verify Your Email',
+          html: `<p>Verify your email address to complete sinup and login into account.</p>
+          <p>This Link: <b>expires in 6 hours</b>.</p>
+          <p>Press <a href=http://localhost:3001/admin/verify/${req.body.email}>here</a> to process</p>`,
+      }
+    
+        transporter.sendMail(mailOptions, function(error, response){
+          if(error){
+              console.log(error);
+          }else{
+              res.redirect('/');
+          }
+      });
+
           var hash = helper.hash_password(req.body.password)
           var entity = {
               name: req.body.username,
@@ -257,7 +284,7 @@ router.post("/register", async (req, res, next) => {
           userModel.addNewUser(entity).then(id => {
               res.send({
                   Status: 1,
-                  Message: "Thành công",
+                  Message: "Thành công! Vui Lòng Xác Nhận Email",
               })
           }).catch(err => {
               console.log(err)
@@ -274,8 +301,15 @@ router.post('/login', (req,res,next)=>{
       if (err) {
         return res.json({Status: 2, Message: 'Không tồn tại tài khoản'});
       }
-      if (! user) {
-        return res.json({Status: 2, Message: 'Không đúng mật khẩu'});
+
+      if (!user) {
+        if(info.message == 'Not Verified Email')
+        {
+          return res.json({Status: 2, Message: 'Chưa xác nhận email'});
+        }
+        if(info.message == 'Invalid password'){
+          return res.json({Status: 2, Message: 'Không đúng mật khẩu'});
+        }
       }
       req.login(user, loginErr => {
         if (loginErr) {
@@ -291,8 +325,23 @@ router.post('/login', (req,res,next)=>{
 
 );
 
+// logout
 router.get('/logout', function(req, res){
   req.logout();
+  req.session.destroy();
+  res.redirect('/admin/login');
+});
+
+// verify account admin
+
+router.get('/verify/(:email)', function (req, res, next) { 
+  userModel.getUserByEmail(req.params.email).then(result => {
+    var entity = {
+      id: result[0].id,
+      verify: true,
+    }
+    userModel.update(entity)
+  })
   res.redirect('/admin/login');
 });
 

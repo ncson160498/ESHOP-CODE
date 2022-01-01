@@ -6,30 +6,43 @@ $(document).ready(function () {
         const phoneInput = $("#registerPhone").val().toString()
         const addressInput = $("#registerAddress").val().toString()
         const passwordInput = $("#registerPass").val().toString() 
-        $.ajax({
-            url: 'auth/register',
-            type: 'POST',
-            cache: false,
-            data: { 
-                email: emailInput, 
-                phone: phoneInput,
-                username: nameInput, 
-                address: addressInput,
-                password: passwordInput, 
-            },
-            success: function (data) {
-                if (data.Status === 1) {
-                    alert("Tạo mới tài khoản thành công")
-                    location.reload()
-                }else{
-                    alert(data.Message)
-                    return
+        const passwordReInput = $("#registerReInputPass").val().toString() 
+
+        if(passwordInput == passwordReInput){
+            $.ajax({
+                url: 'auth/register',
+                type: 'POST',
+                cache: false,
+                data: { 
+                    email: emailInput, 
+                    phone: phoneInput,
+                    username: nameInput, 
+                    address: addressInput,
+                    password: passwordInput, 
+                },
+                success: function (data) {
+                    if (data.Status === 1) {
+                        alert(data.Message)
+                        location.reload()
+                    }
+                    else if(data.Status === 0) {
+                        alert(data.Message)
+                        location.reload()
+                    }
+                    else{
+                        alert(data.Message)
+                        return
+                    }
                 }
-            }
-            , error: function (jqXHR, textStatus, err) {
-                alert('Không thành công')
-            }
-        })
+                , error: function (jqXHR, textStatus, err) {
+                    alert('Không thành công')
+                }
+            })
+
+        }else{
+            alert("Mật Khẩu Nhập Lại Không Giống Nhau!")
+        }
+
     })
 
     $("#loginUserForm").submit(() => {
@@ -56,7 +69,5 @@ $(document).ready(function () {
                 alert('Không thành công')
             }
         })
-
-
     })
 })

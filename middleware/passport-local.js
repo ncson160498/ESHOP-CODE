@@ -10,6 +10,9 @@ module.exports = function (passport) {
             }
             var user = rows[0];
             var ret = bcrypt.compareSync(password, user.password)
+            if(!user.verify){
+                return done(null, false, { message: 'Not Verified Email' });
+            }
             if (ret) {
                 return done(null, user)
             }

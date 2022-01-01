@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 21, 2021 lúc 07:09 AM
+-- Thời gian đã tạo: Th1 01, 2022 lúc 11:02 PM
 -- Phiên bản máy phục vụ: 10.4.21-MariaDB
 -- Phiên bản PHP: 8.0.12
 
@@ -64,7 +64,16 @@ CREATE TABLE `comment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- Đang đổ dữ liệu cho bảng `comment`
+--
 
+INSERT INTO `comment` (`id`, `product_id`, `user_name`, `rating`, `content`) VALUES
+(1, 25, 'HN', '5', 'xinh quá'),
+(2, 25, 'HoangNguyen', '5', 'ngiu tui'),
+(3, 25, 'NS', '5', 'ngiu tui'),
+(4, 25, 'NgocSOn', '5', 'ngiu tui'),
+(5, 25, 'ss', '', 'hế hlu'),
+(6, 25, 'lạc danh', '', 'ok phết');
 
 -- --------------------------------------------------------
 
@@ -119,20 +128,20 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `category_id`, `trademark_id`, `name`, `quanlity`, `size`, `price`, `image`, `created`, `view`) VALUES
-(1, 3, 1, 'Giày Thể Thao Adidas Trắng', 20, '42', '4000000', 'shose-adidas-s42.jpg', '2021-12-14 16:48:24', 0),
+(1, 3, 1, 'Giày Thể Thao Adidas Trắng', 20, '42', '4000000', 'shose-adidas-s42.jpg', '2022-01-01 19:16:52', 4),
 (3, 7, 2, 'Áo Thời Trang Gucci', 40, 'XL', '7500000', 'shirt-gucci-sxl.jpg', '2021-12-14 17:21:08', 0),
 (4, 3, 4, 'Quần ngắn thể thao Nike', 100, 'XL', '5000000', 'pants-nike-sport-sxl.jpg', '2021-12-14 16:21:54', 0),
 (5, 3, 1, 'Quần dài thể thao Adidas', 100, 'XL', '7000000', 'pants-adias-sport-sxl-black.png', '2021-12-14 16:48:30', 0),
-(6, 6, 4, 'Áo Trẻ Em Nike', 20, 'XL', '1000000', 'nike-child-shirt-sxl.jpg', '2021-12-14 16:13:08', 0),
+(6, 6, 4, 'Áo Trẻ Em Nike', 20, 'XL', '1000000', 'nike-child-shirt-sxl.jpg', '2022-01-01 17:33:53', 1),
 (8, 6, 4, 'Quần Áo Trẻ Em Nike', 30, 'S', '2000000', 'nike-child-ss.jpg', '2021-12-14 16:13:12', 0),
 (9, 4, 1, 'Quần Adidas Thể Thao Xám', 50, 'XL', '1500000', 'pants-adidas-sport-sxl-gray.jpg', '2021-12-14 16:14:35', 0),
 (10, 4, 1, 'Quần Thời Trang Gucci', 40, 'XL', '7000000', 'pants-gucci-sxl.jpg', '2021-12-14 17:25:03', 0),
-(11, 5, 2, 'Áo Thời Trang Gucci Đen', 50, 'XXL', '3000000', 'shirt-gucci-sxxl.jpg', '2021-12-14 16:17:21', 0),
+(11, 5, 2, 'Áo Thời Trang Gucci Đen', 50, 'XXL', '3000000', 'shirt-gucci-sxxl.jpg', '2022-01-01 17:19:34', 1),
 (13, 9, 4, 'Giày Thời Trang Nike', 10, '41', '7000000', 'shose-nike-s41.jpg', '2021-12-14 16:19:42', 0),
 (14, 9, 4, 'Giày Thể Thao Nike', 10, '42', '9000000', 'shose-nike-s42.jpg', '2021-12-14 16:21:34', 0),
 (23, 2, 3, 'Ngoc Son', 10, '42', '6999999', '20-12-2021-23-25-50-2.jpg', '2021-12-20 16:44:58', 0),
 (24, 2, 2, 'Sản phẩm', 30, '42', '70000000', '20-12-2021-23-43-9-10.jpg', '2021-12-20 16:43:09', 0),
-(25, 2, 2, 'Siêu Phẩm', 30, '41', '7777777', '20-12-2021-23-44-23-13.jpg', '2021-12-20 16:44:23', 0);
+(25, 2, 2, 'Siêu Phẩm', 30, '41', '7777777', '20-12-2021-23-44-23-13.jpg', '2022-01-01 17:34:55', 7);
 
 -- --------------------------------------------------------
 
@@ -173,6 +182,8 @@ CREATE TABLE `user` (
   `address` varchar(150) NOT NULL,
   `password` varchar(100) NOT NULL,
   `admin` tinyint(1) NOT NULL,
+  `verify` tinyint(1) NOT NULL,
+  `locked` tinyint(1) NOT NULL,
   `created` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -180,11 +191,13 @@ CREATE TABLE `user` (
 -- Đang đổ dữ liệu cho bảng `user`
 --
 
-INSERT INTO `user` (`id`, `name`, `email`, `phone`, `address`, `password`, `admin`, `created`) VALUES
-(25, 'ss', 's@gmail.com', '0332458585', 'Đồng nai 2', '$2a$10$l.1QWy8Cwu8ubM0.ADqz4OIxZD1x9CfM9Snden/fSY6x.8Pdv4Zde', 0, '2021-12-20 16:34:55'),
-(26, 'NGOCSON', 'ss@gmail.com', '033', 'VT', '$2a$10$EPGPP0S1/J3m7Mmme.SN2e8EF5/XGmjniVaipHlOm8381e7s3UfUe', 1, '2021-12-19 14:21:00'),
-(28, 'son1', 'son1@gmail.com', '033245', 'Đà Lạt', '$2a$10$sfNVyh1OK3gbkf5BrUpzzO29A0HZd3SohjOCkhnRuaXBMaE1ejZ.G', 0, '2021-12-19 17:20:19'),
-(29, 'NGOCSON', 'ad@gmail.com', '0332458585', '38/4, Tây Hòa', '$2a$10$.S1OLWi/7whX7CssErFzC.7wTBCjGPMOcm7o7ED7J2v3u.ANIu1jO', 1, '2021-12-19 17:28:44');
+INSERT INTO `user` (`id`, `name`, `email`, `phone`, `address`, `password`, `admin`, `verify`, `locked`, `created`) VALUES
+(25, 'ss', 's@gmail.com', '0332458585', 'Đồng nai 2', '$2a$10$l.1QWy8Cwu8ubM0.ADqz4OIxZD1x9CfM9Snden/fSY6x.8Pdv4Zde', 0, 1, 0, '2022-01-01 21:23:32'),
+(26, 'NGOCSON', 'ss@gmail.com', '033', 'VT', '$2a$10$EPGPP0S1/J3m7Mmme.SN2e8EF5/XGmjniVaipHlOm8381e7s3UfUe', 1, 1, 0, '2022-01-01 22:01:43'),
+(28, 'son1', 'son1@gmail.com', '033245', 'Đà Lạt', '$2a$10$sfNVyh1OK3gbkf5BrUpzzO29A0HZd3SohjOCkhnRuaXBMaE1ejZ.G', 0, 1, 0, '2022-01-01 22:01:47'),
+(29, 'NGOCSON', 'ad@gmail.com', '0332458585', '38/4, Tây Hòa', '$2a$10$.S1OLWi/7whX7CssErFzC.7wTBCjGPMOcm7o7ED7J2v3u.ANIu1jO', 1, 1, 0, '2022-01-01 22:01:50'),
+(37, 'NGOCSON', 'sondn3008@gmail.com', '0332458585', '38/4, Tây Hòa', '$2a$10$HCSyU8MlQFn1W1E2PGOOUOUJ7pfGe7X4irGMdk/7izlZibjLMIb.K', 1, 1, 0, '2022-01-01 21:24:16'),
+(38, 'NGOCSON', 's', '0332458585', '38/4, Tây Hòa', '$2a$10$.cpJ1hMvhQFn690At.nYDebL7i4jEp0DyVbgoz5KI6Hohz67e0hfG', 1, 0, 0, '2022-01-01 21:31:29');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -200,7 +213,8 @@ ALTER TABLE `category`
 -- Chỉ mục cho bảng `comment`
 --
 ALTER TABLE `comment`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_comment_product` (`product_id`);
 
 --
 -- Chỉ mục cho bảng `contact`
@@ -243,25 +257,12 @@ ALTER TABLE `user`
 --
 ALTER TABLE `category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-  
--- AUTO_INCREMENT cho bảng `product`
---
-ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
--- AUTO_INCREMENT cho bảng `user`
---
-ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
-  
--- AUTO_INCREMENT cho bảng `comment`
 --
 -- AUTO_INCREMENT cho bảng `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-ALTER TABLE `comment`
-  ADD CONSTRAINT fk_comment_product FOREIGN KEY(product_id) REFERENCES product(id);
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT cho bảng `contact`
@@ -288,18 +289,20 @@ ALTER TABLE `trademark`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT cho bảng `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
-
-
--- insert data cho cho bảng `comment`
-
-INSERT INTO `comment` (`id`, `product_id`, `user_name`, `rating`, `content`) VALUES
-(1, 25, 'HN',5, 'xinh quá'),
-(2, 25,"HoangNguyen",5, 'ngiu tui'),
-(3, 25,'NS',5, 'ngiu tui'),
-(4, 25, 'NgocSOn',5, 'ngiu tui');
+--
 -- Các ràng buộc cho các bảng đã đổ
 --
+
+--
+-- Các ràng buộc cho bảng `comment`
+--
+ALTER TABLE `comment`
+  ADD CONSTRAINT `fk_comment_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
 
 --
 -- Các ràng buộc cho bảng `product`

@@ -160,7 +160,6 @@ router.get('/product/detail/(:id)', function (req, res, next) {
       productModel.getByTrademarkId(result[0][0].trademark_id),
       productModel.update(entity),
     ]).then(rows => {
-      console.log(result[2])
       res.render('partials/frontend/product-detail',
       {
         id: result[0][0].id,
@@ -181,6 +180,19 @@ router.get('/product/detail/(:id)', function (req, res, next) {
     })
   })
 });
+
+// vetify account client
+router.get('/verify/(:email)', function (req, res, next) { 
+  userModel.getUserByEmail(req.params.email).then(result => {
+    var entity = {
+      id: result[0].id,
+      verify: true,
+    }
+    userModel.update(entity)
+  })
+  res.redirect('/login');
+});
+
 
 
 // chưa làm. nhớ cmt
@@ -313,3 +325,5 @@ router.get('/remove/:id', function (req, res, next) {
 });
 
 module.exports = router
+
+
