@@ -8,7 +8,20 @@ $(document).ready(function () {
         const repasswordInput = $("#exampleRepeatPassword").val().toString()
         const phoneInput = $("#exampleInputPhone").val().toString()
         const addressInput = $("#exampleInputAddress").val().toString()
-        if(passwordInput == repasswordInput){
+
+        if(emailInput == '' || nameInput1 == '' || nameInput2 == '' || phoneInput == '' || addressInput == '' || passwordInput =='')
+        {
+            alert("Vui Lòng Nhập Đủ Thông Tin")
+        }
+        else if(!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/).test(emailInput)){
+            alert('Vui Lòng Nhập Đúng Dạng Email!')
+        }
+        else if(!(/^\d+$/).test(phoneInput)){
+            alert('Vui Lòng Nhập Phone Đúng Dạng Số!')
+        }
+        else if(passwordInput != repasswordInput){
+            alert("Mật Khẩu Nhập Lại Không Giống Nhau!")
+        }else{
             $.ajax({
                 url: '/admin/register',
                 type: 'POST',
@@ -36,9 +49,6 @@ $(document).ready(function () {
                     alert('Không thành công')
                 }
             })
-
-        }else{
-            alert("Mật Khẩu Nhập Lại Không Giống Nhau!")
         }
     })
 
@@ -47,26 +57,38 @@ $(document).ready(function () {
         const emailInput = $("#loginInputEmail").val().toString()
         const passwordInput = $("#loginInputPassword").val().toString()
 
-        $.ajax({
-            url: '/admin/login',
-            type: 'POST',
-            cache: false,
-            data: { email: emailInput, password: passwordInput },
-            success: function (data) {               
-                if (data.Status === 1) {
-                    isSuccessLogin = true
-                    localStorage.setItem("login", true)
-                    localStorage.setItem('userInfo', JSON.stringify(data.data));
-                    $(location).prop('href', '/admin')
+        if(emailInput == '')
+        {
+            alert('Vui Lòng Nhập Email')
+        }
+        else if(passwordInput == ''){
+            alert('Vui Lòng Nhập PassWord')
+        }
+        else if(!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/).test(emailInput)){
+            alert('Vui Lòng Nhập Đúng Dạng Email!')
+        }
+        else{
+            $.ajax({
+                url: '/admin/login',
+                type: 'POST',
+                cache: false,
+                data: { email: emailInput, password: passwordInput },
+                success: function (data) {               
+                    if (data.Status === 1) {
+                        isSuccessLogin = true
+                        localStorage.setItem("login", true)
+                        localStorage.setItem('userInfo', JSON.stringify(data.data));
+                        $(location).prop('href', '/admin')
+                    }
+                    else {
+                        alert(data.Message)
+                    }
                 }
-                else {
-                    alert(data.Message)
+                , error: function (jqXHR, textStatus, err) {
+                    alert('Không thành công')
                 }
-            }
-            , error: function (jqXHR, textStatus, err) {
-                alert('Không thành công')
-            }
-        })
+            })
+        }
     })
 
 })

@@ -1,18 +1,18 @@
-var express = require('express');
-var router = express.Router('');
+const express = require('express');
+const router = express.Router('');
 const userModel = require("../../models/user")
 const productModel = require("../../models/product")
-var bcrypt = require("bcryptjs")
+const bcrypt = require("bcryptjs")
 const categoryModel = require("../../models/category")
 const trademarkModel = require("../../models/trademark")
 const helper = require("../../helpers/Helpers")
-
+const nodemailer = require('nodemailer');
+const generator = require('generate-password');
 
 
 var fs = require('fs');
 
 var Cart = require('../../models/cart');
-const user = require('../../models/user');
 var products = JSON.parse(fs.readFileSync('./data/products.json', 'utf8'));
 
 const perPage = 6
@@ -50,9 +50,6 @@ function pageToArry (number) {
   return result
  };
 
-
-const nodemailer = require('nodemailer');
-
 const transporter = nodemailer.createTransport({
   service: 'Gmail',
   auth: {
@@ -61,7 +58,7 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-var generator = require('generate-password');
+
 // render /
 
 router.get('/', function (req, res, next) {
@@ -104,6 +101,7 @@ router.get('/', function (req, res, next) {
 
 
 });
+
 // product view and search product
 router.get('/product', function (req, res, next) {
   let search = '%' + (req.query.search || '')
@@ -175,15 +173,23 @@ router.get('/product/detail/(:id)', function (req, res, next) {
       productModel.getByTrademarkId(result[0][0].trademark_id),
       productModel.update(entity),
     ]).then(rows => {
+      let statusQuality;
+      if(result[0][0].quanlity > 0){
+        statusQuality = "Còn Hàng"
+      }
+      else{
+        statusQuality = "Hết Hàng"
+      }
       res.render('partials/frontend/product-detail',
       {
         id: result[0][0].id,
         name: result[0][0].name,
         image: result[0][0].image,
-        quanlity: result[0][0].quanlity,
+        statusQuality: statusQuality,
         size: result[0][0].size,
         price: result[0][0].price,
         views: result[0][0].view,
+        sizes: result[0][0].size,
         dataCategory: result[1],
         dataTrademark: result[2],
 
@@ -206,27 +212,6 @@ router.get('/verify/(:email)', function (req, res, next) {
     userModel.update(entity)
   })
   res.redirect('/login');
-});
-
-
-
-// chưa làm. nhớ cmt
-
-router.get('/checkout', function (req, res, next) {
-  res.render('partials/frontend/checkout',
-    {
-      title: 'Checkout',
-    }
-  );
-});
-
-router.get('/cart', function (req, res, next) {
-
-  res.render('partials/frontend/cart',
-  {
-    title: 'Cart',
-
-  });
 });
 
 //reden /login
@@ -377,6 +362,31 @@ router.get('/forgotpassword/(:email)', function (req, res, next) {
   
 });
 
+
+// chưa làm. nhớ cmt
+
+router.get('/checkout', function (req, res, next) {
+  if(req.user != null){
+    res.render('partials/frontend/checkout',
+    {
+      title: 'Checkout',
+    }
+  );
+  }else{
+    res.redirect('/login')
+  }
+
+});
+
+// router.get('/cart', function (req, res, next) {
+
+//   res.render('partials/frontend/cart',
+//   {
+//     title: 'Cart',
+
+//   });
+// });
+
 // chưa làm. làm nhớ cmt
 
 router.get('/blog', function (req, res, next) {
@@ -415,12 +425,12 @@ router.get('/add/:id', function (req, res, next) {
 
 router.get('/cart', function (req, res, next) {
   if (!req.session.cart) {
-    return res.render('cart', {
+    return res.render('partials/frontend/cart', {
       products: null
     });
   }
   var cart = new Cart(req.session.cart);
-  res.render('cart', {
+  res.render('partials/frontend/cart', {
     title: 'NodeJS Shopping Cart',
     products: cart.getItems(),
     totalPrice: cart.totalPrice

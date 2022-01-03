@@ -14,35 +14,40 @@ $(document).ready(function () {
         const nameInput = $("#accountName").val().toString()
         const phoneInput = $("#accountPhone").val().toString()
         const addressInput = $("#accountAddress").val().toString()
-
-        $.ajax({
-            url: '/account',
-            type: 'POST',
-            cache: false,
-            data: { id: userInfo.id, 
-                email: emailInput, 
-                name: nameInput, 
-                phone: phoneInput, 
-                address: addressInput
-            },
-            success: function (data) {
-                if (data.Status === 1) {
-                    isSuccessLogin = true
-                    localStorage.setItem("login", true)
-                    localStorage.setItem('userInfo', JSON.stringify(data.data[0]));
-                    //$(location).prop('href', '/account')
-                    return
+        if(nameInput == '' || phoneInput == '' || addressInput == '')
+        {
+            alert("Vui Lòng Nhập Đủ Thông Tin")
+        }
+        else if(!(/^\d+$/).test(phoneInput)){
+            alert('Vui Lòng Nhập Phone Đúng Dạng Số!')
+        }else{
+            $.ajax({
+                url: '/account',
+                type: 'POST',
+                cache: false,
+                data: { id: userInfo.id, 
+                    email: emailInput, 
+                    name: nameInput, 
+                    phone: phoneInput, 
+                    address: addressInput
+                },
+                success: function (data) {
+                    if (data.Status === 1) {
+                        isSuccessLogin = true
+                        localStorage.setItem("login", true)
+                        localStorage.setItem('userInfo', JSON.stringify(data.data[0]));
+                        //$(location).prop('href', '/account')
+                        return
+                    }
+                    else {
+                        alert(data.Message)
+                    }
                 }
-                else {
-                    alert(data.Message)
+                , error: function (jqXHR, textStatus, err) {
+                    alert('Không thành công')
                 }
-            }
-            , error: function (jqXHR, textStatus, err) {
-                alert('Không thành công')
-            }
-        })
-
-
+            })
+        }
     })
 })
 

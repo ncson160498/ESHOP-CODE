@@ -138,15 +138,46 @@
 								{{!-- <p>Web ID: 1089772</p> --}}
 								{{!-- <img src="img/upload/{{image}}" alt=""> --}}
 								<span>
-									<span>{{price}} VND</span>
-									<label>Số lượng:</label>
-									<input type="text" value="{{quanlity}}">
-									<label>Lượt xem: {{views}}</label>
+									<span>{{price}} VND</span>						
+								</span>
+
+								<span>		
+									<span>
+										<label>Trạng thái:</label>
+										{{statusQuality}}
+									</span>								
+								</span>
+
+								<span>
+									<span>
+										<label>Size: </label>
+										{{sizes}}
+									</span>
+								</span>
+
+								<span>
+									<span>
+										<label>Lượt xem: </label>
+										{{views}}
+									</span>
+								</span>
+									
+								<div class="buttons_added">
+									<span>
+										Số lượng mua: 
+											<input aria-label="quantity" class="input-qty" max="Số tối đa" min="Số tối thiểu" name="" type="number" value="1">
+									</span>
+								</div>
+
+								<span>
 									<button type="button" class="btn btn-fefault cart" id="button_add_cart">
 										<i class="fa fa-shopping-cart"></i>
+										<a href="/add/{{id}}"></a>
 										Thêm vào giỏ hàng
 									</button>
 								</span>
+
+
 
 								{{!-- <p><b>Trạng thái:</b> Trong kho</p>
 								<p><b>Tình trạng:</b> Mới</p>

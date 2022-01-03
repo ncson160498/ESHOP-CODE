@@ -1,6 +1,5 @@
 $(document).ready(function () {
     $("#registerUserForm").submit(() => {
-
         const emailInput = $("#registerEmail").val().toString()
         const nameInput = $("#registerName").val().toString()
         const phoneInput = $("#registerPhone").val().toString()
@@ -8,7 +7,19 @@ $(document).ready(function () {
         const passwordInput = $("#registerPass").val().toString() 
         const passwordReInput = $("#registerReInputPass").val().toString() 
 
-        if(passwordInput == passwordReInput){
+        if(emailInput == '' || nameInput == '' || phoneInput == '' || addressInput == '' || passwordInput =='')
+        {
+            alert("Vui Lòng Nhập Đủ Thông Tin")
+        }
+        else if(!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/).test(emailInput)){
+            alert('Vui Lòng Nhập Đúng Dạng Email!')
+        }
+        else if(!(/^\d+$/).test(phoneInput)){
+            alert('Vui Lòng Nhập Phone Đúng Dạng Số!')
+        }
+        else if(passwordInput != passwordReInput){
+            alert("Mật Khẩu Nhập Lại Không Giống Nhau!")
+        }else{
             $.ajax({
                 url: 'auth/register',
                 type: 'POST',
@@ -38,9 +49,6 @@ $(document).ready(function () {
                     alert('Không thành công')
                 }
             })
-
-        }else{
-            alert("Mật Khẩu Nhập Lại Không Giống Nhau!")
         }
 
     })
@@ -48,25 +56,37 @@ $(document).ready(function () {
     $("#loginUserForm").submit(() => {
         const emailInput = $("#loginEmail").val().toString()
         const passwordInput = $("#loginPass").val().toString()
-        $.ajax({
-            url: 'auth/login',
-            type: 'POST',
-            cache: false,
-            data: { email: emailInput, password: passwordInput },
-            success: function (data) {
-                if (data.Status === 1) {
-                    isSuccessLogin = true
-                    localStorage.setItem("login", true)
-                    localStorage.setItem('userInfo', JSON.stringify(data.data));
-                    $(location).prop('href', '/')
+        if(emailInput == '')
+        {
+            alert('Vui Lòng Nhập Email!')
+        }
+        else if(passwordInput == ''){
+            alert('Vui Lòng Nhập PassWord!')
+        }
+        else if(!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/).test(emailInput)){
+            alert('Vui Lòng Nhập Đúng Dạng Email!')
+        }
+        else{
+            $.ajax({
+                url: 'auth/login',
+                type: 'POST',
+                cache: false,
+                data: { email: emailInput, password: passwordInput },
+                success: function (data) {
+                    if (data.Status === 1) {
+                        isSuccessLogin = true
+                        localStorage.setItem("login", true)
+                        localStorage.setItem('userInfo', JSON.stringify(data.data));
+                        $(location).prop('href', '/')
+                    }
+                    else {
+                        alert(data.Message)
+                    }
                 }
-                else {
-                    alert(data.Message)
+                , error: function (jqXHR, textStatus, err) {
+                    alert('Không thành công')
                 }
-            }
-            , error: function (jqXHR, textStatus, err) {
-                alert('Không thành công')
-            }
-        })
+            })
+        }
     })
 })

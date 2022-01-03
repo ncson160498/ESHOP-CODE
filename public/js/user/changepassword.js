@@ -10,7 +10,15 @@ $(document).ready(function () {
         const passwordOld = $("#passwordOld").val().toString()
         const passwordNewInput = $("#passwordNew").val().toString()
         const rePasswordNewInput = $("#rePasswordNew").val().toString()
-        if(passwordNewInput === rePasswordNewInput){
+        if(passwordOld == ''){
+            alert('Vui Lòng Nhập PassWord Cũ!')
+        }
+        else if(passwordNewInput == ''){
+            alert('Vui Lòng Nhập PassWord Mới!')
+        }
+        else if(passwordNewInput != rePasswordNewInput){
+            alert('Nhập lại mật khẩu không đúng!')
+        }else{
             $.ajax({
                 url: '/changepassword',
                 type: 'POST',
@@ -35,11 +43,9 @@ $(document).ready(function () {
                     }
                 }
                 , error: function (jqXHR, textStatus, err) {
-                    alert('Không thành công')
+                    alert('Không thành công!')
                 }
             }) 
-        }else{
-            alert('Nhập lại mật khẩu không đúng')
         }
     })
 })

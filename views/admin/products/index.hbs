@@ -25,6 +25,14 @@
                                     <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1"
                                         colspan="1" aria-sort="ascending"
                                         aria-label="Name: activate to sort column descending" style="width: 261.812px;">
+                                        Category</th>
+                                    <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                        colspan="1" aria-sort="ascending"
+                                        aria-label="Name: activate to sort column descending" style="width: 261.812px;">
+                                        Trademark</th>
+                                    <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                        colspan="1" aria-sort="ascending"
+                                        aria-label="Name: activate to sort column descending" style="width: 261.812px;">
                                         Name</th>
                                     <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
                                         aria-label="Position: activate to sort column ascending"
@@ -51,6 +59,8 @@
                                 {{#each data}}
                                 <tr class="odd">
                                     <td class="sorting_1">{{id}}</td>
+                                    <td>{{category_id}}</td>
+                                    <td>{{trademark_id}}</td>
                                     <td>{{name}}</td>
                                     <td><img style="width:100px;height:100px" src="/img/upload/{{image}}" alt=""></td>
                                     <td>{{quanlity}}</td>

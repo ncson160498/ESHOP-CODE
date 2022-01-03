@@ -1,12 +1,12 @@
-var express = require('express');
-var router = express.Router();
-var productModel = require("../../models/product")
-var userModel = require("../../models/user")
-var categoryModel = require("../../models/category")
-var trademarkModel = require("../../models/trademark")
+const express = require('express');
+const router = express.Router();
+const productModel = require("../../models/product")
+const userModel = require("../../models/user")
+const categoryModel = require("../../models/category")
+const trademarkModel = require("../../models/trademark")
 const passport = require("passport")
 const helper = require("../../helpers/Helpers")
-var bcrypt = require("bcryptjs")
+const bcrypt = require("bcryptjs")
 
 var fs = require('fs');
 const multer = require('multer')
@@ -56,13 +56,13 @@ const imageUploader = multer({
 // Get list product
 router.get('/product', function (req, res, next) {
     if(req.user != null){
-        productModel.all().then(rows=>{            
-            res.render('admin/products/index',
-                {
-                    data: rows,
-                    layout: 'orther'
-                });
-        })
+      productModel.all().then(rows=>{            
+        res.render('admin/products/index',
+          {
+            data: rows,
+            layout: 'orther'
+          });
+      })
     }
     else{
         res.redirect('/admin')
@@ -90,6 +90,7 @@ router.get('/product/create', function (req, res, next) {
     }
 
 })
+
 //add new product
 router.post('/product/create', imageUploader, function (req, res, next) {
     let name = req.body.name;
@@ -127,6 +128,7 @@ router.post('/product/create', imageUploader, function (req, res, next) {
         })
     })
 })
+
 // Get view edit 
 router.get('/product/edit/(:id)', function (req, res, next) {
     if(req.user != null){
@@ -225,23 +227,23 @@ router.get('/', function (req, res, next) {
   
   });
   
-  router.get('/login', function (req, res, next) {
-    res.render('partials/admin/login',
-      {
-        title: 'Admin-Login',
-        layout: null
-      }
-    );
-  });
+router.get('/login', function (req, res, next) {
+  res.render('partials/admin/login',
+    {
+      title: 'Admin-Login',
+      layout: null
+    }
+  );
+});
   
-  router.get('/register', function (req, res, next) {
-    res.render('partials/admin/register',
-      {
-        title: 'Admin-Register',
-        layout: null
-      }
-    );
-  });
+router.get('/register', function (req, res, next) {
+  res.render('partials/admin/register',
+    {
+      title: 'Admin-Register',
+      layout: null
+    }
+  );
+});
 
 // login, register, logout
 
@@ -345,16 +347,6 @@ router.get('/verify/(:email)', function (req, res, next) {
   })
   res.redirect('/admin/login');
 });
-
- // forgotPass Admin
-
-router.get('/fogotpassword', function (req, res, next) {
-  res.render('partials/admin/forgotPass',
-  {
-    title: 'Admin-ForgotPass',
-    layout: null,
-  });
-})
 
 // account
 
@@ -523,24 +515,6 @@ router.post('/changepassword', function (req, res, next) {
     }
   })
   
- // forgotPass Admin
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 module.exports = router
+

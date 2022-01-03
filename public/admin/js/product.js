@@ -8,32 +8,38 @@ $(document).ready(function () {
         const categoryInput = $("#categorySelected").val().toString()
         const trademarkInput = $("#trademarkSelected").val().toString()
 
-        $.ajax({
-            url: '/admin/product/edit/'+ id,
-            type: 'POST',
-            cache: false,
-            data: { 
-                id: id, 
-                name: nameInput, 
-                quanlity: quanlityInput, 
-                size: sizeInput, 
-                price: priceInput,
-                category: categoryInput,
-                trademark: trademarkInput,
-            },
-            success: function (data) {
-                if (data.Status === 1) {
-                    $(location).prop('href', '/admin/product')
-                    return
+        if(nameInput == '' || quanlityInput == '' || sizeInput == '' || priceInput == '' || categoryInput == '' || trademarkInput == '')
+        {
+            alert("Vui Lòng Nhập Đủ Thông Tin")
+        }
+        else{
+            $.ajax({
+                url: '/admin/product/edit/'+ id,
+                type: 'POST',
+                cache: false,
+                data: { 
+                    id: id, 
+                    name: nameInput, 
+                    quanlity: quanlityInput, 
+                    size: sizeInput, 
+                    price: priceInput,
+                    category: categoryInput,
+                    trademark: trademarkInput,
+                },
+                success: function (data) {
+                    if (data.Status === 1) {
+                        $(location).prop('href', '/admin/product')
+                        return
+                    }
+                    else {
+                        alert(data.Message)
+                    }
                 }
-                else {
-                    alert(data.Message)
+                , error: function (jqXHR, textStatus, err) {
+                    alert('Không thành công')
                 }
-            }
-            , error: function (jqXHR, textStatus, err) {
-                alert('Không thành công')
-            }
-        })
+            })
+        }
     })
 })
 
