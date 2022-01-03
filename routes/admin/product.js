@@ -6,6 +6,7 @@ var categoryModel = require("../../models/category")
 var trademarkModel = require("../../models/trademark")
 const passport = require("passport")
 const helper = require("../../helpers/Helpers")
+var bcrypt = require("bcryptjs")
 
 var fs = require('fs');
 const multer = require('multer')
@@ -261,7 +262,7 @@ router.post("/register", async (req, res, next) => {
           subject: 'Verify Your Email',
           html: `<p>Verify your email address to complete sinup and login into account.</p>
           <p>This Link: <b>expires in 6 hours</b>.</p>
-          <p>Press <a href=http://localhost:3001/admin/verify/${req.body.email}>here</a> to process</p>`,
+          <p>Press <a href=${req.get('origin')}/admin/verify/${req.body.email}>here</a> to process</p>`,
       }
     
         transporter.sendMail(mailOptions, function(error, response){
@@ -395,6 +396,54 @@ router.post('/account', function (req, res, next) {
 else{
     res.redirect('/admin')
 }
+  
+})
+
+// change password admin
+
+router.get('/changepassword', function (req, res, next) {
+  if(req.user != null){
+    userModel.getUserById(req.user.id).then(result => {
+      res.render('admin/products/changepassword',
+      {
+          layout: 'orther',
+          id: result[0].id,
+          email: result[0].email,
+      });
+    })
+  }
+  else{
+      res.redirect('/admin')
+  }
+})
+
+router.post('/changepassword', function (req, res, next) {
+  if(req.user != null){
+    userModel.getUserById(req.body.id).then(result => {
+      if(result.length < 1){
+        return res.status(200).json({Status: 0, Message: 'Không tồn tại tài khoản!'});
+      }
+      else{
+        var acc = result[0]
+        var ret = bcrypt.compareSync(req.body.oldpass, acc.password)
+        if(ret){
+          var hash = helper.hash_password(req.body.newpass)
+          var entity = {
+            id: req.body.id,
+            password: hash,
+          }
+          userModel.update(entity).then(kq => {
+            res.status(200).json({Status: 1, Message: 'Đổi mật khẩu thành công'});
+          })
+        }else{
+          res.status(200).json({Status: 0, Message: 'Mật khẩu cũ không đúng!'});
+        }
+      }
+    })
+}
+  else{
+    res.redirect('/admin')
+  }
   
 })
 

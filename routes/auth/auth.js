@@ -32,7 +32,7 @@ router.post("/register", async (req, res, next) => {
               subject: 'Verify Your Email',
               html: `<p>Verify your email address to complete sinup and login into account.</p>
               <p>This Link: <b>expires in 6 hours</b>.</p>
-              <p>Press <a href=http://localhost:3001/verify/${req.body.email}>here</a> to process</p>`,
+              <p>Press <a href=${req.get('origin')}/verify/${req.body.email}>here</a> to process</p>`,
           }
         
           transporter.sendMail(mailOptions, function(error, response){

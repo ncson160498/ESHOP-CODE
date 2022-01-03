@@ -323,7 +323,7 @@ router.post('/forgotpassword', function (req, res, next) {
         subject: 'Forget And Change PassWord',
         html: `<p>Verify your email address to complete reset password account.</p>
         <p>This Link: <b>expires in 6 hours</b>.</p>
-        <p>Press <a href=http://localhost:3001/forgotpassword/${req.body.email}>here</a> to reset Password</p>`,
+        <p>Press <a href=${req.get('origin')}/forgotpassword/${req.body.email}>here</a> to reset Password</p>`,
     }
 
       transporter.sendMail(mailOptions, function(error, response){
@@ -380,7 +380,6 @@ router.get('/forgotpassword/(:email)', function (req, res, next) {
 // chưa làm. làm nhớ cmt
 
 router.get('/blog', function (req, res, next) {
-
   Promise.all([
     categoryModel.all(),
     trademarkModel.all(),
