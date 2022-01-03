@@ -2,19 +2,22 @@ var express = require('express');
 var router = express.Router('');
 const userModel = require("../../models/user")
 const productModel = require("../../models/product")
-const commentModel = require("../../models/comment")
+var bcrypt = require("bcryptjs")
 const categoryModel = require("../../models/category")
 const trademarkModel = require("../../models/trademark")
+const helper = require("../../helpers/Helpers")
 
 
 
 var fs = require('fs');
 
 var Cart = require('../../models/cart');
+const user = require('../../models/user');
 var products = JSON.parse(fs.readFileSync('./data/products.json', 'utf8'));
 
 const perPage = 6
 const stepConst = 3
+
 
 function numberPage (quanlity,number) {
  if((quanlity%number) == 0)
@@ -47,6 +50,18 @@ function pageToArry (number) {
   return result
  };
 
+
+const nodemailer = require('nodemailer');
+
+const transporter = nodemailer.createTransport({
+  service: 'Gmail',
+  auth: {
+      user: 'sonadweb2022@gmail.com',
+      pass: 'abc123_123'
+  }
+});
+
+var generator = require('generate-password');
 // render /
 
 router.get('/', function (req, res, next) {
@@ -253,6 +268,115 @@ router.post('/account', function (req, res, next) {
   })
 })
 
+// change password
+
+router.get('/changepassword', function (req, res, next) {
+  res.render('partials/frontend/change-password',
+    {
+      title: 'changePassword',
+    }
+  );
+})
+
+router.post('/changepassword', function (req, res, next) {
+  userModel.getUserById(req.body.id).then(result => {
+    var user = result[0]
+    var ret = bcrypt.compareSync(req.body.oldpass, user.password)
+    if(ret){
+      var hash = helper.hash_password(req.body.newpass)
+      var entity = {
+        id: req.body.id,
+        password: hash,
+      }
+      userModel.update(entity).then(id => {
+        userModel.getUserById(req.body.id).then(rows => {
+         res.status(200).json({Status: 1, Message: 'Đổi Mật Khẩu Thành Công', data: rows[0]});
+        })      
+      })
+    }else{
+      res.status(200).json({Status: 0, Message: 'Mật khẩu cũ không đúng'});
+    }
+  })
+})
+
+//forgot pass client
+
+router.get('/forgotpassword', function (req, res, next) {
+  res.render('partials/frontend/forgotPass',
+    {
+      title: 'forgotPassword',
+      layout: null,
+    }
+  );
+})
+
+router.post('/forgotpassword', function (req, res, next) {
+  userModel.getUserByEmail(req.body.email).then(result => {
+    if(result.length < 1){
+      return res.status(200).json({Status: 0, Message: 'Không tồn tại tài khoản'});
+    }
+    else{
+      var user = result[0]
+      var mailOptions = {
+        from: 'sonadweb2022@gmail.com',
+        to: req.body.email,
+        subject: 'Forget And Change PassWord',
+        html: `<p>Verify your email address to complete reset password account.</p>
+        <p>This Link: <b>expires in 6 hours</b>.</p>
+        <p>Press <a href=http://localhost:3001/forgotpassword/${req.body.email}>here</a> to reset Password</p>`,
+    }
+
+      transporter.sendMail(mailOptions, function(error, response){
+        if(error){
+            console.log(error);
+        }else{
+            res.redirect('/');
+        }
+    });
+
+    return res.status(200).json({Status: 1, Message: 'Vui lòng kiểm tra Email Để Reset Password'});
+    }
+   
+  })
+})
+
+router.get('/forgotpassword/(:email)', function (req, res, next) { 
+  userModel.getUserByEmail(req.params.email).then(result => {
+    if(result.length > 0){
+      var password = generator.generate({
+        length: 10,
+        numbers: true
+      });
+  
+      var hash = helper.hash_password(password)
+  
+      var entity = {
+        id: result[0].id,
+        password: hash,
+      }
+  
+      var mailOptions = {
+        from: 'sonadweb2022@gmail.com',
+        to: req.params.email,
+        subject: 'Reset PassWord',
+        html: `<p>Reset Password Succesfully. Now, your password become: <a>${password}</a></p>`,
+    }
+  
+      transporter.sendMail(mailOptions, function(error, response){
+        if(error){
+            console.log(error);
+        }else{
+            res.redirect('/');
+        }
+      });
+      userModel.update(entity).then(rows => {
+        res.redirect('/login');
+      })
+    }
+  })
+  
+});
+
 // chưa làm. làm nhớ cmt
 
 router.get('/blog', function (req, res, next) {
@@ -271,21 +395,10 @@ router.get('/blog', function (req, res, next) {
   })
 });
 
-// chưa làm. làm nhớ cmt
-
 router.get('/contact', function (req, res, next) {
   res.render('partials/frontend/contact',
     {
       title: 'Contact',
-    }
-  );
-});
-
-router.get('/forgotPassword', function (req, res, next) {
-  res.render('partials/admin/forgotPass',
-    {
-      title: 'Admin-ForgotPass',
-      layout: null
     }
   );
 });

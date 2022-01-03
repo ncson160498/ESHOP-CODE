@@ -350,7 +350,8 @@ router.get('/verify/(:email)', function (req, res, next) {
 router.get('/fogotpassword', function (req, res, next) {
   res.render('partials/admin/forgotPass',
   {
-      layout: null,
+    title: 'Admin-ForgotPass',
+    layout: null,
   });
 })
 
@@ -439,6 +440,7 @@ else{
       email: req.body.email,
       phone: req.body.phone,
       address: req.body.address,
+      locked: req.body.locked,
     }
     if(req.user != null){
         userModel.update(entity).then(result => {

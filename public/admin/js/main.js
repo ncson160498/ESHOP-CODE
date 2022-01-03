@@ -4,5 +4,7 @@ $(document).ready(function () {
     let userInfoObject = localStorage.getItem('userInfo');
     const userInfo = JSON.parse(userInfoObject);
 
-    $("#authorAdminLogin").val(userInfo.name)
+    let name = userInfo.name
+
+    $("#authorAdminLogin").val(name)
 })

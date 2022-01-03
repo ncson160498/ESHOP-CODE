@@ -5,6 +5,7 @@ $(document).ready(function () {
         const nameInput = $("#exampleInputNameEdit").val().toString()
         const phoneInput = $("#exampleInputPhoneEdit").val().toString()
         const addressInput = $("#exampleInputAddressEdit").val().toString()
+        const lockedInput = $("#lockedSelected").val().toString()
 
         $.ajax({
             url: '/admin/client/edit/' + id,
@@ -15,7 +16,9 @@ $(document).ready(function () {
                 email: emailInput, 
                 name: nameInput, 
                 phone: phoneInput, 
-                address: addressInput},
+                address: addressInput,
+                locked: lockedInput,
+            },
             success: function (data) {
                 if (data.Status === 1) {
                     $(location).prop('href', '/admin/client')

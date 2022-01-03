@@ -48,7 +48,6 @@ $(document).ready(function () {
     $("#loginUserForm").submit(() => {
         const emailInput = $("#loginEmail").val().toString()
         const passwordInput = $("#loginPass").val().toString()
-
         $.ajax({
             url: 'auth/login',
             type: 'POST',

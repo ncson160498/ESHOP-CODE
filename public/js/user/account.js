@@ -7,7 +7,7 @@ $(document).ready(function () {
     $("#accountName").val(userInfo.name)
     $("#accountPhone").val(userInfo.phone)
     $("#accountAddress").val(userInfo.address)
-
+    $("#accountCreated").val(userInfo.created)
 
     $("#buttonEditInforUser").click(() => {
         const emailInput = $("#accountEmail").val().toString()
@@ -19,7 +19,12 @@ $(document).ready(function () {
             url: '/account',
             type: 'POST',
             cache: false,
-            data: { id: userInfo.id, email: emailInput, name: nameInput, phone: phoneInput, address: addressInput},
+            data: { id: userInfo.id, 
+                email: emailInput, 
+                name: nameInput, 
+                phone: phoneInput, 
+                address: addressInput
+            },
             success: function (data) {
                 if (data.Status === 1) {
                     isSuccessLogin = true

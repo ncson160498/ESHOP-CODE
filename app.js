@@ -29,7 +29,6 @@ const { forwardAuthenticated } = require("./middleware/auth")
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-// hbs.registerPartials(__dirname + '/views/partials/frontend');
 hbs.registerPartials(__dirname + '/views/partials/frontend')
 // hbs.registerPartials(__dirname + '/views/partials/admin')
 app.set('view engine', 'hbs');
