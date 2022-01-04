@@ -13,7 +13,6 @@ const generator = require('generate-password');
 var fs = require('fs');
 
 var Cart = require('../../models/cart');
-var products = JSON.parse(fs.readFileSync('./data/products.json', 'utf8'));
 
 const perPage = 6
 const stepConst = 3
@@ -172,6 +171,7 @@ router.get('/product/detail/(:id)', function (req, res, next) {
       productModel.getByCategoryId(result[0][0].category_id),
       productModel.getByTrademarkId(result[0][0].trademark_id),
       productModel.update(entity),
+      trademarkModel.getByid(result[0][0].trademark_id),
     ]).then(rows => {
       let statusQuality;
       if(result[0][0].quanlity > 0){
@@ -180,6 +180,11 @@ router.get('/product/detail/(:id)', function (req, res, next) {
       else{
         statusQuality = "Hết Hàng"
       }
+
+      var today = new Date();
+      var date = today.getDate() + "/" + (today.getMonth() + 1) + "/" + today.getFullYear()
+      var time = today.getHours() + ":" + today.getMinutes()
+
       res.render('partials/frontend/product-detail',
       {
         id: result[0][0].id,
@@ -196,6 +201,9 @@ router.get('/product/detail/(:id)', function (req, res, next) {
         dataRecommend1: rows[0].slice(0,3),
         dataRecommend2: rows[1].slice(0,3),
         page,
+        date: date,
+        time: time,
+        trademarkProduct: rows[3][0].name,
       }
     );
     })
@@ -362,8 +370,67 @@ router.get('/forgotpassword/(:email)', function (req, res, next) {
   
 });
 
+// cart
 
-// chưa làm. nhớ cmt
+router.get('/cart', function (req, res, next) {
+  if (!req.session.cart) {
+    return res.render('partials/frontend/cart', {
+      products: null
+    });
+  }
+  var cart = new Cart(req.session.cart);
+  res.render('partials/frontend/cart', {
+    title: 'NodeJS Shopping Cart',
+    products: cart.getItems(),
+    totalPrice: cart.totalPrice
+  });
+});
+
+router.get('/add/:id', function (req, res, next) {
+  productModel.all().then(result => {
+    var productId = req.params.id;
+    var cart = new Cart(req.session.cart ? req.session.cart : {});
+    var product = result.filter(function (item) {
+      return item.id == productId;
+    });
+    
+    cart.add(product[0], productId);
+    req.session.cart = cart;
+    res.redirect('/product');
+  })
+
+});
+
+router.get('/remove/:id', function (req, res, next) {
+  var productId = req.params.id;
+  var cart = new Cart(req.session.cart ? req.session.cart : {});
+
+  cart.remove(productId);
+  req.session.cart = cart;
+  res.redirect('/cart');
+});
+
+router.get('/removeQuatity/:id', function (req, res, next) {
+  var productId = req.params.id;
+  var cart = new Cart(req.session.cart ? req.session.cart : {});
+  if(cart.items[productId].quantity == 1){
+    return res.redirect('/remove/'+ productId);
+  }
+  cart.items[productId].quantity--;
+  req.session.cart = cart;
+  res.redirect('/cart');
+});
+
+router.get('/addQuatity/:id', function (req, res, next) {
+  var productId = req.params.id;
+  var cart = new Cart(req.session.cart ? req.session.cart : {});
+  cart.items[productId].quantity++;
+  req.session.cart = cart;
+  res.redirect('/cart');
+});
+
+
+// checkout
 
 router.get('/checkout', function (req, res, next) {
   if(req.user != null){
@@ -377,17 +444,6 @@ router.get('/checkout', function (req, res, next) {
   }
 
 });
-
-// router.get('/cart', function (req, res, next) {
-
-//   res.render('partials/frontend/cart',
-//   {
-//     title: 'Cart',
-
-//   });
-// });
-
-// chưa làm. làm nhớ cmt
 
 router.get('/blog', function (req, res, next) {
   Promise.all([
@@ -412,39 +468,6 @@ router.get('/contact', function (req, res, next) {
   );
 });
 
-router.get('/add/:id', function (req, res, next) {
-  var productId = req.params.id;
-  var cart = new Cart(req.session.cart ? req.session.cart : {});
-  var product = products.filter(function (item) {
-    return item.id == productId;
-  });
-  cart.add(product[0], productId);
-  req.session.cart = cart;
-  res.redirect('/');
-});
-
-router.get('/cart', function (req, res, next) {
-  if (!req.session.cart) {
-    return res.render('partials/frontend/cart', {
-      products: null
-    });
-  }
-  var cart = new Cart(req.session.cart);
-  res.render('partials/frontend/cart', {
-    title: 'NodeJS Shopping Cart',
-    products: cart.getItems(),
-    totalPrice: cart.totalPrice
-  });
-});
-
-router.get('/remove/:id', function (req, res, next) {
-  var productId = req.params.id;
-  var cart = new Cart(req.session.cart ? req.session.cart : {});
-
-  cart.remove(productId);
-  req.session.cart = cart;
-  res.redirect('/cart');
-});
 
 module.exports = router
 

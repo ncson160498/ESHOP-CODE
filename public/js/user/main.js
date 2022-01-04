@@ -19,5 +19,5 @@ $(document).ready(function () {
         let textSearch = $("#text_search").val()
         document.location.href = `/product/?search=${textSearch}`
     })
-    
+
 })

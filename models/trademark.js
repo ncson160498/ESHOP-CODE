@@ -5,6 +5,6 @@ module.exports = {
         return db.load(`SELECT * FROM trademark`);
     },
     getByid: (id) => {
-        return db.load(`SELECT * FROM trademark WHERE id = '${id}'`);
+        return db.load(`SELECT * FROM trademark WHERE id = ${id}`);
     },
 };

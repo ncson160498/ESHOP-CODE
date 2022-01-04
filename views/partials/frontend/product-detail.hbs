@@ -97,7 +97,7 @@
 								<img src="/img/upload/{{image}}" alt="">
 								<h3>ZOOM</h3>
 							</div>
-							<div id="similar-product" class="carousel slide" data-ride="carousel">
+							{{!-- <div id="similar-product" class="carousel slide" data-ride="carousel">
 								
 								  <!-- Wrapper for slides -->
 								    <div class="carousel-inner">
@@ -126,7 +126,7 @@
 								  <a class="right item-control" href="#similar-product" data-slide="next">
 									<i class="fa fa-angle-right"></i>
 								  </a>
-							</div>
+							</div> --}}
 
 						</div>
 					
@@ -134,11 +134,19 @@
 								{{!-- {{#each data}} --}}
 							<div class="product-information"><!--/product-information-->
 								{{!-- <img src="img/upload/{{image}}" class="newarrival" alt=""> --}}
+					
 								<h2>{{name}}</h2>
-								{{!-- <p>Web ID: 1089772</p> --}}
-								{{!-- <img src="img/upload/{{image}}" alt=""> --}}
-								<span>
-									<span>{{price}} VND</span>						
+
+								<p><b>Thương hiệu:</b>
+								<b>
+									{{trademarkProduct}}
+								</b>			
+								</p>
+								<span>								
+									<span>
+										<label>Giá:</label>
+										{{price}} VND
+									</span>						
 								</span>
 
 								<span>		
@@ -162,18 +170,18 @@
 									</span>
 								</span>
 									
-								<div class="buttons_added">
+								{{!-- <div class="buttons_added">
 									<span>
 										Số lượng mua: 
 											<input aria-label="quantity" class="input-qty" max="Số tối đa" min="Số tối thiểu" name="" type="number" value="1">
 									</span>
-								</div>
+								</div> --}}
 
 								<span>
 									<button type="button" class="btn btn-fefault cart" id="button_add_cart">
 										<i class="fa fa-shopping-cart"></i>
-										<a href="/add/{{id}}"></a>
-										Thêm vào giỏ hàng
+										<a href="/add/{{id}}">Thêm vào giỏ hàng</a>
+										
 									</button>
 								</span>
 
@@ -191,14 +199,14 @@
 					<div class="category-tab shop-details-tab"><!--category-tab-->
 						<div class="col-sm-12">
 							<ul class="nav nav-tabs">
-								<li><a href="#details" data-toggle="tab">Chi tiết</a></li>
+								{{!-- <li><a href="#details" data-toggle="tab">Chi tiết</a></li>
 								<li><a href="#companyprofile" data-toggle="tab">Hồ sơ công ty</a></li>
-								<li><a href="#tag" data-toggle="tab">Tag</a></li>
+								<li><a href="#tag" data-toggle="tab">Tag</a></li> --}}
 								<li class="active"><a href="product/detail/{{id}}/page=1" data-toggle="tab">Nhận xét</a></li>
 							</ul>
 						</div>
 						<div class="tab-content">
-							<div class="tab-pane fade" id="details">
+							{{!-- <div class="tab-pane fade" id="details">
 								<div class="col-sm-3">
 									<div class="product-image-wrapper">
 										<div class="single-products">
@@ -349,14 +357,13 @@
 										</div>
 									</div>
 								</div>
-							</div>
+							</div> --}}
 							
 							<div class="tab-pane fade active in" id="reviews">
 								<div class="col-sm-12">
 									<ul>
-										<li><a href=""><i class="fa fa-user"></i>EUGEN</a></li>
-										<li><a href=""><i class="fa fa-clock-o"></i>12:41 PM</a></li>
-										<li><a href=""><i class="fa fa-calendar-o"></i>31 DEC 2014</a></li>
+										<li><a href=""><i class="fa fa-clock-o"></i>{{time}}</a></li>
+										<li><a href=""><i class="fa fa-calendar-o"></i>{{date}}</a></li>
 									</ul>
 								</ul>
 									<div id="ratings"></div>					
@@ -501,6 +508,5 @@
 <script src="js/jquery.prettyPhoto.js"></script>
 <script src="js/main.js"></script>
 <script src="/js/user/main.js"></script>
-<script src="/js/cart/quantily.js"></script>
 
 </html>
