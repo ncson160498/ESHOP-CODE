@@ -4,6 +4,7 @@ const productModel = require("../../models/product")
 const userModel = require("../../models/user")
 const categoryModel = require("../../models/category")
 const trademarkModel = require("../../models/trademark")
+const orderproductModel = require("../../models/orderproduct")
 const passport = require("passport")
 const helper = require("../../helpers/Helpers")
 const bcrypt = require("bcryptjs")
@@ -380,7 +381,7 @@ router.post('/account', function (req, res, next) {
 
   if(req.user != null){
     userModel.update(entity).then(result => {
-      res.status(200).json({Status: 1, Message: 'success'});
+      res.status(200).json({Status: 1, Message: 'Successfully'});
     }).catch(err => {
       res.status(500).json({Status: 'fail', Message: 'fail'});
   })
@@ -441,80 +442,132 @@ router.post('/changepassword', function (req, res, next) {
 
   // management client by admin
   
-  router.get('/client', function (req, res, next) {
-    if(req.user != null){
-        userModel.allUser().then(result => {
-            res.render('admin/client/client',
-            {
-                layout: 'orther',
-                data: result,
-            });
-        })
-    }
-    else{
-        res.redirect('/admin')
-    }
-  })
-  
-  //edit information client by admin
-  
-  router.get('/client/edit/(:id)', function (req, res, next) {
-    let id = req.params.id;
-    if(req.user != null){
-        userModel.getUserById(id).then(result => {
-            res.render('admin/client/editclient',
-            {
-                layout: 'orther',
-                data: result[0],
-            });
-        })
-    }
-    else{
-        res.redirect('/admin')
-    }
-  })
-  
-  router.post('/client/edit/(:id)', function (req, res, next) {
-    var entity = {
-      id: req.body.id,
-      name: req.body.name,
-      email: req.body.email,
-      phone: req.body.phone,
-      address: req.body.address,
-      locked: req.body.locked,
-    }
-    if(req.user != null){
-        userModel.update(entity).then(result => {
-          userModel.getUserById(entity.id).then(rows => {
-            res.status(200).json({Status: 1, Message: 'success', data: rows[0]});
-          })
-        }).catch(err => {
-          console.log(err)
+router.get('/client', function (req, res, next) {
+  if(req.user != null){
+      userModel.allUser().then(result => {
+          res.render('admin/client/client',
+          {
+              layout: 'orther',
+              data: result,
+          });
       })
-    }
-    else{
-        res.redirect('/admin')
-    }
-  })
-  
-  //delete client by admin
-  
-  router.get('/client/delete/(:id)', function (req, res, next) {
-    let id = req.params.id;
-    if(req.user != null){
-        userModel.getUserById(id).then(result => {
-          userModel.deleteUser(result[0]).then(rows => {
-            res.redirect('/admin/client')
-          })
-        }).catch(err => {
-          console.log(err)
+  }
+  else{
+      res.redirect('/admin')
+  }
+})
+
+//edit information client by admin
+
+router.get('/client/edit/(:id)', function (req, res, next) {
+  let id = req.params.id;
+  if(req.user != null){
+      userModel.getUserById(id).then(result => {
+          res.render('admin/client/editclient',
+          {
+              layout: 'orther',
+              data: result[0],
+          });
       })
-    }
-    else{
-        res.redirect('/admin')
-    }
-  })
-  
+  }
+  else{
+      res.redirect('/admin')
+  }
+})
+
+router.post('/client/edit/(:id)', function (req, res, next) {
+  var entity = {
+    id: req.body.id,
+    name: req.body.name,
+    email: req.body.email,
+    phone: req.body.phone,
+    address: req.body.address,
+    locked: req.body.locked,
+  }
+  if(req.user != null){
+      userModel.update(entity).then(result => {
+        userModel.getUserById(entity.id).then(rows => {
+          res.status(200).json({Status: 1, Message: 'Successfully', data: rows[0]});
+        })
+      }).catch(err => {
+        console.log(err)
+    })
+  }
+  else{
+      res.redirect('/admin')
+  }
+})
+
+//delete client by admin
+
+router.get('/client/delete/(:id)', function (req, res, next) {
+  let id = req.params.id;
+  if(req.user != null){
+      userModel.getUserById(id).then(result => {
+        userModel.deleteUser(result[0]).then(rows => {
+          res.redirect('/admin/client')
+        })
+      }).catch(err => {
+        console.log(err)
+    })
+  }
+  else{
+      res.redirect('/admin')
+  }
+})
+
+
+// orderproduct
+
+router.get('/order', function (req, res, next) {
+  if(req.user != null){
+      orderproductModel.all().then(result => {
+          res.render('admin/order/order',
+          {
+              layout: 'orther',
+              data: result,
+          });
+      })
+  }
+  else{
+      res.redirect('/admin')
+  }
+})
+
+router.get('/order/edit/(:id)', function (req, res, next) {
+  let id = req.params.id;
+  if(req.user != null){
+    orderproductModel.getById(id).then(result => {
+          res.render('admin/order/editorder',
+          {
+              layout: 'orther',
+              data: result[0],
+          });
+      })
+  }
+  else{
+      res.redirect('/admin')
+  }
+})
+
+router.post('/order/edit/(:id)', function (req, res, next) {
+  var entity = {
+    id: req.body.id,
+    status: req.body.status,
+  }
+  if(req.user != null){
+      orderproductModel.update(entity).then(result => {
+        orderproductModel.getById(entity.id).then(rows => {
+          res.status(200).json({Status: 1, Message: 'Successfully', data: rows[0]});
+        })
+      }).catch(err => {
+        res.status(200).json({Status: 0, Message: 'Fail!'});
+    })
+  }
+  else{
+      res.redirect('/admin')
+  }
+})
 
 module.exports = router
 

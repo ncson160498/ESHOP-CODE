@@ -28,6 +28,7 @@ $(document).ready(function () {
                 },
                 success: function (data) {
                     if (data.Status === 1) {
+                        alert(data.Message)
                         $(location).prop('href', '/admin/product')
                         return
                     }

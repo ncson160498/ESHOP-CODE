@@ -1,0 +1,65 @@
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <div class="row">
+            <div class="col-sm-11">
+                <h6 class="m-0 font-weight-bold text-primary">Edit Order</h6>
+            </div>
+            {{!-- <div class="col-sm-1">
+                <a style="font-size: 12px;" class="btn btn-info" href="/admin/product/create">Create Product</a>
+            </div> --}}
+        </div>
+    </div>
+    <div class="card-body">
+        <div style="overflow: hidden;" class="table-responsive">
+            <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                <form>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">ID</label>
+                        <input type="number" disabled class="form-control" id="exampleInputIdEdit"
+                            name="id" value="{{data.id}}">
+                    </div>
+                   <div class="form-group">
+                        <label for="exampleInputEmail1">User ID</label>
+                        <input type="number" disabled class="form-control" id="exampleInputUserIdEdit"
+                            name="user_id" value="{{data.user_id}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Name</label>
+                        <input type="text" disabled class="form-control" id="exampleInputNameProductEdit"
+                            name="nameproduct" value="{{data.nameproduct}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Message</label>
+                        <input type="text" disabled class="form-control" id="exampleInputEmailEdit" name="email" value="{{data.message}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Phone</label>
+                        <input type="number" disabled class="form-control" id="exampleInputPhoneEdit" name="phone" value="{{data.phone}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Address</label>
+                        <input type="text" disabled class="form-control" id="exampleInputAddressEdit" name="address" value="{{data.address}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Total Price</label>
+                        <input type="text" disabled class="form-control" id="exampleInputTotalPriceEdit" name="totalprice" value="{{data.totalprice}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Status</label>                 
+                        <select name="category" id="statusSelected" class="form-select" aria-label="Default select example">
+                            <option value="Chưa Giao">Chưa Giao</option>
+                            <option value="Đã Giao">Đã Giao</option>
+                            <option value="Đang Giao">Đang Giao</option>
+                        </select>
+                    </div>
+                  
+                    <button type="button" class="btn btn-primary" id="editOrderByAdmin" value="Update">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/admin/js/order.js">
+
+</script>

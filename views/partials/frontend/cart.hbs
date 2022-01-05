@@ -20,18 +20,18 @@
 					</thead>			
 					<tbody>
 						{{# if products }}
-							
-						<tr>										
 							{{#each products }}	
+						<tr>										
+							
 							<td class="cart_product">
-								<a href=""><img src="/img/upload/{{ this.item.image}}" height="100" width="100"></a>
+								<a href="/product/detail/{{this.item.id}}"><img src="/img/upload/{{ this.item.image}}" height="100" width="100"></a>
 							</td>
 							<td class="cart_description">
-								<h4><a href="">{{ this.item.name }}</a></h4>
+								<h4><a href="/product/detail/{{this.item.id}}">{{ this.item.name }}</a></h4>
 								{{!-- <p>Web ID: 1089772</p> --}}
 							</td>
 							<td class="cart_price">
-								<p>{{price}} VND</p>
+								<p>{{this.item.price}} VND</p>
 							</td>
 							<td class="cart_quantity">
 								<div class="cart_quantity_button">
@@ -47,22 +47,34 @@
 							<td class="cart_delete">
 								<a class="cart_quantity_delete" href="/remove/{{this.item.id}}"><i class="fa fa-times"></i></a>
 							</td>
-								{{/each}}
+								
 
+						</tr>
+						{{/each}}
+
+
+						<tr>
+							<td colspan="4">&nbsp;</td>
+							<td colspan="2">
+								<table class="table table-condensed total-result">
+									<tbody>
+										<tr>
+											<td>Tổng</td>
+											<td><span>{{totalPrice}} VND</span></td>
+										</tr>
+									</tbody>
+								</table>
+							</td>
 						</tr>
 						{{ else }}
 							Your shopping cart is empty.					
 						{{/if}}
 					</tbody>
 				</table>
-
-					<div class="text-right">
-						<strong>Total: {{ totalPrice }} VND</strong>
-					</div>
-					<hr>
-					<div class="text-right">
-						<a href="/checkout" type="button" class="btn btn-success">Checkout</a>
-					</div>
+				
+				<div class="text-right">
+					<a href="/checkout" type="button" class="btn btn-success">Checkout</a>
+				</div>
 			</div>
 		</div>
 	</section>

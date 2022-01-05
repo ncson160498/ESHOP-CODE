@@ -5,6 +5,7 @@ const productModel = require("../../models/product")
 const bcrypt = require("bcryptjs")
 const categoryModel = require("../../models/category")
 const trademarkModel = require("../../models/trademark")
+const orderproductModel = require("../../models/orderproduct")
 const helper = require("../../helpers/Helpers")
 const nodemailer = require('nodemailer');
 const generator = require('generate-password');
@@ -416,7 +417,7 @@ router.get('/removeQuatity/:id', function (req, res, next) {
   if(cart.items[productId].quantity == 1){
     return res.redirect('/remove/'+ productId);
   }
-  cart.items[productId].quantity--;
+  cart.removeQuantity(productId);
   req.session.cart = cart;
   res.redirect('/cart');
 });
@@ -424,7 +425,7 @@ router.get('/removeQuatity/:id', function (req, res, next) {
 router.get('/addQuatity/:id', function (req, res, next) {
   var productId = req.params.id;
   var cart = new Cart(req.session.cart ? req.session.cart : {});
-  cart.items[productId].quantity++;
+  cart.addQuantity(productId);
   req.session.cart = cart;
   res.redirect('/cart');
 });
@@ -434,16 +435,53 @@ router.get('/addQuatity/:id', function (req, res, next) {
 
 router.get('/checkout', function (req, res, next) {
   if(req.user != null){
-    res.render('partials/frontend/checkout',
-    {
-      title: 'Checkout',
+    if (!req.session.cart) {
+      return res.render('partials/frontend/checkout', {
+        products: null
+      });
     }
-  );
+    var cart = new Cart(req.session.cart);
+    res.render('partials/frontend/checkout', {
+      title: 'Checkout',
+      products: cart.getItems(),
+      totalPrice: cart.totalPrice
+    });
   }else{
     res.redirect('/login')
   }
-
 });
+
+router.post('/checkout', function (req, res, next) {
+  let id = req.body.id
+  let address = req.body.address
+  let message = req.body.message
+  let phone = req.body.phone
+  
+  if (!req.session.cart) {
+    res.status(200).json({Status: 0, Message: 'Không có sản phẩm nào để thanh toán'});
+  }else{
+    var cart = new Cart(req.session.cart);
+    var products = cart.getItems()
+    var name = ''
+    for (let index = 0; index < products.length; index++) {
+      name += products[index].item.name + "(x)" + products[index].quantity + ',\n' 
+    }
+    var entity = {
+      user_id: id,
+      nameproduct: name,
+      address: address,
+      message: message,
+      phone: phone,
+      totalprice: cart.totalPrice,
+      status: 'Chưa Giao',
+    }
+    orderproductModel.addNewOrder(entity).then(result => {
+      res.status(200).json({Status: 1, Message: 'Hoàn Tất Đơn Hàng thanh toán'});
+    }) 
+  }
+})
+
+// chưa làm
 
 router.get('/blog', function (req, res, next) {
   Promise.all([

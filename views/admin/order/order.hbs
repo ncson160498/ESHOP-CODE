@@ -1,0 +1,83 @@
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <div class="row">
+            <div class="col-sm-11">
+                <h6 class="m-0 font-weight-bold text-primary">List Order</h6>
+            </div>
+            {{!-- <div class="col-sm-1">
+                <a style="font-size: 12px;" class="btn btn-info" href="/admin/product/create">Create Product</a>
+            </div> --}}
+        </div>
+    </div>
+    <div class="card-body">
+        <div style="overflow: hidden;" class="table-responsive">
+            <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0"
+                            role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                            <thead>
+                                <tr role="row">
+                                    <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                        colspan="1" aria-sort="ascending"
+                                        aria-label="Name: activate to sort column descending" style="width: 261.812px;">
+                                        UserId</th>
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                        aria-label="Position: activate to sort column ascending"
+                                        style="width: 429.484px;">Name Product</th>
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                        aria-label="Office: activate to sort column ascending">Phone</th>
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                        aria-label="Age: activate to sort column ascending" style="width: 100.453px;">
+                                        Address</th>
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                        aria-label="Age: activate to sort column ascending" style="width: 100.453px;">
+                                        Message</th>
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                        aria-label="Age: activate to sort column ascending" style="width: 100.453px;">
+                                        Total Price</th>
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                        aria-label="Age: activate to sort column ascending" style="width: 100.453px;">
+                                        Status</th>
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                        aria-label="Age: activate to sort column ascending" style="width: 100.453px;">
+                                        Created</th>
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                        aria-label="Position: activate to sort column ascending"
+                                        style="width: 429.484px;">Action</th>
+
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {{#each data}}
+                                <tr class="odd">
+                                    <td>{{user_id}}</td>
+                                    <td>{{nameproduct}}</td>
+                                    <td>{{phone}}</td>
+                                    <td>{{address}}</td>                         
+                                    <td>{{message}}</td>
+                                    <td>{{totalprice}}</td>
+                                    <td>{{status}}</td>
+                                    <td>{{created}}</td>
+
+                                    <td>
+                                        <a class="btn btn-success edit" href="/admin/order/edit/{{id}}">Edit</a>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(() => {
+        $('#dataTable').DataTable();
+    });
+</script>
