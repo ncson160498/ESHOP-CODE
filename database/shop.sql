@@ -104,6 +104,7 @@ CREATE TABLE `orderproduct` (
   `address` varchar(400) NOT NULL,
   `message` varchar(1000) NOT NULL,
   `phone` varchar(15) NOT NULL,
+  `image` varchar(100),
   `totalprice` int(15) NOT NULL,
   `status` varchar(45) NOT NULL,
   `created` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
