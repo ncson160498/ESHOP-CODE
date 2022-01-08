@@ -13,6 +13,9 @@ module.exports = {
     getById: (id) => {
         return db.load(`SELECT * FROM orderproduct WHERE id = ${id}`);
     },
+    getByUserId: (user_id) =>{
+        return db.load(`SELECT * FROM orderproduct WHERE user_id = ${user_id}`);
+    },
     update: (entity) => {
         return db.update("orderproduct", entity);
     },
