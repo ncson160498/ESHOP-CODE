@@ -1,4 +1,5 @@
-<div class="container">
+	{{#if currentUser}}
+	<div class="container">
 			<div class="table-responsive cart_info">				
 				<table class="table table-condensed">
 					<thead>
@@ -43,3 +44,8 @@
 				</table>
 			</div>
 		</div>
+		{{else}}
+			<div class="container"><p>Chưa đăng nhập</p></div>
+				
+		{{/if}}
+		
