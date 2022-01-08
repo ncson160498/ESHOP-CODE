@@ -371,6 +371,21 @@ router.get('/forgotpassword/(:email)', function (req, res, next) {
   
 });
 
+router.get('/history', function(req,res,next){
+    console.log(req.session.user)
+    if(req.session.user){
+      user_id = req.session.user.id
+      orderproductModel.getByUserId(user_id).then( result =>{
+        
+        res.render('partials/frontend/history',
+          {
+            title: 'Account',
+            orderedList: result
+          }
+        );
+      })
+    }
+});
 // cart
 
 router.get('/cart', function (req, res, next) {
@@ -462,6 +477,7 @@ router.post('/checkout', function (req, res, next) {
   }else{
     var cart = new Cart(req.session.cart);
     var products = cart.getItems()
+    image= products[0].item.image
     var name = ''
     for (let index = 0; index < products.length; index++) {
       name += products[index].item.name + "(x)" + products[index].quantity + ',\n' 
@@ -472,6 +488,7 @@ router.post('/checkout', function (req, res, next) {
       address: address,
       message: message,
       phone: phone,
+      image: image,
       totalprice: cart.totalPrice,
       status: 'Chưa Giao',
     }
