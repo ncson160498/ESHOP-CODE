@@ -1,0 +1,45 @@
+<div class="container">
+			<div class="table-responsive cart_info">				
+				<table class="table table-condensed">
+					<thead>
+						<tr class="cart_menu">
+							<td class="image">Đơn Hàng</td>
+							<td class="price">Giá Tiền</td>
+                            <td class="address">Địa Chỉ</td>
+                            <td class="status">Trạng Thái</td>
+							<td></td>
+						</tr>
+					</thead>			
+					<tbody>
+							{{#each orderedList }}	
+						<tr>										
+							
+							{{!-- <td class="cart_product">
+								<img src="/img/upload/{{image}}" height="100" width="100">
+							</td> --}}
+                            <div class="col-4-sm">
+                                <td>
+								    <h4>{{ nameproduct }}</h4>
+                                </td>
+								{{!-- <p>Web ID: 1089772</p> --}}
+                            </div>
+							
+							<td class="cart_price">
+								<p>{{totalprice}} VND</p>
+							</td>
+                            <div>
+                                <td>
+                                    {{address}}
+                                </td>
+                            </div>
+                            <div>
+                                <td>
+                                        <p>{{status}}</p>
+                                </td>
+                            </div>
+						</tr>
+						{{/each}}
+					</tbody>
+				</table>
+			</div>
+		</div>
