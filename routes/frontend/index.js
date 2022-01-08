@@ -372,18 +372,24 @@ router.get('/forgotpassword/(:email)', function (req, res, next) {
 });
 
 router.get('/history', function(req,res,next){
-    console.log(req.session.user)
     if(req.session.user){
       user_id = req.session.user.id
       orderproductModel.getByUserId(user_id).then( result =>{
         
         res.render('partials/frontend/history',
           {
-            title: 'Account',
+            title: 'Lịch Sử',
             orderedList: result
           }
         );
       })
+    }
+    else{
+      res.render('partials/frontend/history',
+          {
+            title: 'Lịch sưr',
+          }
+        );
     }
 });
 // cart
