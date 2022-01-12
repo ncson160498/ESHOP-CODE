@@ -1,0 +1,108 @@
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <div class="row">
+            <div class="col-xl-12">
+                <h6 class="m-0 font-weight-bold text-primary">Báo cáo doanh thu</h6>
+            </div>
+            <br>
+            <div class="col-md-12">
+                <form method="post" id="month">
+              
+                <div class="row">
+                    <div class="form-group col-md-2 ">
+                    <label for="exampleInputEmail1">Ngày</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1"
+                        placeholder="Ngày" name="Thang" value="{{Thang}}">
+                    </div>
+                    <div class="form-group col-md-2 ">
+                    <label for="exampleInputEmail1">Tuần</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" 
+                        placeholder="Tuần" name="Thang" value="{{Thang}}">
+                    </div>
+                
+                    <div class="form-group col-xl-2 ">
+                    <label for="exampleInputEmail1">Tháng</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" 
+                        placeholder="Tháng" name="Thang" value="{{Thang}}">
+                    </div>                               
+                    <div class="form-group col-xl-2 ">
+                    <label for="exampleInputEmail1">Năm</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" 
+                        placeholder="Năm" name="Thang" value="{{Thang}}">
+                    </div>              
+                    <div class="form-group col-xl-2 ">
+                    <label for="exampleInputEmail1">Quý</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" 
+                        placeholder="Quý" name="Thang" value="{{Thang}}">
+                    </div>
+                </div>   
+            </div>
+            
+              
+                {{!-- <div class="form-group">
+                    <label for="exampleInputEmail1">Ngày</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" style="width: 100px;"
+                        placeholder="Ngày" name="Thang" value="{{Thang}}">
+                </div> --}}
+                {{!-- <div class="form-group">
+                    <label for="exampleInputEmail1">Tuần</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" style="width:100px;" 
+                        placeholder="Tuần" name="Thang" value="{{Thang}}">
+                </div> --}}
+                {{!-- <div class="form-group">
+                    <label for="exampleInputEmail1">Tháng</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" style="width: 100px;"
+                        placeholder="Tháng" name="Thang" value="{{Thang}}">
+                </div> --}}
+                {{!-- <div class="form-group">
+                    <label for="exampleInputEmail1">Năm</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" style="width: 100px;"
+                        placeholder="Năm" name="Thang" value="{{Thang}}">
+                </div> --}}
+                {{!-- <div class="form-group">
+                    <label for="exampleInputEmail1">Quý</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" style="width: 100px;" 
+                        placeholder="Quý" name="Thang" value="{{Thang}}">
+                </div> --}}
+                <button type="submit" class="btn btn-primary" value="create">Tìm</button>
+            </form>
+        </div>
+        <br>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid"
+            aria-describedby="dataTable_info" style="width: 100%;">
+            <thead>
+                <tr role="row">
+                    <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                        aria-sort="ascending" aria-label="Name: activate to sort column descending"
+                        style="width: 100px;">
+                        STT</th>
+                    <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                        aria-sort="ascending" aria-label="Name: activate to sort column descending"
+                        style="width: 200px;">
+                        Loại phòng</th>
+                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                        aria-label="Position: activate to sort column ascending" style="width: 200px;">
+                        Doanh Thu</th>
+
+                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                        aria-label="Age: activate to sort column ascending" style="width: 100px;">
+                        Tỷ lệ</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {{#each data}}
+                <tr class="odd">
+                    <td>{{STT}}</td> 
+                    <td>{{TenLoai}}</td>
+                    <td>{{DoanhThu}}</td>
+                    <td>{{TyLe}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>

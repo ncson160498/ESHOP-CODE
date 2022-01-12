@@ -19,9 +19,12 @@ const app = express();
 
 //router 
 const adminProductRouter = require('./routes/admin/product');
+const revenueRouter = require('./routes/admin/revenueReport');
+
 const authRouter = require('./routes/auth/auth')
 const index = require('./routes/frontend/index');
 const apiProductRoute = require('./api/product');
+
 
 const { forwardAuthenticated } = require("./middleware/auth")
 
@@ -81,6 +84,7 @@ app.use((req, res, next) => {
 app.use('/', index);
 app.use('/admin', adminProductRouter);
 app.use('/auth', authRouter);
+app.use('/admin/revenueReport',revenueRouter);
 app.use('/api/product', apiProductRoute);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
