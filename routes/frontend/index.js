@@ -504,30 +504,7 @@ router.post('/checkout', function (req, res, next) {
   }
 })
 
-// chưa làm
 
-router.get('/blog', function (req, res, next) {
-  Promise.all([
-    categoryModel.all(),
-    trademarkModel.all(),
-  ]).then(result => {
-    res.render('partials/frontend/blog',
-    {
-      title: 'Blog',
-      dataCategory: result[0],
-      dataTrademark: result[1],
-    }
-  );
-  })
-});
-
-router.get('/contact', function (req, res, next) {
-  res.render('partials/frontend/contact',
-    {
-      title: 'Contact',
-    }
-  );
-});
 
 
 module.exports = router
