@@ -15,7 +15,7 @@ var fs = require('fs');
 
 var Cart = require('../../models/cart');
 
-const perPage = 6
+const perPage = 9
 const stepConst = 3
 
 
