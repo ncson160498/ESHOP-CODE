@@ -2,10 +2,10 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th1 05, 2022 lúc 03:39 AM
--- Phiên bản máy phục vụ: 10.4.21-MariaDB
--- Phiên bản PHP: 8.0.12
+-- Host: 127.0.0.1
+-- Generation Time: Jan 15, 2022 at 07:29 PM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 8.0.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,23 +18,22 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `shop`
+-- Database: `shop`
 --
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `category`
+-- Table structure for table `category`
 --
 
-DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category` (
   `id` int(11) NOT NULL,
   `name` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Đang đổ dữ liệu cho bảng `category`
+-- Dumping data for table `category`
 --
 
 INSERT INTO `category` (`id`, `name`) VALUES
@@ -51,10 +50,9 @@ INSERT INTO `category` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `comment`
+-- Table structure for table `comment`
 --
 
-DROP TABLE IF EXISTS `comment`;
 CREATE TABLE `comment` (
   `id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
@@ -63,25 +61,12 @@ CREATE TABLE `comment` (
   `content` varchar(600) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Đang đổ dữ liệu cho bảng `comment`
---
-
-INSERT INTO `comment` (`id`, `product_id`, `user_name`, `rating`, `content`) VALUES
-(1, 25, 'HN', '5', 'xinh quá'),
-(2, 25, 'HoangNguyen', '5', 'ngiu tui'),
-(3, 25, 'NS', '5', 'ngiu tui'),
-(4, 25, 'NgocSOn', '5', 'ngiu tui'),
-(5, 25, 'ss', '', 'hế hlu'),
-(6, 25, 'lạc danh', '', 'ok phết');
-
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `contact`
+-- Table structure for table `contact`
 --
 
-DROP TABLE IF EXISTS `contact`;
 CREATE TABLE `contact` (
   `id` int(11) NOT NULL,
   `name` varchar(45) NOT NULL,
@@ -93,10 +78,9 @@ CREATE TABLE `contact` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `orderproduct`
+-- Table structure for table `orderproduct`
 --
 
-DROP TABLE IF EXISTS `orderproduct`;
 CREATE TABLE `orderproduct` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
@@ -104,27 +88,26 @@ CREATE TABLE `orderproduct` (
   `address` varchar(400) NOT NULL,
   `message` varchar(1000) NOT NULL,
   `phone` varchar(15) NOT NULL,
-  `image` varchar(100),
+  `image` varchar(100) DEFAULT NULL,
   `totalprice` int(15) NOT NULL,
   `status` varchar(45) NOT NULL,
   `created` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Đang đổ dữ liệu cho bảng `orderproduct`
+-- Dumping data for table `orderproduct`
 --
 
-INSERT INTO `orderproduct` (`id`, `user_id`, `nameproduct`, `address`, `message`, `phone`, `totalprice`, `status`, `created`) VALUES
-(6, 25, 'Áo Thời Trang Gucci(x)3,\nQuần Áo Trẻ Em Nike(x)2,\n', 'Đồng nai 3', 'nhớ đúng giờ', '0332458585', 26500000, 'Đã Giao', '2022-01-05 02:35:36'),
-(7, 25, 'Áo Thời Trang Gucci(x)3,\nQuần ngắn thể thao Nike(x)1,\nQuần dài thể thao Adidas(x)2,\nQuần Áo Trẻ Em Nike(x)2,\n', 'Đồng nai 3', 'hàng okiê', '0332458585', 45500000, 'Chưa Giao', '2022-01-05 02:04:07');
+INSERT INTO `orderproduct` (`id`, `user_id`, `nameproduct`, `address`, `message`, `phone`, `image`, `totalprice`, `status`, `created`) VALUES
+(6, 25, 'Áo Thời Trang Gucci(x)3,\nQuần Áo Trẻ Em Nike(x)2,\n', 'Đồng nai 3', 'nhớ đúng giờ', '0332458585', NULL, 26500000, 'Đã Giao', '2022-01-05 02:35:36'),
+(7, 25, 'Áo Thời Trang Gucci(x)3,\nQuần ngắn thể thao Nike(x)1,\nQuần dài thể thao Adidas(x)2,\nQuần Áo Trẻ Em Nike(x)2,\n', 'Đồng nai 3', 'hàng okiê', '0332458585', NULL, 45500000, 'Chưa Giao', '2022-01-05 02:04:07');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `product`
+-- Table structure for table `product`
 --
 
-DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product` (
   `id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
@@ -139,7 +122,7 @@ CREATE TABLE `product` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Đang đổ dữ liệu cho bảng `product`
+-- Dumping data for table `product`
 --
 
 INSERT INTO `product` (`id`, `category_id`, `trademark_id`, `name`, `quanlity`, `size`, `price`, `image`, `created`, `view`) VALUES
@@ -154,24 +137,33 @@ INSERT INTO `product` (`id`, `category_id`, `trademark_id`, `name`, `quanlity`, 
 (11, 5, 2, 'Áo Thời Trang Gucci Đen', 50, 'XXL', '3000000', 'shirt-gucci-sxxl.jpg', '2022-01-01 17:19:34', 1),
 (13, 9, 4, 'Giày Thời Trang Nike', 10, '41', '7000000', 'shose-nike-s41.jpg', '2021-12-14 16:19:42', 0),
 (14, 9, 4, 'Giày Thể Thao Nike', 10, '42', '9000000', 'shose-nike-s42.jpg', '2021-12-14 16:21:34', 0),
-(23, 2, 3, 'Ngoc Son', 10, '42', '6999999', '20-12-2021-23-25-50-2.jpg', '2021-12-20 16:44:58', 0),
-(24, 2, 2, 'Sản phẩm', 30, '42', '70000000', '20-12-2021-23-43-9-10.jpg', '2022-01-04 19:48:54', 4),
-(25, 2, 2, 'Siêu Phẩm', 30, '41', '7777777', '20-12-2021-23-44-23-13.jpg', '2022-01-04 19:45:55', 30);
+(26, 2, 1, 'QUẦN SHORT TENNIS ERGO', 10, 'XL', '1250000', '16-1-2022-1-3-25-Quan_Short_Tennis_Ergo_Mau_xanh_da_troi_H50275_21_model.jpg', '2022-01-15 18:03:25', 0),
+(27, 9, 1, 'GIÀY SUPERSTAR', 10, '42', '2500000', '16-1-2022-1-5-10-SUPERSTAR_trang_FZ1968_01_standard.jpg', '2022-01-15 18:05:10', 0),
+(28, 9, 1, 'GIÀY ULTRABOOST 22', 10, '43', '5000000', '16-1-2022-1-5-55-ULTRABOOST_22_DJen_GZ0127_01_standard.jpg', '2022-01-15 18:05:55', 0),
+(29, 9, 1, 'GIÀY ZX 5K BOOST', 10, '40', '4200000', '16-1-2022-1-7-0-Giay_ZX_5K_Boost_mau_xanh_la_GV7699_01_standard.jpg', '2022-01-15 18:07:00', 0),
+(30, 8, 1, 'ÁO THUN TẾT', 10, 'L', '950000', '16-1-2022-1-7-44-Ao_Thun_Tet_DJen_HC0574_21_model.jpg', '2022-01-15 18:07:44', 0),
+(31, 2, 1, 'ÁO M FI 3BAR TEE', 10, 'XL', '750000', '16-1-2022-1-8-27-M_FI_3BAR_TEE_Hong_HF4753_21_model.jpg', '2022-01-15 18:08:27', 0),
+(32, 5, 1, 'ÁO HOODIE LOGO TẾT', 10, 'M', '2300000', '16-1-2022-1-9-10-Ao_Hoodie_Logo_Tet_DJen_HD0319_21_model.jpg', '2022-01-15 18:09:10', 0),
+(33, 5, 1, 'ÁO HOODIE BA LÁ CLASSICS ADICOLOR', 10, 'XL', '1900000', '16-1-2022-1-10-0-Ao_Hoodie_Ba_La_Classics_Adicolor_DJen_H06667_21_model.jpg', '2022-01-15 18:10:00', 0),
+(34, 3, 1, 'ÁO TREFOIL SCRIPT', 10, 'XL', '750000', '16-1-2022-1-17-20-TREFOIL_SCRIPT_DJen_H31329_21_model.jpg', '2022-01-15 18:17:20', 0),
+(35, 3, 1, 'ÁO THUN CAMO PACK', 10, 'L', '750000', '16-1-2022-1-17-58-Ao_Thun_Camo_Pack_trang_H13500_21_model.jpg', '2022-01-15 18:17:58', 0),
+(36, 1, 1, 'ÁO GIÓ W.N.D. ADIDAS SPORTSWEAR', 10, 'XL', '2400000', '16-1-2022-1-19-2-Ao_Gio_W.N.D._adidas_Sportswear_DJen_GT9754_21_model.jpg', '2022-01-15 18:19:02', 0),
+(37, 1, 1, 'ÁO THUN GRAPHIC LOGO FUTURE ICONS ADIDAS SPORTSWEAR', 10, 'XL', '750000', '16-1-2022-1-19-43-Ao_Thun_Graphic_Logo_Future_Icons_adidas_Sportswear_Hong_H24101_21_model.jpg', '2022-01-15 18:19:44', 0),
+(38, 4, 1, 'QUẦN SHORT 2 TRONG 1 VẢI DỆT 3 SỌC PACER', 10, 'L', '800000', '16-1-2022-1-21-14-Quan_short_2_trong_1_vai_det_3_Soc_Pacer_DJen_GL7686_21_model.jpg', '2022-01-15 18:21:14', 0);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `trademark`
+-- Table structure for table `trademark`
 --
 
-DROP TABLE IF EXISTS `trademark`;
 CREATE TABLE `trademark` (
   `id` int(11) NOT NULL,
   `name` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Đang đổ dữ liệu cho bảng `trademark`
+-- Dumping data for table `trademark`
 --
 
 INSERT INTO `trademark` (`id`, `name`) VALUES
@@ -185,10 +177,9 @@ INSERT INTO `trademark` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `user`
+-- Table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `name` varchar(45) NOT NULL,
@@ -203,7 +194,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Đang đổ dữ liệu cho bảng `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id`, `name`, `email`, `phone`, `address`, `password`, `admin`, `verify`, `locked`, `created`) VALUES
@@ -215,36 +206,36 @@ INSERT INTO `user` (`id`, `name`, `email`, `phone`, `address`, `password`, `admi
 (38, 'NGOCSON', 's', '0332458585', '38/4, Tây Hòa', '$2a$10$.cpJ1hMvhQFn690At.nYDebL7i4jEp0DyVbgoz5KI6Hohz67e0hfG', 1, 0, 0, '2022-01-01 21:31:29');
 
 --
--- Chỉ mục cho các bảng đã đổ
+-- Indexes for dumped tables
 --
 
 --
--- Chỉ mục cho bảng `category`
+-- Indexes for table `category`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `comment`
+-- Indexes for table `comment`
 --
 ALTER TABLE `comment`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_comment_product` (`product_id`);
 
 --
--- Chỉ mục cho bảng `contact`
+-- Indexes for table `contact`
 --
 ALTER TABLE `contact`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `orderproduct`
+-- Indexes for table `orderproduct`
 --
 ALTER TABLE `orderproduct`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `product`
+-- Indexes for table `product`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`id`),
@@ -252,75 +243,75 @@ ALTER TABLE `product`
   ADD KEY `trademark_id` (`trademark_id`);
 
 --
--- Chỉ mục cho bảng `trademark`
+-- Indexes for table `trademark`
 --
 ALTER TABLE `trademark`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT cho các bảng đã đổ
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT cho bảng `category`
+-- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT cho bảng `comment`
+-- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT cho bảng `contact`
+-- AUTO_INCREMENT for table `contact`
 --
 ALTER TABLE `contact`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `orderproduct`
+-- AUTO_INCREMENT for table `orderproduct`
 --
 ALTER TABLE `orderproduct`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT cho bảng `product`
+-- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
--- AUTO_INCREMENT cho bảng `trademark`
+-- AUTO_INCREMENT for table `trademark`
 --
 ALTER TABLE `trademark`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT cho bảng `user`
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
--- Các ràng buộc cho các bảng đã đổ
+-- Constraints for dumped tables
 --
 
 --
--- Các ràng buộc cho bảng `comment`
+-- Constraints for table `comment`
 --
 ALTER TABLE `comment`
   ADD CONSTRAINT `fk_comment_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
 
 --
--- Các ràng buộc cho bảng `product`
+-- Constraints for table `product`
 --
 ALTER TABLE `product`
   ADD CONSTRAINT `product_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`),
