@@ -23,7 +23,7 @@ const revenueRouter = require('./routes/admin/revenueReport');
 
 const authRouter = require('./routes/auth/auth')
 const index = require('./routes/frontend/index');
-const apiProductRoute = require('./api/product');
+const apiProductRoute = require('./routes/api/product');
 
 
 const { forwardAuthenticated } = require("./middleware/auth")
