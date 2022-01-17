@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 15, 2022 at 07:29 PM
+-- Generation Time: Jan 17, 2022 at 07:16 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.0.13
 
@@ -64,20 +64,6 @@ CREATE TABLE `comment` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `contact`
---
-
-CREATE TABLE `contact` (
-  `id` int(11) NOT NULL,
-  `name` varchar(45) NOT NULL,
-  `email` varchar(45) NOT NULL,
-  `subject` varchar(100) NOT NULL,
-  `message` varchar(600) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `orderproduct`
 --
 
@@ -127,7 +113,7 @@ CREATE TABLE `product` (
 
 INSERT INTO `product` (`id`, `category_id`, `trademark_id`, `name`, `quanlity`, `size`, `price`, `image`, `created`, `view`) VALUES
 (1, 3, 1, 'Giày Thể Thao Adidas Trắng', 20, '42', '4000000', 'shose-adidas-s42.jpg', '2022-01-05 01:03:38', 59),
-(3, 7, 2, 'Áo Thời Trang Gucci', 40, 'XL', '7500000', 'shirt-gucci-sxl.jpg', '2022-01-05 02:01:54', 17),
+(3, 7, 2, 'Áo Thời Trang Gucci', 40, 'XL', '7500000', 'shirt-gucci-sxl.jpg', '2022-01-17 05:19:07', 18),
 (4, 3, 4, 'Quần ngắn thể thao Nike', 100, 'XL', '5000000', 'pants-nike-sport-sxl.jpg', '2022-01-05 02:03:39', 27),
 (5, 3, 1, 'Quần dài thể thao Adidas', 100, 'XL', '7000000', 'pants-adias-sport-sxl-black.png', '2022-01-05 02:03:36', 5),
 (6, 6, 4, 'Áo Trẻ Em Nike', 20, 'XL', '1000000', 'nike-child-shirt-sxl.jpg', '2022-01-05 01:01:38', 15),
@@ -149,7 +135,16 @@ INSERT INTO `product` (`id`, `category_id`, `trademark_id`, `name`, `quanlity`, 
 (35, 3, 1, 'ÁO THUN CAMO PACK', 10, 'L', '750000', '16-1-2022-1-17-58-Ao_Thun_Camo_Pack_trang_H13500_21_model.jpg', '2022-01-15 18:17:58', 0),
 (36, 1, 1, 'ÁO GIÓ W.N.D. ADIDAS SPORTSWEAR', 10, 'XL', '2400000', '16-1-2022-1-19-2-Ao_Gio_W.N.D._adidas_Sportswear_DJen_GT9754_21_model.jpg', '2022-01-15 18:19:02', 0),
 (37, 1, 1, 'ÁO THUN GRAPHIC LOGO FUTURE ICONS ADIDAS SPORTSWEAR', 10, 'XL', '750000', '16-1-2022-1-19-43-Ao_Thun_Graphic_Logo_Future_Icons_adidas_Sportswear_Hong_H24101_21_model.jpg', '2022-01-15 18:19:44', 0),
-(38, 4, 1, 'QUẦN SHORT 2 TRONG 1 VẢI DỆT 3 SỌC PACER', 10, 'L', '800000', '16-1-2022-1-21-14-Quan_short_2_trong_1_vai_det_3_Soc_Pacer_DJen_GL7686_21_model.jpg', '2022-01-15 18:21:14', 0);
+(38, 4, 1, 'QUẦN SHORT 2 TRONG 1 VẢI DỆT 3 SỌC PACER', 10, 'L', '800000', '16-1-2022-1-21-14-Quan_short_2_trong_1_vai_det_3_Soc_Pacer_DJen_GL7686_21_model.jpg', '2022-01-15 18:21:14', 0),
+(39, 6, 1, 'SET ÁO THUN QUẦN SHORT ADICOLOR', 10, 'S', '1100000', '17-1-2022-12-7-39-Set_Ao_Thun_Quan_Short_Adicolor_trang_H25274_01_laydown.jpg', '2022-01-17 05:07:39', 0),
+(40, 6, 1, 'SET QUẦN ÁO HÈ DISNEY MICKEY MOUSE', 10, 'S', '1150000', '17-1-2022-12-8-23-Set_Quan_Ao_He_Disney_Mickey_Mouse_trang_GT9481_01_laydown.jpg', '2022-01-17 05:08:23', 0),
+(41, 1, 1, 'Áo Khoác Gucci Red And Navy Baroque Jacquard Bomber Jacket 572524 ZAAEV', 10, 'L', '28600000', '17-1-2022-12-15-18-ao-khoac-gucci-red-and-navy-baroque-jacquard-bomber-jacket-572524-zaaev-size-48-6', '2022-01-17 05:18:21', 0),
+(42, 2, 2, 'Áo Phông Gucci Embroidered Cotton Polo Màu Trắng', 10, 'M', '11600000', '17-1-2022-12-16-23-ao-phong-gucci-embroidered-cotton-polo-mau-trang-size-m-5d15d2da58e5c-28062019154', '2022-01-17 05:16:23', 0),
+(43, 1, 2, 'Áo Polo Gucci Embroidered Bees Polo Màu Đen', 10, 'M', '11900000', '17-1-2022-12-17-16-ao-polo-gucci-embroidered-bees-polo-mau-den-5e709d88013fb-17032020165104.jpg', '2022-01-17 05:17:16', 0),
+(44, 1, 2, 'Áo Len Gucci Navy Wool GG Symbol Logos Wool Fine Knit V-Neck Sweater', 10, 'M', '11880000', '17-1-2022-12-17-54-ao-len-gucci-navy-wool-gg-symbol-logos-wool-fine-knit-v-neck-sweater-top-size-m-6', '2022-01-17 05:17:54', 0),
+(45, 7, 3, 'DIOR OBLIQUE SWEATER', 10, 'L', '10000000', '17-1-2022-12-20-53-1638893196_193M638AT344_C082_E13_GH.jpg', '2022-01-17 05:20:53', 0),
+(46, 7, 3, 'OVERSIZED DOWN JACKET WITH LEOPARD MOTIF', 10, 'L', '15000000', '17-1-2022-12-21-38-1637345108_213C411A5492_C188_E01_ZHC.jpg', '2022-01-17 05:21:38', 0),
+(47, 9, 3, 'B27 LOW-TOP SNEAKER', 10, '42', '13500000', '17-1-2022-12-22-41-1637345114_3SN272ZIR_H262_E02_ZHC.jpg', '2022-01-17 05:22:41', 0);
 
 -- --------------------------------------------------------
 
@@ -223,12 +218,6 @@ ALTER TABLE `comment`
   ADD KEY `fk_comment_product` (`product_id`);
 
 --
--- Indexes for table `contact`
---
-ALTER TABLE `contact`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `orderproduct`
 --
 ALTER TABLE `orderproduct`
@@ -271,12 +260,6 @@ ALTER TABLE `comment`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `contact`
---
-ALTER TABLE `contact`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `orderproduct`
 --
 ALTER TABLE `orderproduct`
@@ -286,7 +269,7 @@ ALTER TABLE `orderproduct`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `trademark`
