@@ -104,7 +104,7 @@ router.get('/', function (req, res, next) {
 
 // product view and search product
 router.get('/product', function (req, res, next) {
-  let search = '%' + (req.query.search || '')
+  let search = (req.query.search || '')
   let category = req.query.category || 0
   let trademark = req.query.trademark || 0
 
