@@ -23,6 +23,7 @@ jobs:
           name: Install npm dependencies
           command: |
             npm install --save
+      - run: npm test
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
