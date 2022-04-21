@@ -76,6 +76,11 @@ router.get('/', function (req, res, next) {
     productModel.getByKeyWord("%GUCCI"),
     categoryModel.all(),
     trademarkModel.all(),
+
+
+
+
+    
   ]).then(result => {
     
     let page = numberPage(result[7][0].totalCount,perPage)
